@@ -25,11 +25,11 @@
     --input: 48 20% 90%;
     --ring: 158 64% 42%;
     --radius: 0.75rem;
-    
+
     /* Platform colors */
     --vercel: 0 0% 8%;
     --aws: 33 100% 50%;
-    
+
     /* Chart colors */
     --chart-1: 158 64% 42%;
     --chart-2: 199 89% 48%;
@@ -59,11 +59,11 @@
     --border: 225 15% 18%;
     --input: 225 15% 16%;
     --ring: 158 72% 48%;
-    
+
     /* Platform colors */
     --vercel: 0 0% 100%;
     --aws: 33 100% 55%;
-    
+
     /* Chart colors */
     --chart-1: 158 72% 48%;
     --chart-2: 199 89% 58%;
@@ -71,18 +71,24 @@
     --chart-4: 280 65% 65%;
     --chart-5: 340 75% 60%;
   }
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
+  }
 }
 
 @layer base {
   * {
     @apply border-border;
   }
-  
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
-  
+
   ::selection {
     @apply bg-primary/20;
   }
