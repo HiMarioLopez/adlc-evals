@@ -43,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${sora.variable} ${firaCode.variable} font-sans`}>
+      <body className={`${sora.variable} ${firaCode.variable} font-sans overflow-x-hidden`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

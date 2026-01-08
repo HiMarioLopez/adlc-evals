@@ -28,7 +28,7 @@ const documentationGaps = [
 
 export function Footer() {
   return (
-    <footer className="py-24 px-6 bg-card/50 border-t border-border">
+    <footer id="sources" className="py-24 px-6 bg-card/50 border-t border-border">
       <div className="max-w-6xl mx-auto">
         {/* Links grid */}
         <div className="grid md:grid-cols-2 gap-12 mb-16">

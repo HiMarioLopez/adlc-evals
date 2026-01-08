@@ -84,6 +84,10 @@
     @apply border-border;
   }
 
+  html, body {
+    @apply overflow-x-hidden;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
@@ -146,6 +150,16 @@
 .delay-400 { animation-delay: 400ms; }
 .delay-500 { animation-delay: 500ms; }
 .delay-600 { animation-delay: 600ms; }
+
+/* Shimmer animation for banner */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s ease-in-out infinite;
+}
 
 /* Code block styling */
 pre {
@@ -228,7 +242,7 @@ input[type="range"]:focus {
   background: hsl(var(--muted) / 0.5);
 }
 
-/* Smooth section transitions */
+/* Smooth section transitions - accounts for fixed nav + banner */
 section {
-  @apply scroll-mt-20;
+  @apply scroll-mt-32;
 }
