@@ -26,6 +26,10 @@ const documentationGaps = [
   { item: "Bedrock AgentCore GA SLA percentage", status: "No specific uptime % published" },
 ]
 
+const contributors = [
+  { name: "Mario Lopez Martinez", github: "HiMarioLopez" },
+]
+
 export function Footer() {
   return (
     <footer id="sources" className="py-24 px-6 bg-card/50 border-t border-border">
@@ -82,6 +86,34 @@ export function Footer() {
                 </li>
               ))}
             </ul>
+          </div>
+        </div>
+
+        {/* Contributors */}
+        <div className="mb-12 pt-8 border-t border-border/50">
+          <div className="flex items-center gap-3 mb-4">
+            <Github className="w-5 h-5 text-muted-foreground" />
+            <h3 className="text-sm font-medium text-muted-foreground">Contributors</h3>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {contributors.map((contributor) => (
+              <a
+                key={contributor.github}
+                href={`https://github.com/${contributor.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 hover:bg-muted transition-colors"
+              >
+                <img
+                  src={`https://github.com/${contributor.github}.png`}
+                  alt={contributor.name}
+                  className="w-5 h-5 rounded-full"
+                />
+                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                  {contributor.name}
+                </span>
+              </a>
+            ))}
           </div>
         </div>
 

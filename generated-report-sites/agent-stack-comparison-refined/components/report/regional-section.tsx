@@ -332,49 +332,77 @@ export function RegionalSection() {
 
         {/* Service availability note */}
         <div className="mb-8 grid sm:grid-cols-2 gap-4">
-          <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
-            <div className="flex items-center gap-2 mb-2">
-              <Server className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium">Vercel Service Availability</span>
-            </div>
-            <div className="text-xs text-muted-foreground space-y-1">
-              <p><strong className="text-foreground">Functions & Fluid Compute:</strong> All 19 regions</p>
-              <p><strong className="text-foreground">AI Gateway:</strong> Global (126 PoPs)</p>
-              <p><strong className="text-foreground">Workflow SDK:</strong> All regions</p>
-              <p><strong className="text-primary">Sandbox SDK:</strong> iad1 only (Beta)</p>
-            </div>
-          </div>
           <div className="p-4 rounded-xl bg-aws/5 border border-aws/20">
-            <div className="flex items-center gap-2 mb-2">
+            <div className="flex items-center gap-2 mb-3">
               <Cpu className="w-4 h-4 text-aws" />
               <span className="text-sm font-medium">AWS AgentCore Availability</span>
             </div>
-            <div className="text-xs text-muted-foreground space-y-1">
-              <p><strong className="text-foreground">Full Stack:</strong> {awsFullStackRegions.length} of {awsRegions.length} AWS regions</p>
-              <p><strong className="text-foreground">Partial Support:</strong> {awsPartialRegions.length} regions (Memory/Gateway/Identity)</p>
-              <p><strong className="text-foreground">No AgentCore:</strong> {awsNoAgentCoreRegions.length} regions</p>
-              <p><strong className="text-aws">Evaluations (Preview):</strong> 4 regions only</p>
+            <div className="text-xs space-y-2">
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-chart-3/20 text-chart-3 shrink-0 mt-0.5">
+                  <AlertCircle className="w-2.5 h-2.5" />
+                </span>
+                <span><strong className="text-chart-3">Full Stack:</strong> <span className="text-muted-foreground">{awsFullStackRegions.length} of {awsRegions.length} AWS regions ({Math.round(awsFullStackRegions.length / awsRegions.length * 100)}%)</span></span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-muted shrink-0 mt-0.5">
+                  <Minus className="w-2.5 h-2.5 text-muted-foreground" />
+                </span>
+                <span><strong className="text-muted-foreground">Partial Support:</strong> <span className="text-muted-foreground">{awsPartialRegions.length} regions (Memory/Gateway/Identity)</span></span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-destructive/20 text-destructive shrink-0 mt-0.5">
+                  <AlertCircle className="w-2.5 h-2.5" />
+                </span>
+                <span><strong className="text-destructive">No AgentCore:</strong> <span className="text-muted-foreground">{awsNoAgentCoreRegions.length} regions</span></span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-aws/20 text-aws shrink-0 mt-0.5">
+                  <AlertCircle className="w-2.5 h-2.5" />
+                </span>
+                <span><strong className="text-aws">Evaluations (Preview):</strong> <span className="text-muted-foreground">4 regions only</span></span>
+              </p>
+            </div>
+          </div>
+          <div className="p-4 rounded-xl bg-primary/5 border border-primary/20">
+            <div className="flex items-center gap-2 mb-3">
+              <Server className="w-4 h-4 text-primary" />
+              <span className="text-sm font-medium">Vercel Service Availability</span>
+            </div>
+            <div className="text-xs space-y-2">
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary/20 text-primary shrink-0 mt-0.5">
+                  <Check className="w-2.5 h-2.5" />
+                </span>
+                <span><strong className="text-primary">Functions & Fluid Compute:</strong> <span className="text-muted-foreground">All 19 regions</span></span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary/20 text-primary shrink-0 mt-0.5">
+                  <Check className="w-2.5 h-2.5" />
+                </span>
+                <span><strong className="text-primary">AI Gateway:</strong> <span className="text-muted-foreground">Global (126 PoPs)</span></span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-primary/20 text-primary shrink-0 mt-0.5">
+                  <Check className="w-2.5 h-2.5" />
+                </span>
+                <span><strong className="text-primary">Workflow SDK:</strong> <span className="text-muted-foreground">All regions</span></span>
+              </p>
+              <p className="flex items-start gap-2">
+                <span className="inline-flex items-center justify-center w-4 h-4 rounded-full bg-chart-3/20 text-chart-3 shrink-0 mt-0.5">
+                  <AlertCircle className="w-2.5 h-2.5" />
+                </span>
+                <span><strong className="text-chart-3">Sandbox SDK:</strong> <span className="text-muted-foreground">iad1 only (Beta)</span></span>
+              </p>
             </div>
           </div>
         </div>
 
         {/* Tabbed Maps */}
-        <Tabs defaultValue="vercel" className="mb-8">
+        <Tabs defaultValue="aws" className="mb-8">
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border bg-muted/30">
               <TabsList className="grid w-full max-w-md grid-cols-2 bg-background/50">
-                <TabsTrigger 
-                  value="vercel" 
-                  className="data-[state=active]:bg-foreground data-[state=active]:text-background gap-2"
-                >
-                  <svg className="w-4 h-4" viewBox="0 0 76 65" fill="currentColor">
-                    <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-                  </svg>
-                  <span className="hidden sm:inline">Vercel</span>
-                  <span className="ml-1 px-1.5 py-0.5 text-[10px] rounded-full bg-primary/20 data-[state=active]:bg-white/20">
-                    {vercelRegions.length}
-                  </span>
-                </TabsTrigger>
                 <TabsTrigger 
                   value="aws" 
                   className="data-[state=active]:bg-aws data-[state=active]:text-white gap-2"
@@ -385,6 +413,18 @@ export function RegionalSection() {
                   <span className="hidden sm:inline">AWS</span>
                   <span className="ml-1 px-1.5 py-0.5 text-[10px] rounded-full bg-aws/20 data-[state=active]:bg-white/20">
                     {awsRegions.length}
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="vercel" 
+                  className="data-[state=active]:bg-foreground data-[state=active]:text-background gap-2"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 76 65" fill="currentColor">
+                    <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                  </svg>
+                  <span className="hidden sm:inline">Vercel</span>
+                  <span className="ml-1 px-1.5 py-0.5 text-[10px] rounded-full bg-primary/20 data-[state=active]:bg-white/20">
+                    {vercelRegions.length}
                   </span>
                 </TabsTrigger>
               </TabsList>
