@@ -352,19 +352,6 @@ export function CostCalculator() {
           </div>
         </div>
 
-        {/* Note */}
-        <div className="mt-4 p-4 rounded-xl bg-muted/50 border border-border space-y-2">
-          <p className="text-xs text-muted-foreground text-center">
-            <strong className="text-foreground">Vercel AI Gateway:</strong> Pass-through at Anthropic direct pricing with no markup.
-          </p>
-          <p className="text-xs text-muted-foreground text-center">
-            <strong className="text-foreground">AWS Bedrock:</strong> Global endpoints match Anthropic pricing. 
-            Regional endpoints (data residency guarantee) add 10% premium for Claude 4.5+ models.
-          </p>
-          <p className="text-[10px] text-muted-foreground/70 text-center">
-            Sources: Anthropic pricing docs, AWS Bedrock pricing (us-east-1) — January 2026
-          </p>
-        </div>
       </div>
     </section>
   )

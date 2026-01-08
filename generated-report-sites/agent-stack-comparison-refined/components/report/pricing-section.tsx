@@ -1,6 +1,6 @@
 "use client"
 
-import { DollarSign, TrendingUp, AlertTriangle } from "lucide-react"
+import { DollarSign, TrendingUp, AlertTriangle, Info } from "lucide-react"
 
 const modelPricing = [
   { model: "Claude Opus 4.5", input: "$5.00", output: "$25.00", tier: "flagship" },
@@ -32,10 +32,10 @@ const effortLevels = [
 ]
 
 const bedrockTiers = [
-  { tier: "On-Demand", description: "Pay per token", discount: "Baseline" },
-  { tier: "Provisioned", description: "Reserved capacity", discount: "Commitment discount" },
-  { tier: "Batch Mode", description: "Async processing", discount: "50% discount" },
-  { tier: "Prompt Caching", description: "Cache prompts", discount: "Up to 90% off" },
+  { tier: "On-Demand", description: "Pay per token", discount: "Baseline", tooltip: null },
+  { tier: "Provisioned", description: "Reserved capacity", discount: "Commitment discount", tooltip: "Purchase Model Units (MUs) with 1-month or 6-month commitments for guaranteed throughput. Longer commitments = lower hourly rates." },
+  { tier: "Batch Mode", description: "Async processing", discount: "50% discount", tooltip: "Process multiple prompts asynchronously via S3. Results retrieved from bucket when complete. Not supported for provisioned models." },
+  { tier: "Prompt Caching", description: "Cache prompts", discount: "Up to 90% off", tooltip: "Cache frequently-used prompt components to skip recomputation. 5-minute TTL. Cached tokens charged at reduced rate." },
 ]
 
 export function PricingSection() {
@@ -246,13 +246,38 @@ export function PricingSection() {
           </div>
         </div>
 
+        {/* Vercel Tiers */}
+        <div className="mb-8">
+          <h3 className="text-xl font-semibold mb-6">Vercel Pricing Tiers</h3>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="p-5 rounded-2xl bg-card border border-primary/30">
+              <h4 className="font-medium text-primary mb-2">On-Demand</h4>
+              <p className="text-xs text-muted-foreground mb-3">Pay per token</p>
+              <span className="inline-block px-2 py-1 rounded-lg bg-primary/10 text-xs font-mono text-primary">
+                Baseline
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Bedrock Tiers */}
         <div>
           <h3 className="text-xl font-semibold mb-6">Amazon Bedrock Pricing Tiers</h3>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {bedrockTiers.map((tier) => (
-              <div key={tier.tier} className="p-5 rounded-2xl bg-card border border-border">
-                <h4 className="font-medium text-aws mb-2">{tier.tier}</h4>
+              <div key={tier.tier} className="p-5 rounded-2xl bg-card border border-border relative group">
+                <div className="flex items-center gap-1.5 mb-2">
+                  <h4 className="font-medium text-aws">{tier.tier}</h4>
+                  {tier.tooltip && (
+                    <div className="relative">
+                      <Info className="w-3.5 h-3.5 text-muted-foreground/50 hover:text-aws cursor-help transition-colors" />
+                      <div className="fixed sm:absolute bottom-auto sm:bottom-full left-4 right-4 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 top-1/2 sm:top-auto -translate-y-1/2 sm:translate-y-0 sm:mb-2 px-3 py-2 bg-popover border border-border rounded-lg shadow-lg text-xs text-popover-foreground sm:w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                        {tier.tooltip}
+                        <div className="hidden sm:block absolute top-full left-1/2 -translate-x-1/2 -mt-px border-4 border-transparent border-t-border" />
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <p className="text-xs text-muted-foreground mb-3">{tier.description}</p>
                 <span className="inline-block px-2 py-1 rounded-lg bg-aws/10 text-xs font-mono text-aws">
                   {tier.discount}

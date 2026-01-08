@@ -318,61 +318,6 @@ export function CodeSection() {
           </div>
         </div>
 
-        {/* bash-tool vs Code Interpreter */}
-        <div className="p-8 rounded-2xl bg-gradient-to-br from-primary/5 via-transparent to-aws/5 border border-border">
-          <h4 className="font-semibold text-lg mb-6">bash-tool vs Code Interpreter</h4>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 rounded bg-foreground" />
-                <h5 className="font-medium">Vercel bash-tool</h5>
-              </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                  Pure TypeScript interpreter (<code className="text-xs bg-muted px-1 rounded">just-bash</code>)
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                  Simulated shell (no binary execution)
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                  Near-zero overhead (in-memory)
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
-                  Best for: <code className="text-xs">find</code>, <code className="text-xs">grep</code>, <code className="text-xs">jq</code>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-6 h-6 rounded bg-aws" />
-                <h5 className="font-medium">AWS Code Interpreter</h5>
-              </div>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-aws mt-2 shrink-0" />
-                  Real Python/JS/TS runtime
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-aws mt-2 shrink-0" />
-                  Full shell access with internet
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-aws mt-2 shrink-0" />
-                  Container cold start overhead
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-aws mt-2 shrink-0" />
-                  Best for: Complex computations, data analysis
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
   )

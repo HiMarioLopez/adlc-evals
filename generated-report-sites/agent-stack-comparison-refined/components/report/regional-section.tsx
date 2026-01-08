@@ -113,11 +113,10 @@ const agentcoreFeatures = [
   { key: "evaluations", label: "Evaluations", required: false },
 ]
 
-const vercelConstraints = [
-  { feature: "Sandbox Region", value: "iad1 only", note: "Single region during Beta" },
-  { feature: "Compute Regions", value: "19 regions", note: "Functions & Fluid Compute" },
-  { feature: "Edge PoPs", value: "126 globally", note: "CDN & AI Gateway" },
-  { feature: "Functions Duration", value: "Up to 800s", note: "Pro with Fluid Compute" },
+const vercelFeatures = [
+  { key: "functions", label: "Functions", note: "Serverless" },
+  { key: "fluidCompute", label: "Fluid Compute", note: "Servers, serverless form" },
+  { key: "sandbox", label: "Sandbox", note: "Beta" },
 ]
 
 type AgentCoreStatus = 'full' | 'partial' | 'none'
@@ -472,26 +471,105 @@ export function RegionalSection() {
           </div>
         </Tabs>
 
-        {/* Vercel constraints - updated */}
-        <div className="mb-8 p-6 rounded-2xl border border-primary/30 bg-primary/5">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
-              <svg className="w-5 h-5 text-background" viewBox="0 0 76 65" fill="currentColor">
-                <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-              </svg>
-            </div>
-            <h3 className="font-semibold">Vercel Infrastructure Overview</h3>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {vercelConstraints.map((item) => (
-              <div key={item.feature}>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">{item.feature}</p>
-                <p className="font-mono text-sm font-medium">{item.value}</p>
-                {item.note && <p className="text-xs text-muted-foreground mt-1">{item.note}</p>}
+        {/* Collapsible Vercel Region Matrix */}
+        <Collapsible className="mb-8">
+          <div className="rounded-2xl border border-border bg-card/60 backdrop-blur-sm overflow-hidden">
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between p-6 border-b border-border bg-primary/5 hover:bg-primary/10 transition-colors group">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
+                    <svg className="w-5 h-5 text-background" viewBox="0 0 76 65" fill="currentColor">
+                      <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-semibold">Vercel Compute Regions</h3>
+                    <p className="text-xs text-muted-foreground">Feature availability across all {vercelRegions.length} compute regions</p>
+                  </div>
+                </div>
+                <ChevronDown className="w-5 h-5 text-muted-foreground transition-transform duration-300 group-data-[state=open]:rotate-180" />
+              </button>
+            </CollapsibleTrigger>
+
+            <CollapsibleContent>
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead>
+                    <tr className="border-b border-border bg-card">
+                      <th className="relative text-left p-4 text-xs font-mono uppercase tracking-wider text-muted-foreground sticky left-0 bg-card z-20 min-w-[100px] after:absolute after:right-0 after:top-0 after:h-full after:w-px after:bg-border">
+                        Region
+                      </th>
+                      <th className="p-4 text-xs font-mono uppercase tracking-wider text-muted-foreground text-left min-w-[180px]">
+                        Location
+                      </th>
+                      <th className="p-4 text-xs font-mono uppercase tracking-wider text-muted-foreground text-left min-w-[120px]">
+                        Region Name
+                      </th>
+                      {vercelFeatures.map((f) => (
+                        <th key={f.key} className="p-4 text-xs font-mono uppercase tracking-wider text-muted-foreground text-center min-w-[90px]">
+                          {f.label}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {vercelRegions.map((region, idx) => (
+                      <tr
+                        key={region.code}
+                        className={cn(
+                          "border-b border-border/50 last:border-b-0 transition-colors",
+                          idx % 2 === 0 ? "bg-secondary" : "bg-card",
+                          region.hasSandbox ? "hover:bg-primary/10" : "hover:bg-muted"
+                        )}
+                      >
+                        <td className={cn(
+                          "relative p-4 sticky left-0 z-20 after:absolute after:right-0 after:top-0 after:h-full after:w-px after:bg-border/50",
+                          idx % 2 === 0 ? "bg-secondary" : "bg-card"
+                        )}>
+                          <div className="flex items-center gap-2">
+                            <span className={cn(
+                              "w-2 h-2 rounded-full shrink-0",
+                              region.hasSandbox ? "bg-primary" : "bg-primary/50"
+                            )} />
+                            <span className="font-mono text-sm font-medium">{region.code}</span>
+                          </div>
+                        </td>
+                        <td className="p-4 text-sm">{region.name}</td>
+                        <td className="p-4 font-mono text-xs text-muted-foreground">{region.awsRegion}</td>
+                        <td className="p-4 text-center">
+                          <Check className="w-4 h-4 text-primary mx-auto" />
+                        </td>
+                        <td className="p-4 text-center">
+                          <Check className="w-4 h-4 text-primary mx-auto" />
+                        </td>
+                        <td className="p-4 text-center">
+                          {region.hasSandbox ? (
+                            <Check className="w-4 h-4 text-primary mx-auto" />
+                          ) : (
+                            <Minus className="w-4 h-4 text-muted-foreground/30 mx-auto" />
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-            ))}
+              <div className="p-4 bg-muted/30 border-t border-border flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary" />
+                  <span>Sandbox enabled (iad1)</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-primary/50" />
+                  <span>Compute only ({vercelRegions.length - 1} regions)</span>
+                </div>
+                <div className="flex items-center gap-2 ml-auto">
+                  <span className="text-muted-foreground">+ 126 Edge PoPs globally for CDN & AI Gateway</span>
+                </div>
+              </div>
+            </CollapsibleContent>
           </div>
-        </div>
+        </Collapsible>
 
         {/* Collapsible AWS Region Matrix */}
         <Collapsible open={matrixOpen} onOpenChange={setMatrixOpen}>
@@ -503,7 +581,7 @@ export function RegionalSection() {
                     <span className="text-white font-bold text-sm">A</span>
                   </div>
                   <div className="text-left">
-                    <h3 className="font-semibold">Bedrock AgentCore Regional Matrix</h3>
+                    <h3 className="font-semibold">AWS Bedrock AgentCore Regional Matrix</h3>
                     <p className="text-xs text-muted-foreground">Detailed feature availability across all {awsRegions.length} AWS regions</p>
                   </div>
                 </div>
@@ -598,33 +676,6 @@ export function RegionalSection() {
           </div>
         </Collapsible>
 
-        {/* Regional comparison note */}
-        <div className="mt-8 p-6 rounded-2xl bg-card border border-border">
-          <div className="flex items-start gap-4">
-            <AlertCircle className="w-5 h-5 text-chart-3 shrink-0 mt-0.5" />
-            <div>
-              <h4 className="font-semibold mb-2">Key Regional Insights</h4>
-              <div className="text-sm text-muted-foreground space-y-2">
-                <p>
-                  <strong className="text-foreground">AWS global reach:</strong>{" "}
-                  {awsRegions.length} regions worldwide, but only {awsFullStackRegions.length} have full AgentCore support
-                </p>
-                <p>
-                  <strong className="text-foreground">Vercel compute:</strong>{" "}
-                  All {vercelRegions.length} regions support Functions & Fluid Compute; Sandbox limited to iad1 (Beta)
-                </p>
-                <p>
-                  <strong className="text-foreground">Edge distribution:</strong>{" "}
-                  Vercel has 126 PoPs for AI Gateway & CDN; AWS Bedrock is region-bound
-                </p>
-                <p>
-                  <strong className="text-foreground">Coverage gaps:</strong>{" "}
-                  AgentCore Evaluations in 4 regions only (preview); Many AWS regions have no AgentCore yet
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   )

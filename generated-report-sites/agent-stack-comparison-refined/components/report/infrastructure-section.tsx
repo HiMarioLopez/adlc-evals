@@ -267,93 +267,98 @@ export function InfrastructureSection() {
                 </div>
               </div>
 
-              {/* Table header */}
-              <div className="grid grid-cols-[1.2fr_1fr_1fr] border-b border-border bg-muted/30">
-                <div className="p-4 text-xs font-mono uppercase tracking-widest text-muted-foreground">
-                  Capability
-                </div>
-                <div className="p-4 border-l border-border">
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-md bg-foreground flex items-center justify-center">
-                      <svg className="w-3 h-3 text-background" viewBox="0 0 76 65" fill="currentColor">
-                        <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-                      </svg>
+              {/* Scrollable table container */}
+              <div className="overflow-x-auto">
+                <div className="min-w-[700px]">
+                  {/* Table header */}
+                  <div className="grid grid-cols-[1.2fr_1fr_1fr] border-b border-border bg-muted/30">
+                    <div className="p-4 text-xs font-mono uppercase tracking-widest text-muted-foreground">
+                      Capability
                     </div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Vercel</span>
-                  </div>
-                </div>
-                <div className="p-4 border-l border-border">
-                  <div className="flex items-center gap-2">
-                    <div className="w-5 h-5 rounded-md bg-aws flex items-center justify-center">
-                      <span className="text-white text-[10px] font-bold">A</span>
+                    <div className="p-4 border-l border-border">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-foreground flex items-center justify-center">
+                          <svg className="w-3 h-3 text-background" viewBox="0 0 76 65" fill="currentColor">
+                            <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                          </svg>
+                        </div>
+                        <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">Vercel</span>
+                      </div>
                     </div>
-                    <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">AWS</span>
+                    <div className="p-4 border-l border-border">
+                      <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 rounded-md bg-aws flex items-center justify-center">
+                          <span className="text-white text-[10px] font-bold">A</span>
+                        </div>
+                        <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">AWS</span>
+                      </div>
+                    </div>
                   </div>
+
+                  {/* Table rows */}
+                  {category.rows.map((row) => (
+                    <div
+                      key={row.capability}
+                      className="grid grid-cols-[1.2fr_1fr_1fr] border-b border-border last:border-b-0"
+                    >
+                      {/* Capability column */}
+                      <div className="p-4 sm:p-5">
+                        <div className="flex items-start gap-3">
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-primary/15 text-primary">
+                            {row.icon}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className="font-medium text-sm">{row.capability}</span>
+                            <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+                              {row.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Vercel column */}
+                      <div className="p-4 sm:p-5 border-l border-border">
+                        <p className="text-sm font-medium text-foreground">{row.vercel.text}</p>
+                        <div className="mt-2 space-y-2">
+                          {row.vercel.detail && (
+                            <p className="text-xs text-muted-foreground leading-relaxed">{row.vercel.detail}</p>
+                          )}
+                          {row.vercel.link && (
+                            <a
+                              href={row.vercel.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                            >
+                              Documentation <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* AWS column */}
+                      <div className="p-4 sm:p-5 border-l border-border">
+                        <p className="text-sm font-medium text-foreground">{row.aws.text}</p>
+                        <div className="mt-2 space-y-2">
+                          {row.aws.detail && (
+                            <p className="text-xs text-muted-foreground leading-relaxed">{row.aws.detail}</p>
+                          )}
+                          {row.aws.link && (
+                            <a
+                              href={row.aws.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+                            >
+                              Documentation <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-
-              {/* Table rows */}
-              {category.rows.map((row) => (
-                <div
-                  key={row.capability}
-                  className="grid grid-cols-[1.2fr_1fr_1fr] border-b border-border last:border-b-0"
-                >
-                  {/* Capability column */}
-                  <div className="p-4 sm:p-5">
-                    <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-primary/15 text-primary">
-                        {row.icon}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <span className="font-medium text-sm">{row.capability}</span>
-                        <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-                          {row.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Vercel column */}
-                  <div className="p-4 sm:p-5 border-l border-border">
-                    <p className="text-sm font-medium text-foreground">{row.vercel.text}</p>
-                    <div className="mt-2 space-y-2">
-                      {row.vercel.detail && (
-                        <p className="text-xs text-muted-foreground leading-relaxed">{row.vercel.detail}</p>
-                      )}
-                      {row.vercel.link && (
-                        <a
-                          href={row.vercel.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                        >
-                          Documentation <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* AWS column */}
-                  <div className="p-4 sm:p-5 border-l border-border">
-                    <p className="text-sm font-medium text-foreground">{row.aws.text}</p>
-                    <div className="mt-2 space-y-2">
-                      {row.aws.detail && (
-                        <p className="text-xs text-muted-foreground leading-relaxed">{row.aws.detail}</p>
-                      )}
-                      {row.aws.link && (
-                        <a
-                          href={row.aws.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
-                        >
-                          Documentation <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              ))}
             </div>
           ))}
         </div>
