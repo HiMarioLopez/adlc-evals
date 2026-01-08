@@ -35,9 +35,9 @@ interface CategoryGroup {
 
 const categoryGroups: CategoryGroup[] = [
   {
-    name: "Agent Core",
+    name: "Agent Foundations",
     icon: <Bot className="w-5 h-5" />,
-    description: "Foundation for building AI agents with reasoning and tool use",
+    description: "Core SDKs and gateways for building AI agents with reasoning and tool use",
     color: "from-violet-500/20 to-purple-500/20",
     rows: [
       {
@@ -52,7 +52,7 @@ const categoryGroups: CategoryGroup[] = [
         aws: { 
           text: "Strands Agents SDK", 
           detail: "Agent class, tools, model providers, multi-agent support",
-          link: "https://github.com/strands-agents/sdk-python" 
+          link: "https://strandsagents.com/latest/" 
         },
       },
       {
@@ -62,7 +62,7 @@ const categoryGroups: CategoryGroup[] = [
         vercel: { 
           text: "AI Gateway", 
           detail: "Provider auto-failover, model fallbacks, 0% markup, 20+ providers, 100+ global PoPs, BYOK",
-          link: "https://vercel.com/changelog/model-fallbacks-now-available-in-vercel-ai-gateway" 
+          link: "https://vercel.com/ai-gateway" 
         },
         aws: { 
           text: "Amazon Bedrock", 
@@ -77,6 +77,7 @@ const categoryGroups: CategoryGroup[] = [
         vercel: { 
           text: "Native tool calling", 
           detail: "MCP client (experimental), provider integrations",
+          link: "https://ai-sdk.dev/docs/foundations/tools"
         },
         aws: { 
           text: "Bedrock AgentCore Gateway", 
@@ -129,7 +130,7 @@ const categoryGroups: CategoryGroup[] = [
         vercel: { 
           text: 'Workflow SDK', 
           detail: '"use workflow" directive, survives deployments',
-          link: "https://vercel.com/blog/introducing-workflow" 
+          link: "https://useworkflow.dev/" 
         },
         aws: { 
           text: "Bedrock AgentCore Runtime Sessions", 
@@ -142,9 +143,9 @@ const categoryGroups: CategoryGroup[] = [
         description: "Programmatic browser control for web scraping, testing, and UI automation",
         icon: <Globe className="w-4 h-4" />,
         vercel: { 
-          text: "Anthropic Computer Use", 
-          detail: "computer_20250124, bash, textEditor tools",
-          link: "https://sdk.vercel.ai/providers/ai-sdk-providers/anthropic#computer-tool" 
+          text: "Kernel (Marketplace) + Computer Use", 
+          detail: "Cloud-native browser instances via API/SDK, Puppeteer/Playwright support; native integration coming soon",
+          link: "https://vercel.com/marketplace/kernel" 
         },
         aws: { 
           text: "Bedrock AgentCore Browser Tool", 

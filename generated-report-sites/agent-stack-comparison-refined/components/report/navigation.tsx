@@ -6,6 +6,7 @@ import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 
 const sections = [
+  { id: "foreword", label: "Foreword" },
   { id: "infrastructure", label: "Infrastructure" },
   { id: "pricing", label: "Pricing" },
   { id: "calculator", label: "Calculator" },

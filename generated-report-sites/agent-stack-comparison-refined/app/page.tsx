@@ -1,6 +1,7 @@
 import { DataFreshnessBanner } from "@/components/report/data-freshness-banner"
 import { Navigation } from "@/components/report/navigation"
 import { Hero } from "@/components/report/hero"
+import { ForewordSection } from "@/components/report/foreword-section"
 import { InfrastructureSection } from "@/components/report/infrastructure-section"
 import { PricingSection } from "@/components/report/pricing-section"
 import { CostCalculator } from "@/components/report/cost-calculator"
@@ -17,6 +18,7 @@ export default function Page() {
       <DataFreshnessBanner />
       <Navigation />
       <Hero />
+      <ForewordSection />
       <InfrastructureSection />
       <PricingSection />
       <CostCalculator />
