@@ -1,24 +1,29 @@
 "use client"
 
 import { useState } from "react"
-import { Calculator, Info } from "lucide-react"
+import { Calculator, Info, AlertCircle, Network, ExternalLink } from "lucide-react"
 
 export function CostCalculator() {
   const [turns, setTurns] = useState(1000)
   const [model, setModel] = useState<'sonnet' | 'opus' | 'haiku'>('sonnet')
+  const [useBedrockRegional, setUseBedrockRegional] = useState(true)
 
-  // Model pricing
+  // Model pricing (Anthropic direct / Vercel AI Gateway passthrough pricing per MTok)
   const pricing = {
     sonnet: { input: 3, output: 15, name: 'Claude Sonnet 4.5' },
     opus: { input: 5, output: 25, name: 'Claude Opus 4.5' },
-    haiku: { input: 0.8, output: 4, name: 'Claude Haiku 4.5' },
+    haiku: { input: 1, output: 5, name: 'Claude Haiku 4.5' },
   }
+  
+  // Bedrock regional endpoint premium (10% markup for Claude 4.5+ models)
+  const bedrockRegionalPremium = 1.10
 
   const selectedModel = pricing[model]
 
-  // AWS calculation
-  const awsModelInput = (turns * 1000 / 1_000_000) * selectedModel.input
-  const awsModelOutput = (turns * 500 / 1_000_000) * selectedModel.output
+  // AWS calculation (with optional regional endpoint 10% premium)
+  const awsPremium = useBedrockRegional ? bedrockRegionalPremium : 1.0
+  const awsModelInput = (turns * 1000 / 1_000_000) * selectedModel.input * awsPremium
+  const awsModelOutput = (turns * 500 / 1_000_000) * selectedModel.output * awsPremium
   const awsRuntimeCPU = (turns * (1 / 3600)) * 0.0895
   const awsRuntimeMemory = (turns * (4 / 3600) * 1) * 0.00945
   const awsGateway = (turns * 2 / 1000) * 0.005
@@ -92,7 +97,7 @@ export function CostCalculator() {
             <div>
               <label className="text-sm font-medium block mb-4">Model Selection</label>
               <div className="grid grid-cols-3 gap-2">
-                {(Object.keys(pricing) as Array<keyof typeof pricing>).map((key) => (
+                {(['haiku', 'sonnet', 'opus'] as const).map((key) => (
                   <button
                     key={key}
                     onClick={() => setModel(key)}
@@ -106,6 +111,38 @@ export function CostCalculator() {
                     <p className="text-[10px] font-mono mt-1">${pricing[key].input}/M in</p>
                   </button>
                 ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bedrock Regional Toggle */}
+          <div className="mt-8 pt-8 border-t border-border">
+            <div className="flex items-start gap-4">
+              <button
+                onClick={() => setUseBedrockRegional(!useBedrockRegional)}
+                className={`shrink-0 w-11 h-6 rounded-full transition-colors relative ${
+                  useBedrockRegional ? 'bg-aws' : 'bg-muted'
+                }`}
+              >
+                <span 
+                  className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-sm transition-transform duration-200 ${
+                    useBedrockRegional ? 'translate-x-5' : 'translate-x-0'
+                  }`}
+                />
+              </button>
+              <div className="flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">Use Bedrock Regional Endpoints</span>
+                  {useBedrockRegional && (
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-aws/10 text-aws">
+                      +10% premium
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Regional endpoints guarantee data routing within specific AWS regions. 
+                  Global endpoints (default) route dynamically for maximum availability.
+                </p>
               </div>
             </div>
           </div>
@@ -147,7 +184,12 @@ export function CostCalculator() {
                   <div className="w-10 h-10 rounded-xl bg-aws flex items-center justify-center">
                     <span className="text-white font-bold">A</span>
                   </div>
-                  <h3 className="font-semibold">AWS Total Cost</h3>
+                  <div>
+                    <h3 className="font-semibold">AWS Total Cost</h3>
+                    {useBedrockRegional && (
+                      <p className="text-[10px] text-aws font-medium">Regional endpoints (+10%)</p>
+                    )}
+                  </div>
                 </div>
                 <p className="text-3xl font-bold font-mono text-aws">{formatCost(awsTotal)}</p>
               </div>
@@ -260,11 +302,67 @@ export function CostCalculator() {
           </div>
         </div>
 
+        {/* AI Gateway Resilience Callout */}
+        <div className="mt-8 p-6 rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20">
+          <div className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-xl bg-primary/15 flex items-center justify-center shrink-0">
+              <Network className="w-5 h-5 text-primary" />
+            </div>
+            <div className="flex-1">
+              <h4 className="font-semibold mb-2">Vercel AI Gateway: Built-in Resilience</h4>
+              <p className="text-sm text-muted-foreground mb-4">
+                AI Gateway provides <strong className="text-foreground">automatic provider failover</strong> and <strong className="text-foreground">model fallbacks</strong> out of the box. 
+                If a provider is down or a model fails (context limits, unsupported inputs, outages), requests automatically route to backup providers or fallback models.
+              </p>
+              
+              <div className="grid sm:grid-cols-3 gap-4 mb-4">
+                <div className="p-3 rounded-lg bg-background/60 border border-border">
+                  <p className="text-2xl font-bold font-mono text-primary">10-14%</p>
+                  <p className="text-xs text-muted-foreground">P99 latency improvement</p>
+                </div>
+                <div className="p-3 rounded-lg bg-background/60 border border-border">
+                  <p className="text-2xl font-bold font-mono text-primary">24.3%</p>
+                  <p className="text-xs text-muted-foreground">Error rate reduction</p>
+                </div>
+                <div className="p-3 rounded-lg bg-background/60 border border-border">
+                  <p className="text-2xl font-bold font-mono text-primary">0%</p>
+                  <p className="text-xs text-muted-foreground">Markup on inference</p>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3 text-xs">
+                <a
+                  href="https://vercel.com/changelog/model-fallbacks-now-available-in-vercel-ai-gateway"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-primary hover:underline"
+                >
+                  Model Fallbacks Changelog <ExternalLink className="w-3 h-3" />
+                </a>
+                <a
+                  href="https://cline.bot/blog/cline-provider-now-runs-on-vercel"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-primary hover:underline"
+                >
+                  Cline Production Metrics <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Note */}
-        <div className="mt-8 p-4 rounded-xl bg-muted/50 border border-border">
+        <div className="mt-4 p-4 rounded-xl bg-muted/50 border border-border space-y-2">
           <p className="text-xs text-muted-foreground text-center">
-            Model costs via AI Gateway are pass-through at provider list prices with no markup. 
-            All calculations use published pricing as of January 2026.
+            <strong className="text-foreground">Vercel AI Gateway:</strong> Pass-through at Anthropic direct pricing with no markup.
+          </p>
+          <p className="text-xs text-muted-foreground text-center">
+            <strong className="text-foreground">AWS Bedrock:</strong> Global endpoints match Anthropic pricing. 
+            Regional endpoints (data residency guarantee) add 10% premium for Claude 4.5+ models.
+          </p>
+          <p className="text-[10px] text-muted-foreground/70 text-center">
+            Sources: Anthropic pricing docs, AWS Bedrock pricing (us-east-1) — January 2026
           </p>
         </div>
       </div>

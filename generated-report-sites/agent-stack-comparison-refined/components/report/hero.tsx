@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowDown, Sparkles } from "lucide-react"
+import { ArrowDown, ArrowUpDown, Sparkles } from "lucide-react"
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -71,7 +71,7 @@ export function Hero() {
 
           {/* Arrows */}
           <div className="flex items-center gap-2 text-muted-foreground/40 py-1">
-            <span className="text-xl">↕</span>
+            <ArrowUpDown className="w-5 h-5" />
           </div>
 
           {/* AWS card */}
@@ -86,12 +86,14 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Key insight */}
-        <div className="inline-flex items-center gap-3 px-6 py-3 rounded-xl bg-primary/5 border border-primary/20 opacity-0 animate-fade-up delay-500">
-          <span className="text-xs uppercase tracking-wider text-primary font-semibold">Key Finding</span>
-          <span className="w-px h-4 bg-primary/30" />
-          <span className="text-sm text-muted-foreground">
-            Infrastructure costs ≈ <span className="text-primary font-mono font-bold">3%</span> of total • LLM inference dominates TCO
+        {/* Key insights - combined */}
+        <div className="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 px-5 py-3 rounded-xl bg-primary/5 border border-primary/20 opacity-0 animate-fade-up delay-500">
+          <span className="text-xs uppercase tracking-wider text-primary font-semibold">Key Findings</span>
+          <span className="hidden sm:block w-px h-4 bg-primary/30" />
+          <span className="text-sm text-muted-foreground text-center sm:text-left">
+            Infra ≈ <span className="text-primary font-mono font-bold">3%</span> of TCO
+            <span className="mx-2 text-primary/40">•</span>
+            Time-to-first-agent: <span className="text-primary font-mono font-bold">3 min</span> vs <span className="text-aws font-mono font-bold">60+ min</span>
           </span>
         </div>
 

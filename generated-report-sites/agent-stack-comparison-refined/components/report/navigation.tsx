@@ -6,13 +6,14 @@ import { useTheme } from "next-themes"
 import { cn } from "@/lib/utils"
 
 const sections = [
-  { id: "delta", label: "2026 Delta" },
   { id: "infrastructure", label: "Infrastructure" },
   { id: "pricing", label: "Pricing" },
   { id: "calculator", label: "Calculator" },
   { id: "code", label: "Code" },
+  { id: "deployment", label: "Deployment" },
   { id: "regions", label: "Regions" },
   { id: "adoption", label: "Adoption" },
+  { id: "delta", label: "Updates" },
 ]
 
 export function Navigation() {
@@ -64,7 +65,7 @@ export function Navigation() {
     <>
       <nav
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+          "fixed top-0 inset-x-0 w-full z-50 transition-all duration-300",
           isScrolled
             ? "bg-background/85 backdrop-blur-xl border-b border-border shadow-sm"
             : "bg-transparent"
@@ -90,7 +91,7 @@ export function Navigation() {
           </div>
 
           {/* Desktop nav */}
-          <div className="hidden lg:flex items-center gap-0.5">
+          <div className="hidden xl:flex items-center gap-0.5">
             {sections.map((section) => (
               <button
                 key={section.id}
@@ -109,15 +110,13 @@ export function Navigation() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <a
-              href="https://github.com"
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => scrollTo("sources")}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-muted/50"
             >
               View Sources
               <ExternalLink className="w-3 h-3" />
-            </a>
+            </button>
             
             <button
               onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
@@ -133,7 +132,7 @@ export function Navigation() {
 
             <button
               onClick={() => setMobileOpen(!mobileOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-muted/50 transition-colors"
+              className="xl:hidden p-2 rounded-lg hover:bg-muted/50 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -144,7 +143,7 @@ export function Navigation() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 bg-background/98 backdrop-blur-xl lg:hidden pt-20">
+        <div className="fixed inset-0 z-[55] bg-background/98 backdrop-blur-xl xl:hidden pt-20">
           <div className="flex flex-col p-6 gap-1">
             {sections.map((section, idx) => (
               <button

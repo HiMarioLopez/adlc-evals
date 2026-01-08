@@ -5,7 +5,7 @@ import { DollarSign, TrendingUp, AlertTriangle } from "lucide-react"
 const modelPricing = [
   { model: "Claude Opus 4.5", input: "$5.00", output: "$25.00", tier: "flagship" },
   { model: "Claude Sonnet 4.5", input: "$3.00", output: "$15.00", tier: "balanced" },
-  { model: "Claude Haiku 4.5", input: "$0.80", output: "$4.00", tier: "fast" },
+  { model: "Claude Haiku 4.5", input: "$1.00", output: "$5.00", tier: "fast" },
 ]
 
 const costBreakdown = {
@@ -46,7 +46,7 @@ export function PricingSection() {
         <div className="mb-16">
           <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-primary mb-4">
             <DollarSign className="w-4 h-4" />
-            Section 3
+            Section 2
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
             2026 Unit Economics
@@ -111,6 +111,21 @@ export function PricingSection() {
               </div>
             ))}
           </div>
+          
+          {/* Pricing Source Comparison */}
+          <div className="mt-6 p-4 rounded-xl border border-aws/20 bg-aws/5">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-4 h-4 text-aws shrink-0 mt-0.5" />
+              <div className="text-sm">
+                <p className="font-medium text-foreground mb-1">AWS Bedrock Pricing Note</p>
+                <p className="text-muted-foreground text-xs">
+                  Bedrock <strong className="text-foreground">global endpoints</strong> match Anthropic direct pricing (shown above).
+                  <strong className="text-aws"> Regional endpoints</strong> add a 10% premium for data residency guarantees.
+                  This applies to Claude 4.5+ models.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Cost Comparison */}
@@ -123,7 +138,10 @@ export function PricingSection() {
                   <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
                 </svg>
               </div>
-              <h3 className="font-semibold">Vercel Stack</h3>
+              <div>
+                <h3 className="font-semibold">Vercel Stack</h3>
+                <p className="text-[10px] text-muted-foreground">AI Gateway passthrough pricing</p>
+              </div>
             </div>
             <div className="p-6 space-y-4">
               {costBreakdown.vercel.map((item) => (
@@ -148,7 +166,10 @@ export function PricingSection() {
               <div className="w-8 h-8 rounded-lg bg-aws flex items-center justify-center">
                 <span className="text-white font-bold">A</span>
               </div>
-              <h3 className="font-semibold">AWS Stack</h3>
+              <div>
+                <h3 className="font-semibold">AWS Stack</h3>
+                <p className="text-[10px] text-muted-foreground">Global endpoint pricing</p>
+              </div>
             </div>
             <div className="p-6 space-y-4">
               {costBreakdown.aws.map((item) => (
@@ -161,7 +182,10 @@ export function PricingSection() {
                 </div>
               ))}
               <div className="pt-4 border-t border-border flex items-center justify-between">
-                <span className="font-semibold">Total</span>
+                <div>
+                  <span className="font-semibold">Total</span>
+                  <p className="text-[10px] text-muted-foreground">+$1.35 with regional endpoints</p>
+                </div>
                 <span className="text-2xl font-mono font-bold text-aws">$13.93</span>
               </div>
             </div>

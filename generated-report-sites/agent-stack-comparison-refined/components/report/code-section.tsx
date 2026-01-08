@@ -198,7 +198,7 @@ export function CodeSection() {
         <div className="mb-16">
           <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-primary mb-4">
             <Code2 className="w-4 h-4" />
-            Section 4
+            Section 3
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
             Code Examples
@@ -372,6 +372,7 @@ export function CodeSection() {
             </div>
           </div>
         </div>
+
       </div>
     </section>
   )

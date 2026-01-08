@@ -55,13 +55,13 @@ export function DeltaSection() {
         <div className="mb-16">
           <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-primary mb-4">
             <GitBranch className="w-4 h-4" />
-            Section 1
+            Changelog
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            2025 → 2026 Technical Delta
+            Recent Platform Updates
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl">
-            Key platform changes affecting agent development and infrastructure decisions.
+            Key changes affecting agent development and infrastructure decisions.
           </p>
         </div>
 
