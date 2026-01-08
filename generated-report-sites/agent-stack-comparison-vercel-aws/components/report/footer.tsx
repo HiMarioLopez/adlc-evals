@@ -140,7 +140,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="mt-8 text-center">
           <p className="text-xs text-muted-foreground">
-            Technical evaluation report for internal team use. Data sourced from official documentation and GitHub repositories.
+            Data sourced from official documentation and GitHub repositories.
           </p>
         </div>
       </div>

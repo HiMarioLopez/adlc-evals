@@ -41,7 +41,7 @@ export function DataFreshnessBanner() {
                   January 8, 2026
                 </time>
                 <span className="mx-1.5 opacity-60">·</span>
-                <span className="opacity-90">Verify with official sources before decisions</span>
+                <span className="opacity-90">Always verify with official sources</span>
               </p>
             </div>
             
