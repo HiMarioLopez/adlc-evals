@@ -43,7 +43,7 @@ generated-report-sites/    → Interactive Next.js sites
 
 | Comparison | Status | Links |
 |------------|--------|-------|
-| Vercel vs AWS | ✅ Complete | [Report](generated-reports/vercel-aws/2026/01/2026-01-08-Agent-Comparison-Report-Claude-Opus-4.5.md) · [Site](generated-report-sites/agent-stack-comparison-vercel-aws/) |
+| Vercel vs AWS | ✅ Live | [Report](generated-reports/vercel-aws/2026/01/2026-01-08-Agent-Comparison-Report-Claude-Opus-4.5.md) · [Live Site](https://adlc-evals-vercel-aws.vercel.app/) · [Source](generated-report-sites/agent-stack-comparison-vercel-aws/) |
 | Vercel vs Cloudflare | 🔜 Planned | — |
 | Vercel vs GCP | 🔜 Planned | — |
 
