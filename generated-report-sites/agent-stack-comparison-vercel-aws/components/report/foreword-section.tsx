@@ -95,9 +95,10 @@ export function ForewordSection() {
 
           <div className="prose prose-lg prose-invert max-w-none">
             <p className="text-muted-foreground leading-relaxed">
-              This reality is precisely why this report is extensive. To make informed platform decisions, we need to 
-              understand not just individual components, but how they compose together—their integration points, 
-              operational characteristics, and total cost of ownership.
+              This isn't a value judgment—it's simply the state of the ecosystem. Both platforms require you to 
+              understand how pieces fit together, make explicit trade-offs, and own the integration surface area.
+              The question isn't "which one is turnkey?" but rather "which composition aligns better with your 
+              team's constraints and priorities?"
             </p>
           </div>
 
@@ -107,12 +108,12 @@ export function ForewordSection() {
               <Layers className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <h3 className="font-semibold mb-2">Why This Matters for the Vercel Narrative</h3>
+              <h3 className="font-semibold mb-2">What This Report Does</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">
-                When we pitch Vercel for AI agents, we're not pitching a single SDK or a single service. 
-                We're pitching <span className="text-foreground">a platform</span>—a curated composition of 
-                infrastructure primitives (Functions, KV, Postgres, Blob) combined with a best-in-class 
-                developer experience. Understanding the full solution space lets us craft this narrative authentically.
+                We examine each platform's components side-by-side: compute models, state management, 
+                orchestration patterns, and operational characteristics. The goal is to surface the 
+                <span className="text-foreground"> actual differences</span>—not marketing claims—so you 
+                can make decisions based on what each stack genuinely offers today.
               </p>
             </div>
           </div>
@@ -120,7 +121,7 @@ export function ForewordSection() {
           {/* Transition to report */}
           <div className={`flex items-center gap-3 pt-6 text-sm text-muted-foreground transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <Puzzle className="w-4 h-4" />
-            <span>With that context, let's dive into the components...</span>
+            <span>Let's examine the components...</span>
             <ArrowRight className="w-4 h-4" />
           </div>
         </div>
