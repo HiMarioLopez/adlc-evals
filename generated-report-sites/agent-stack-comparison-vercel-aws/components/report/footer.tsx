@@ -46,7 +46,7 @@ export function Footer() {
               </div>
               <h3 className="font-semibold">Vercel Documentation</h3>
             </div>
-            <ul className="grid grid-cols-2 gap-3">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
               {vercelLinks.map((link) => (
                 <li key={link.label}>
                   <a
@@ -71,7 +71,7 @@ export function Footer() {
               </div>
               <h3 className="font-semibold">AWS Documentation</h3>
             </div>
-            <ul className="grid grid-cols-2 gap-3">
+            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
               {awsLinks.map((link) => (
                 <li key={link.label}>
                   <a
@@ -118,28 +118,28 @@ export function Footer() {
         </div>
 
         {/* Version info */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8 border-t border-border">
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
+        <div className="flex flex-col items-center gap-4 sm:gap-6 pt-8 border-t border-border">
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
             <span>Report Version: <span className="font-mono text-foreground">1.0.0</span></span>
-            <span className="text-border">•</span>
+            <span className="hidden sm:inline text-border">•</span>
             <span>Generated: <span className="font-mono text-foreground">2026-01-08</span></span>
           </div>
           
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <span>Analyzed:</span>
+          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-2 text-xs text-muted-foreground">
+            <span>Analyzed:</span>
+            <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
               <span className="font-mono text-primary">ai@6.0.23</span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span className="font-mono text-chart-2">strands@1.21.0</span>
-              <span>•</span>
+              <span className="hidden sm:inline">•</span>
               <span className="font-mono text-aws">agentcore@1.1.4</span>
             </div>
           </div>
         </div>
 
         {/* Copyright */}
-        <div className="mt-8 text-center">
-          <p className="text-xs text-muted-foreground">
+        <div className="mt-6 sm:mt-8 text-center px-4 sm:px-0">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             Data sourced from official documentation and public GitHub repositories.
           </p>
         </div>
