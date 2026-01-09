@@ -1,9 +1,8 @@
 "use client"
 
-import { useState } from "react"
-import { Globe, Check, Minus, AlertCircle, ChevronDown, Server, Cpu } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Globe, Check, Minus, AlertCircle, ChevronDown, Server, Cpu, Loader2 } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { Map, MapMarker, MarkerContent, MarkerTooltip, MapControls } from "@/components/ui/map"
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -131,123 +130,30 @@ function getAgentCoreStatus(region: AWSRegionData): AgentCoreStatus {
   return 'none'
 }
 
-function AWSRegionMarker({ region }: { region: AWSRegionData }) {
-  const status = getAgentCoreStatus(region)
-  const enabledFeatures = agentcoreFeatures.filter(f => region.agentcore[f.key as keyof typeof region.agentcore])
-
+// Loading placeholder for maps
+function MapLoadingPlaceholder() {
   return (
-    <MapMarker longitude={region.coordinates[0]} latitude={region.coordinates[1]}>
-      <MarkerContent>
-        <div
-          className={cn(
-            "relative flex items-center justify-center transition-transform hover:scale-110",
-            status === 'full' ? "z-20" : status === 'partial' ? "z-15" : "z-10"
-          )}
-        >
-          {status === 'full' && (
-            <div className="absolute w-8 h-8 rounded-full bg-aws/20 animate-pulse" />
-          )}
-          <div
-            className={cn(
-              "rounded-full border-2 border-white shadow-lg",
-              status === 'full' ? "w-4 h-4 bg-aws" : 
-              status === 'partial' ? "w-3.5 h-3.5 bg-chart-3" : 
-              "w-3 h-3 bg-muted-foreground/40"
-            )}
-          />
-        </div>
-      </MarkerContent>
-      <MarkerTooltip className="min-w-[200px] px-3 py-2.5">
-        <div className="flex items-center gap-2 mb-1.5">
-          <span className={cn(
-            "w-2 h-2 rounded-full",
-            status === 'full' ? "bg-aws" : status === 'partial' ? "bg-chart-3" : "bg-muted-foreground/40"
-          )} />
-          <span className="font-semibold text-sm">{region.name}</span>
-        </div>
-        <p className="text-[11px] opacity-70 font-mono mb-2">{region.region}</p>
-        
-        {status === 'none' ? (
-          <p className="text-[10px] opacity-50">No AgentCore services available</p>
-        ) : (
-          <div className="flex flex-wrap gap-1">
-            {enabledFeatures.map(f => (
-              <span
-                key={f.key}
-                className={cn(
-                  "px-1.5 py-0.5 text-[10px] rounded",
-                  f.required ? "bg-aws/30 text-aws" : "bg-background/20"
-                )}
-              >
-                {f.label}
-              </span>
-            ))}
-          </div>
-        )}
-        
-        {status === 'full' && (
-          <p className="text-[10px] text-aws mt-1.5">Full AgentCore stack available</p>
-        )}
-        {status === 'partial' && (
-          <p className="text-[10px] text-chart-3 mt-1.5">Partial AgentCore support</p>
-        )}
-      </MarkerTooltip>
-    </MapMarker>
+    <div className="h-[420px] flex items-center justify-center bg-muted/20">
+      <div className="flex flex-col items-center gap-3 text-muted-foreground">
+        <Loader2 className="w-8 h-8 animate-spin" />
+        <span className="text-sm">Loading map...</span>
+      </div>
+    </div>
   )
 }
 
-function VercelRegionMarker({ region }: { region: VercelRegion }) {
-  return (
-    <MapMarker longitude={region.coordinates[0]} latitude={region.coordinates[1]}>
-      <MarkerContent>
-        <div className={cn(
-          "relative flex items-center justify-center transition-transform hover:scale-110",
-          region.hasSandbox ? "z-30" : "z-10"
-        )}>
-          {region.hasSandbox && (
-            <>
-              <div className="absolute w-10 h-10 rounded-full bg-primary/10 animate-pulse" />
-              <div className="absolute w-7 h-7 rounded-full bg-primary/20 animate-pulse [animation-delay:150ms]" />
-            </>
-          )}
-          <div className={cn(
-            "rounded-full border-2 border-white shadow-lg flex items-center justify-center",
-            region.hasSandbox 
-              ? "w-5 h-5 bg-primary" 
-              : "w-3.5 h-3.5 bg-primary/70"
-          )}>
-            {region.hasSandbox && (
-              <svg className="w-2.5 h-2.5 text-primary-foreground" viewBox="0 0 76 65" fill="currentColor">
-                <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-              </svg>
-            )}
-          </div>
-        </div>
-      </MarkerContent>
-      <MarkerTooltip className="min-w-[180px] px-3 py-2.5">
-        <div className="flex items-center gap-2 mb-1">
-          <svg className="w-3 h-3" viewBox="0 0 76 65" fill="currentColor">
-            <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-          </svg>
-          <span className="font-semibold text-sm">{region.name}</span>
-        </div>
-        <p className="text-[11px] opacity-70 font-mono mb-2">{region.code} ({region.awsRegion})</p>
-        <div className="flex flex-wrap gap-1">
-          <span className="px-1.5 py-0.5 text-[10px] rounded bg-background/20">Functions</span>
-          <span className="px-1.5 py-0.5 text-[10px] rounded bg-background/20">Fluid Compute</span>
-          {region.hasSandbox && (
-            <span className="px-1.5 py-0.5 text-[10px] rounded bg-primary/30 text-primary">Sandbox</span>
-          )}
-        </div>
-        {region.hasSandbox && (
-          <p className="text-[10px] opacity-50 mt-1.5">Only region with Sandbox (Beta)</p>
-        )}
-      </MarkerTooltip>
-    </MapMarker>
-  )
-}
+// Lazy-loaded AWS Map component
+function AWSMapLazy() {
+  const [MapModule, setMapModule] = useState<typeof import("@/components/ui/map") | null>(null)
 
-function AWSMap() {
+  useEffect(() => {
+    import("@/components/ui/map").then(setMapModule)
+  }, [])
+
+  if (!MapModule) return <MapLoadingPlaceholder />
+
+  const { Map, MapMarker, MarkerContent, MarkerTooltip, MapControls } = MapModule
+
   return (
     <div className="h-[420px] relative">
       <Map
@@ -257,15 +163,87 @@ function AWSMap() {
         maxZoom={6}
       >
         <MapControls position="bottom-right" showZoom={true} />
-        {awsRegions.map(region => (
-          <AWSRegionMarker key={region.region} region={region} />
-        ))}
+        {awsRegions.map(region => {
+          const status = getAgentCoreStatus(region)
+          const enabledFeatures = agentcoreFeatures.filter(f => region.agentcore[f.key as keyof typeof region.agentcore])
+
+          return (
+            <MapMarker key={region.region} longitude={region.coordinates[0]} latitude={region.coordinates[1]}>
+              <MarkerContent>
+                <div
+                  className={cn(
+                    "relative flex items-center justify-center transition-transform hover:scale-110",
+                    status === 'full' ? "z-20" : status === 'partial' ? "z-15" : "z-10"
+                  )}
+                >
+                  {status === 'full' && (
+                    <div className="absolute w-8 h-8 rounded-full bg-aws/20 animate-pulse" />
+                  )}
+                  <div
+                    className={cn(
+                      "rounded-full border-2 border-white shadow-lg",
+                      status === 'full' ? "w-4 h-4 bg-aws" : 
+                      status === 'partial' ? "w-3.5 h-3.5 bg-chart-3" : 
+                      "w-3 h-3 bg-muted-foreground/40"
+                    )}
+                  />
+                </div>
+              </MarkerContent>
+              <MarkerTooltip className="min-w-[200px] px-3 py-2.5">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <span className={cn(
+                    "w-2 h-2 rounded-full",
+                    status === 'full' ? "bg-aws" : status === 'partial' ? "bg-chart-3" : "bg-muted-foreground/40"
+                  )} />
+                  <span className="font-semibold text-sm">{region.name}</span>
+                </div>
+                <p className="text-[11px] opacity-70 font-mono mb-2">{region.region}</p>
+                
+                {status === 'none' ? (
+                  <p className="text-[10px] opacity-50">No AgentCore services available</p>
+                ) : (
+                  <div className="flex flex-wrap gap-1">
+                    {enabledFeatures.map(f => (
+                      <span
+                        key={f.key}
+                        className={cn(
+                          "px-1.5 py-0.5 text-[10px] rounded",
+                          f.required ? "bg-aws/30 text-aws" : "bg-background/20"
+                        )}
+                      >
+                        {f.label}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                
+                {status === 'full' && (
+                  <p className="text-[10px] text-aws mt-1.5">Full AgentCore stack available</p>
+                )}
+                {status === 'partial' && (
+                  <p className="text-[10px] text-chart-3 mt-1.5">Partial AgentCore support</p>
+                )}
+              </MarkerTooltip>
+            </MapMarker>
+          )
+        })}
       </Map>
     </div>
   )
 }
 
-function VercelMap() {
+// Lazy-loaded Vercel Map component
+function VercelMapLazy() {
+  const [MapModule, setMapModule] = useState<typeof import("@/components/ui/map") | null>(null)
+
+  useEffect(() => {
+    import("@/components/ui/map").then(setMapModule)
+  }, [])
+
+  if (!MapModule) return <MapLoadingPlaceholder />
+
+  const { Map, MapMarker, MarkerContent, MarkerTooltip, MapControls } = MapModule
+
   return (
     <div className="h-[420px] relative">
       <Map
@@ -276,7 +254,52 @@ function VercelMap() {
       >
         <MapControls position="bottom-right" showZoom={true} />
         {vercelRegions.map(region => (
-          <VercelRegionMarker key={region.code} region={region} />
+          <MapMarker key={region.code} longitude={region.coordinates[0]} latitude={region.coordinates[1]}>
+            <MarkerContent>
+              <div className={cn(
+                "relative flex items-center justify-center transition-transform hover:scale-110",
+                region.hasSandbox ? "z-30" : "z-10"
+              )}>
+                {region.hasSandbox && (
+                  <>
+                    <div className="absolute w-10 h-10 rounded-full bg-primary/10 animate-pulse" />
+                    <div className="absolute w-7 h-7 rounded-full bg-primary/20 animate-pulse [animation-delay:150ms]" />
+                  </>
+                )}
+                <div className={cn(
+                  "rounded-full border-2 border-white shadow-lg flex items-center justify-center",
+                  region.hasSandbox 
+                    ? "w-5 h-5 bg-primary" 
+                    : "w-3.5 h-3.5 bg-primary/70"
+                )}>
+                  {region.hasSandbox && (
+                    <svg className="w-2.5 h-2.5 text-primary-foreground" viewBox="0 0 76 65" fill="currentColor">
+                      <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                    </svg>
+                  )}
+                </div>
+              </div>
+            </MarkerContent>
+            <MarkerTooltip className="min-w-[180px] px-3 py-2.5">
+              <div className="flex items-center gap-2 mb-1">
+                <svg className="w-3 h-3" viewBox="0 0 76 65" fill="currentColor">
+                  <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                </svg>
+                <span className="font-semibold text-sm">{region.name}</span>
+              </div>
+              <p className="text-[11px] opacity-70 font-mono mb-2">{region.code} ({region.awsRegion})</p>
+              <div className="flex flex-wrap gap-1">
+                <span className="px-1.5 py-0.5 text-[10px] rounded bg-background/20">Functions</span>
+                <span className="px-1.5 py-0.5 text-[10px] rounded bg-background/20">Fluid Compute</span>
+                {region.hasSandbox && (
+                  <span className="px-1.5 py-0.5 text-[10px] rounded bg-primary/30 text-primary">Sandbox</span>
+                )}
+              </div>
+              {region.hasSandbox && (
+                <p className="text-[10px] opacity-50 mt-1.5">Only region with Sandbox (Beta)</p>
+              )}
+            </MarkerTooltip>
+          </MapMarker>
         ))}
       </Map>
     </div>
@@ -285,12 +308,12 @@ function VercelMap() {
 
 export function RegionalSection() {
   const [matrixOpen, setMatrixOpen] = useState(false)
+  const [activeTab, setActiveTab] = useState<string>("aws")
   
   // Calculate stats
   const awsFullStackRegions = awsRegions.filter(r => getAgentCoreStatus(r) === 'full')
   const awsPartialRegions = awsRegions.filter(r => getAgentCoreStatus(r) === 'partial')
   const awsNoAgentCoreRegions = awsRegions.filter(r => getAgentCoreStatus(r) === 'none')
-  const agentCoreRegionsWithRuntime = awsRegions.filter(r => r.agentcore.runtime)
 
   return (
     <section id="regions" className="py-24 px-6 bg-muted/30">
@@ -397,8 +420,8 @@ export function RegionalSection() {
           </div>
         </div>
 
-        {/* Tabbed Maps */}
-        <Tabs defaultValue="aws" className="mb-8">
+        {/* Tabbed Maps - Only render active tab's map */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
           <div className="rounded-2xl border border-border bg-card overflow-hidden">
             <div className="flex items-center justify-between p-4 sm:p-5 border-b border-border bg-muted/30">
               <TabsList className="grid w-full max-w-md grid-cols-2 bg-background/50">
@@ -434,7 +457,8 @@ export function RegionalSection() {
             </div>
 
             <TabsContent value="vercel" className="m-0">
-              <VercelMap />
+              {/* Only mount Vercel map when tab is active */}
+              {activeTab === "vercel" && <VercelMapLazy />}
               <div className="p-4 border-t border-border bg-muted/20 flex flex-wrap items-center justify-center gap-6 text-xs">
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 rounded-full bg-primary border-2 border-white shadow-sm flex items-center justify-center">
@@ -452,7 +476,8 @@ export function RegionalSection() {
             </TabsContent>
 
             <TabsContent value="aws" className="m-0">
-              <AWSMap />
+              {/* Only mount AWS map when tab is active */}
+              {activeTab === "aws" && <AWSMapLazy />}
               <div className="p-4 border-t border-border bg-muted/20 flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs">
                 <div className="flex items-center gap-2">
                   <span className="w-3 h-3 rounded-full bg-aws border-2 border-white shadow-sm" />

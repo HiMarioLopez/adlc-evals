@@ -1,24 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter"
-import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism"
-import { Code2, Copy, Check } from "lucide-react"
+import { Code2 } from "lucide-react"
 import { cn } from "@/lib/utils"
-
-const customTheme = {
-  ...oneDark,
-  'pre[class*="language-"]': {
-    ...oneDark['pre[class*="language-"]'],
-    background: "transparent",
-    margin: 0,
-    padding: 0,
-  },
-  'code[class*="language-"]': {
-    ...oneDark['code[class*="language-"]'],
-    background: "transparent",
-  },
-}
+import { LightCodeBlock } from "@/components/ui/code-block"
 
 const codeExamples = {
   vercel: {
@@ -135,58 +120,6 @@ const awsTabs: { key: AwsTab; label: string }[] = [
   { key: "memory", label: "Memory" },
 ]
 
-function CodeBlock({ 
-  code, 
-  language 
-}: { 
-  code: string
-  language: string 
-}) {
-  const [copied, setCopied] = useState(false)
-
-  const copyToClipboard = async () => {
-    await navigator.clipboard.writeText(code)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  return (
-    <div className="relative group">
-      <button
-        onClick={copyToClipboard}
-        className="absolute top-3 right-3 p-2 rounded-lg bg-muted/80 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-muted"
-        aria-label="Copy code"
-      >
-        {copied ? (
-          <Check className="w-4 h-4 text-primary" />
-        ) : (
-          <Copy className="w-4 h-4 text-muted-foreground" />
-        )}
-      </button>
-      <div className="overflow-x-auto">
-        <SyntaxHighlighter
-          language={language}
-          style={customTheme}
-          customStyle={{
-            margin: 0,
-            padding: "1.25rem",
-            background: "transparent",
-            fontSize: "0.8125rem",
-            lineHeight: 1.7,
-          }}
-          codeTagProps={{
-            style: {
-              fontFamily: "var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace",
-            }
-          }}
-        >
-          {code}
-        </SyntaxHighlighter>
-      </div>
-    </div>
-  )
-}
-
 export function CodeSection() {
   const [activeVercelTab, setActiveVercelTab] = useState<VercelTab>("agent")
   const [activeAwsTab, setActiveAwsTab] = useState<AwsTab>("agent")
@@ -237,7 +170,7 @@ export function CodeSection() {
                 </button>
               ))}
             </div>
-            <CodeBlock 
+            <LightCodeBlock 
               code={codeExamples.vercel[activeVercelTab]} 
               language="typescript" 
             />
@@ -268,7 +201,7 @@ export function CodeSection() {
                 </button>
               ))}
             </div>
-            <CodeBlock 
+            <LightCodeBlock 
               code={codeExamples.aws[activeAwsTab]} 
               language={activeAwsTab === 'policy' ? 'hcl' : 'python'} 
             />

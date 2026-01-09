@@ -246,3 +246,64 @@ input[type="range"]:focus {
 section {
   @apply scroll-mt-32;
 }
+
+/* ===========================================
+   MOBILE PERFORMANCE OPTIMIZATIONS
+   Disable expensive effects on mobile devices
+   =========================================== */
+
+@media (max-width: 768px) {
+  /* Disable large blur effects that are extremely GPU-intensive */
+  .blur-\[150px\],
+  .blur-\[120px\],
+  .blur-\[180px\] {
+    filter: none !important;
+    opacity: 0.15;
+  }
+
+  /* Disable backdrop-blur for performance */
+  .backdrop-blur-sm,
+  .backdrop-blur {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* Reduce/disable pulse animations on mobile to save CPU */
+  .animate-pulse {
+    animation: none !important;
+  }
+
+  /* Disable ping animation on mobile */
+  .animate-ping {
+    animation: none !important;
+    opacity: 0;
+  }
+
+  /* Simplify map marker animations */
+  .animate-pulse[class*="rounded-full"] {
+    animation: none !important;
+    opacity: 0.5;
+  }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  .blur-\[150px\],
+  .blur-\[120px\],
+  .blur-\[180px\] {
+    filter: none !important;
+    opacity: 0.1;
+  }
+  
+  .animate-pulse,
+  .animate-ping,
+  .animate-shimmer {
+    animation: none !important;
+  }
+  
+  .backdrop-blur-sm,
+  .backdrop-blur {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
