@@ -17,6 +17,8 @@ export default function Page() {
     <main className="min-h-screen bg-background">
       <DataFreshnessBanner />
       <Navigation />
+      {/* Spacer for fixed nav (h-16 = 64px) + banner (~44px) */}
+      <div className="h-28" aria-hidden="true" />
       <Hero />
       <ForewordSection />
       <InfrastructureSection />

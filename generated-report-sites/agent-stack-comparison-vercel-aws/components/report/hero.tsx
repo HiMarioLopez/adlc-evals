@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowDown, ArrowUpDown, Sparkles } from "lucide-react"
+import { ArrowUpDown, Sparkles } from "lucide-react"
 
 export function Hero() {
   const [mounted, setMounted] = useState(false)
@@ -11,7 +11,7 @@ export function Hero() {
   }, [])
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative md:min-h-[calc(100vh-7rem)] flex items-center justify-center py-8 md:py-12">
       {/* Background layers */}
       <div className="absolute inset-0 grid-pattern opacity-50" />
       
@@ -97,13 +97,6 @@ export function Hero() {
           </span>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="flex flex-col items-center gap-2 mt-16 opacity-0 animate-fade-up delay-600">
-          <span className="text-xs text-muted-foreground">Scroll to explore</span>
-          <div className="w-6 h-10 rounded-full border-2 border-muted-foreground/30 flex justify-center pt-2">
-            <ArrowDown className="w-3 h-3 text-primary animate-bounce" />
-          </div>
-        </div>
       </div>
     </section>
   )

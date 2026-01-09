@@ -26,9 +26,8 @@ export function ForewordSection() {
 
   return (
     <section ref={sectionRef} id="foreword" className="relative py-24 overflow-hidden">
-      {/* Subtle background accent */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-muted/30 to-background" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-24 bg-gradient-to-b from-transparent via-border to-border" />
+      {/* Subtle background accent - blends with hero above */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-muted/20 to-background" />
       
       <div className="relative z-10 max-w-4xl mx-auto px-6">
         {/* Section label */}
