@@ -78,14 +78,16 @@ export function CostCalculator() {
   const awsModelTotal = awsModelInput + awsModelOutput;
   const awsTotal = awsModelTotal + awsInfraTotal;
 
-  // Vercel calculation
+  // Vercel calculation (no Bedrock regional premium - uses Anthropic direct / AI Gateway passthrough pricing)
+  const vercelModelInput = ((turns * 1000) / 1_000_000) * selectedModel.input;
+  const vercelModelOutput = ((turns * 500) / 1_000_000) * selectedModel.output;
+  const vercelModelTotal = vercelModelInput + vercelModelOutput;
   const vercelCPU = turns * (1 / 3600) * 0.128;
   const vercelMemory = turns * (4 / 3600) * 2 * 0.0106;
   const vercelCreations = (turns / 1_000_000) * 0.6;
   const vercelNetwork = 0.15; // Assuming 1GB
   const vercelInfraTotal =
     vercelCPU + vercelMemory + vercelCreations + vercelNetwork;
-  const vercelModelTotal = awsModelTotal; // Same model costs
   const vercelTotal = vercelModelTotal + vercelInfraTotal;
 
   const formatCost = (cost: number) => {
