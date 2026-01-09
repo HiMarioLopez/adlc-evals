@@ -74,6 +74,10 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
   const { resolvedTheme } = useTheme();
   const currentStyleRef = useRef<MapStyleOption | null>(null);
 
+  // Memoize map options to avoid recreating on every render
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Using JSON.stringify for deep comparison
+  const memoizedProps = useMemo(() => props, [JSON.stringify(props)]);
+
   const mapStyles = useMemo(
     () => ({
       dark: styles?.dark ?? defaultStyles.dark,
@@ -100,7 +104,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       attributionControl: {
         compact: true,
       },
-      ...props,
+      ...memoizedProps,
     });
 
     const styleDataHandler = () => setIsStyleLoaded(true);
@@ -118,8 +122,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       setIsStyleLoaded(false);
       setMapInstance(null);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapStyles.dark, mapStyles.light, props, resolvedTheme]);
+  }, [mapStyles.dark, mapStyles.light, memoizedProps, resolvedTheme]);
 
   useEffect(() => {
     if (!(mapInstance && resolvedTheme)) {
@@ -215,9 +218,16 @@ function MapMarker({
 }: MapMarkerProps) {
   const { map } = useMap();
 
+  // Memoize marker options to avoid recreating on every render
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Using JSON.stringify for deep comparison
+  const memoizedMarkerOptions = useMemo(
+    () => markerOptions,
+    [JSON.stringify(markerOptions)]
+  );
+
   const marker = useMemo(() => {
     const markerInstance = new MapLibreGL.Marker({
-      ...markerOptions,
+      ...memoizedMarkerOptions,
       element: document.createElement("div"),
       draggable,
     }).setLngLat([longitude, latitude]);
@@ -252,13 +262,11 @@ function MapMarker({
     markerInstance.on("dragend", handleDragEnd);
 
     return markerInstance;
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     draggable,
     latitude,
     longitude,
-    markerOptions,
+    memoizedMarkerOptions,
     onClick,
     onDrag,
     onDragEnd,
@@ -360,18 +368,24 @@ function MarkerPopup({
   const container = useMemo(() => document.createElement("div"), []);
   const prevPopupOptions = useRef(popupOptions);
 
+  // Memoize popup options to avoid recreating on every render
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Using JSON.stringify for deep comparison
+  const memoizedPopupOptions = useMemo(
+    () => popupOptions,
+    [JSON.stringify(popupOptions)]
+  );
+
   const popup = useMemo(() => {
     const popupInstance = new MapLibreGL.Popup({
       offset: 16,
-      ...popupOptions,
+      ...memoizedPopupOptions,
       closeButton: false,
     })
       .setMaxWidth("none")
       .setDOMContent(container);
 
     return popupInstance;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [container, popupOptions]);
+  }, [container, memoizedPopupOptions]);
 
   useEffect(() => {
     if (!map) {
@@ -442,17 +456,23 @@ function MarkerTooltip({
   const container = useMemo(() => document.createElement("div"), []);
   const prevTooltipOptions = useRef(popupOptions);
 
+  // Memoize popup options to avoid recreating on every render
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Using JSON.stringify for deep comparison
+  const memoizedPopupOptions = useMemo(
+    () => popupOptions,
+    [JSON.stringify(popupOptions)]
+  );
+
   const tooltip = useMemo(() => {
     const tooltipInstance = new MapLibreGL.Popup({
       offset: 16,
-      ...popupOptions,
+      ...memoizedPopupOptions,
       closeOnClick: true,
       closeButton: false,
     }).setMaxWidth("none");
 
     return tooltipInstance;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [popupOptions]);
+  }, [memoizedPopupOptions]);
 
   useEffect(() => {
     if (!map) {
@@ -789,18 +809,24 @@ function MapPopup({
   const popupOptionsRef = useRef(popupOptions);
   const container = useMemo(() => document.createElement("div"), []);
 
+  // Memoize popup options to avoid recreating on every render
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Using JSON.stringify for deep comparison
+  const memoizedPopupOptions = useMemo(
+    () => popupOptions,
+    [JSON.stringify(popupOptions)]
+  );
+
   const popup = useMemo(() => {
     const popupInstance = new MapLibreGL.Popup({
       offset: 16,
-      ...popupOptions,
+      ...memoizedPopupOptions,
       closeButton: false,
     })
       .setMaxWidth("none")
       .setLngLat([longitude, latitude]);
 
     return popupInstance;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [latitude, longitude, popupOptions]);
+  }, [latitude, longitude, memoizedPopupOptions]);
 
   useEffect(() => {
     if (!map) {

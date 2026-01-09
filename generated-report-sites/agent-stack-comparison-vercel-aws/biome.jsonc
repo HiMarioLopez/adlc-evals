@@ -33,9 +33,7 @@
       },
       "correctness": {
         // External images may not need explicit dimensions with CSS sizing
-        "useImageSize": "off",
-        // Map component has complex dependency patterns
-        "useExhaustiveDependencies": "warn"
+        "useImageSize": "off"
       }
     }
   }
