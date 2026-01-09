@@ -1,62 +1,88 @@
-"use client"
+"use client";
 
-import { ExternalLink, FileText, Github } from "lucide-react"
+import { ExternalLink, Github } from "lucide-react";
 
 const vercelLinks = [
   { label: "AI SDK 6 Blog", url: "https://vercel.com/blog/ai-sdk-6" },
   { label: "AI SDK GitHub", url: "https://github.com/vercel/ai" },
   { label: "AI Gateway", url: "https://vercel.com/ai-gateway" },
   { label: "Sandbox Docs", url: "https://vercel.com/docs/vercel-sandbox" },
-  { label: "Workflow Blog", url: "https://vercel.com/blog/introducing-workflow" },
-  { label: "Secure Compute", url: "https://vercel.com/docs/connectivity/secure-compute" },
-]
+  {
+    label: "Workflow Blog",
+    url: "https://vercel.com/blog/introducing-workflow",
+  },
+  {
+    label: "Secure Compute",
+    url: "https://vercel.com/docs/connectivity/secure-compute",
+  },
+];
 
 const awsLinks = [
-  { label: "Bedrock AgentCore Overview", url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html" },
-  { label: "Bedrock AgentCore Pricing", url: "https://aws.amazon.com/bedrock/agentcore/pricing/" },
-  { label: "Bedrock AgentCore Regions", url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html" },
+  {
+    label: "Bedrock AgentCore Overview",
+    url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/what-is-bedrock-agentcore.html",
+  },
+  {
+    label: "Bedrock AgentCore Pricing",
+    url: "https://aws.amazon.com/bedrock/agentcore/pricing/",
+  },
+  {
+    label: "Bedrock AgentCore Regions",
+    url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html",
+  },
   { label: "Strands SDK", url: "https://github.com/strands-agents/sdk-python" },
   { label: "Bedrock Pricing", url: "https://aws.amazon.com/bedrock/pricing/" },
-  { label: "Bedrock AgentCore Policy", url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html" },
-]
+  {
+    label: "Bedrock AgentCore Policy",
+    url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
+  },
+];
 
-const documentationGaps = [
+const _documentationGaps = [
   { item: "Vercel 'AI Units' v2026", status: "Not publicly documented" },
   { item: "Vercel Workflow SDK pricing details", status: "Beta pricing only" },
-  { item: "Bedrock AgentCore GA SLA percentage", status: "No specific uptime % published" },
-]
+  {
+    item: "Bedrock AgentCore GA SLA percentage",
+    status: "No specific uptime % published",
+  },
+];
 
-const contributors = [
-  { name: "Mario Lopez Martinez", github: "HiMarioLopez" },
-]
+const contributors = [{ name: "Mario Lopez Martinez", github: "HiMarioLopez" }];
 
 export function Footer() {
   return (
-    <footer id="sources" className="py-24 px-6 bg-card/50 border-t border-border">
-      <div className="max-w-6xl mx-auto">
+    <footer
+      className="border-border border-t bg-card/50 px-6 py-24"
+      id="sources"
+    >
+      <div className="mx-auto max-w-6xl">
         {/* Links grid */}
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
+        <div className="mb-16 grid gap-12 md:grid-cols-2">
           {/* Vercel */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
-                <svg className="w-5 h-5 text-background" viewBox="0 0 76 65" fill="currentColor">
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground">
+                <svg
+                  className="h-5 w-5 text-background"
+                  fill="currentColor"
+                  viewBox="0 0 76 65"
+                >
                   <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
                 </svg>
               </div>
               <h3 className="font-semibold">Vercel Documentation</h3>
             </div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
               {vercelLinks.map((link) => (
                 <li key={link.label}>
                   <a
+                    className="inline-flex items-center gap-1.5 text-muted-foreground text-sm transition-colors hover:text-primary"
                     href={link.url}
-                    target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+                    target="_blank"
                   >
                     {link.label}
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink className="h-3 w-3" />
                   </a>
                 </li>
               ))}
@@ -65,23 +91,23 @@ export function Footer() {
 
           {/* AWS */}
           <div>
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-aws flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
+            <div className="mb-6 flex items-center gap-3">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-aws">
+                <span className="font-bold text-sm text-white">A</span>
               </div>
               <h3 className="font-semibold">AWS Documentation</h3>
             </div>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+            <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
               {awsLinks.map((link) => (
                 <li key={link.label}>
                   <a
+                    className="inline-flex items-center gap-1.5 text-muted-foreground text-sm transition-colors hover:text-aws"
                     href={link.url}
-                    target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-aws transition-colors"
+                    target="_blank"
                   >
                     {link.label}
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink className="h-3 w-3" />
                   </a>
                 </li>
               ))}
@@ -90,26 +116,28 @@ export function Footer() {
         </div>
 
         {/* Contributors */}
-        <div className="mb-12 pt-8 border-t border-border/50">
-          <div className="flex items-center gap-3 mb-4">
-            <Github className="w-5 h-5 text-muted-foreground" />
-            <h3 className="text-sm font-medium text-muted-foreground">Contributors</h3>
+        <div className="mb-12 border-border/50 border-t pt-8">
+          <div className="mb-4 flex items-center gap-3">
+            <Github className="h-5 w-5 text-muted-foreground" />
+            <h3 className="font-medium text-muted-foreground text-sm">
+              Contributors
+            </h3>
           </div>
           <div className="flex flex-wrap gap-3">
             {contributors.map((contributor) => (
               <a
-                key={contributor.github}
+                className="group flex items-center gap-2 rounded-full bg-muted/50 px-3 py-1.5 transition-colors hover:bg-muted"
                 href={`https://github.com/${contributor.github}`}
-                target="_blank"
+                key={contributor.github}
                 rel="noopener noreferrer"
-                className="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 hover:bg-muted transition-colors"
+                target="_blank"
               >
                 <img
-                  src={`https://github.com/${contributor.github}.png`}
                   alt={contributor.name}
-                  className="w-5 h-5 rounded-full"
+                  className="h-5 w-5 rounded-full"
+                  src={`https://github.com/${contributor.github}.png`}
                 />
-                <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                <span className="text-muted-foreground text-sm transition-colors group-hover:text-foreground">
                   {contributor.name}
                 </span>
               </a>
@@ -118,14 +146,20 @@ export function Footer() {
         </div>
 
         {/* Version info */}
-        <div className="flex flex-col items-center gap-4 sm:gap-6 pt-8 border-t border-border">
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-sm text-muted-foreground">
-            <span>Report Version: <span className="font-mono text-foreground">1.0.0</span></span>
-            <span className="hidden sm:inline text-border">•</span>
-            <span>Generated: <span className="font-mono text-foreground">2026-01-08</span></span>
+        <div className="flex flex-col items-center gap-4 border-border border-t pt-8 sm:gap-6">
+          <div className="flex flex-col items-center gap-2 text-muted-foreground text-sm sm:flex-row sm:gap-4">
+            <span>
+              Report Version:{" "}
+              <span className="font-mono text-foreground">1.0.0</span>
+            </span>
+            <span className="hidden text-border sm:inline">•</span>
+            <span>
+              Generated:{" "}
+              <span className="font-mono text-foreground">2026-01-08</span>
+            </span>
           </div>
-          
-          <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-2 text-xs text-muted-foreground">
+
+          <div className="flex flex-col items-center gap-2 text-muted-foreground text-xs sm:flex-row sm:gap-2">
             <span>Analyzed:</span>
             <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-1">
               <span className="font-mono text-primary">ai@6.0.23</span>
@@ -138,12 +172,13 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="mt-6 sm:mt-8 text-center px-4 sm:px-0">
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            Data sourced from official documentation and public GitHub repositories.
+        <div className="mt-6 px-4 text-center sm:mt-8 sm:px-0">
+          <p className="text-muted-foreground text-xs leading-relaxed">
+            Data sourced from official documentation and public GitHub
+            repositories.
           </p>
         </div>
       </div>
     </footer>
-  )
+  );
 }

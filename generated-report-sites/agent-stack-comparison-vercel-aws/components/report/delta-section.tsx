@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { ArrowRight, ExternalLink, GitBranch } from "lucide-react"
+import { ArrowRight, ExternalLink, GitBranch } from "lucide-react";
 
 const deltas = [
   {
@@ -45,23 +45,24 @@ const deltas = [
     link: "https://github.com/strands-agents/sdk-python",
     color: "chart-2",
   },
-]
+];
 
 export function DeltaSection() {
   return (
-    <section id="delta" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="px-6 py-24" id="delta">
+      <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">
-          <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-primary mb-4">
-            <GitBranch className="w-4 h-4" />
+          <span className="mb-4 inline-flex items-center gap-2 font-mono text-primary text-xs uppercase tracking-widest">
+            <GitBranch className="h-4 w-4" />
             Changelog
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h2 className="mb-4 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
             Recent Platform Updates
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl">
-            Key changes affecting agent development and infrastructure decisions.
+          <p className="max-w-2xl text-lg text-muted-foreground">
+            Key changes affecting agent development and infrastructure
+            decisions.
           </p>
         </div>
 
@@ -69,62 +70,84 @@ export function DeltaSection() {
         <div className="grid gap-6">
           {deltas.map((delta, idx) => (
             <div
+              className={`group relative overflow-hidden rounded-2xl border border-border bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-${delta.color}/30 hover:bg-card/80`}
               key={delta.platform}
-              className={`group relative rounded-2xl border border-border bg-card/50 backdrop-blur-sm overflow-hidden transition-all duration-300 hover:border-${delta.color}/30 hover:bg-card/80`}
               style={{ animationDelay: `${idx * 100}ms` }}
             >
               {/* Accent line */}
-              <div className={`absolute left-0 top-0 bottom-0 w-1 bg-${delta.color}`} />
-              
+              <div
+                className={`absolute top-0 bottom-0 left-0 w-1 bg-${delta.color}`}
+              />
+
               <div className="p-6 sm:p-8">
-                <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
                   {/* Platform info */}
                   <div className="lg:w-1/3">
-                    <div className="flex items-center gap-3 mb-4">
-                      <h3 className="text-xl font-semibold">{delta.platform}</h3>
+                    <div className="mb-4 flex items-center gap-3">
+                      <h3 className="font-semibold text-xl">
+                        {delta.platform}
+                      </h3>
                       <a
+                        className="rounded-lg bg-secondary/50 p-1.5 transition-colors hover:bg-secondary"
                         href={delta.link}
-                        target="_blank"
                         rel="noopener noreferrer"
-                        className="p-1.5 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
+                        target="_blank"
                       >
-                        <ExternalLink className="w-3.5 h-3.5 text-muted-foreground" />
+                        <ExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
                       </a>
                     </div>
-                    
+
                     <div className="flex items-center gap-3 text-sm">
-                      <span className="px-2.5 py-1 rounded-lg bg-muted text-muted-foreground font-mono text-xs">
-                        {delta.previous.split(' ')[0]}
+                      <span className="rounded-lg bg-muted px-2.5 py-1 font-mono text-muted-foreground text-xs">
+                        {delta.previous.split(" ")[0]}
                       </span>
-                      <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                      <span className={`px-2.5 py-1 rounded-lg bg-${delta.color}/10 text-${delta.color} font-mono text-xs font-medium`}>
-                        {delta.current.split(' ')[0]}
+                      <ArrowRight className="h-4 w-4 text-muted-foreground" />
+                      <span
+                        className={`rounded-lg px-2.5 py-1 bg-${delta.color}/10 text-${delta.color} font-medium font-mono text-xs`}
+                      >
+                        {delta.current.split(" ")[0]}
                       </span>
                     </div>
                   </div>
 
                   {/* Version transition */}
-                  <div className="lg:w-1/3 flex flex-col gap-2">
-                    <p className="text-xs uppercase tracking-widest text-muted-foreground">Previous</p>
-                    <p className="text-sm text-muted-foreground">{delta.previous}</p>
-                    <p className="text-xs uppercase tracking-widest text-muted-foreground mt-2">Current</p>
-                    <p className="text-sm text-foreground font-medium">{delta.current}</p>
+                  <div className="flex flex-col gap-2 lg:w-1/3">
+                    <p className="text-muted-foreground text-xs uppercase tracking-widest">
+                      Previous
+                    </p>
+                    <p className="text-muted-foreground text-sm">
+                      {delta.previous}
+                    </p>
+                    <p className="mt-2 text-muted-foreground text-xs uppercase tracking-widest">
+                      Current
+                    </p>
+                    <p className="font-medium text-foreground text-sm">
+                      {delta.current}
+                    </p>
                   </div>
 
                   {/* Changes */}
                   <div className="lg:w-1/3">
-                    <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Key Changes</p>
+                    <p className="mb-3 text-muted-foreground text-xs uppercase tracking-widest">
+                      Key Changes
+                    </p>
                     <ul className="space-y-2">
                       {delta.changes.map((change, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className={`mt-1.5 w-1.5 h-1.5 rounded-full bg-${delta.color} shrink-0`} />
+                        <li
+                          className="flex items-start gap-2 text-muted-foreground text-sm"
+                          key={i}
+                        >
+                          <span
+                            className={`mt-1.5 h-1.5 w-1.5 rounded-full bg-${delta.color} shrink-0`}
+                          />
                           {change}
                         </li>
                       ))}
                     </ul>
-                    <div className="mt-4 pt-4 border-t border-border">
-                      <span className="font-mono text-xs text-muted-foreground">
-                        Latest: <span className="text-foreground">{delta.version}</span>
+                    <div className="mt-4 border-border border-t pt-4">
+                      <span className="font-mono text-muted-foreground text-xs">
+                        Latest:{" "}
+                        <span className="text-foreground">{delta.version}</span>
                       </span>
                     </div>
                   </div>
@@ -135,5 +158,5 @@ export function DeltaSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

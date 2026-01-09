@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["ultracite/biome/core", "ultracite/biome/next"],
+  "linter": {
+    "rules": {
+      "style": {
+        // Nested ternaries are common in JSX for conditional rendering
+        "noNestedTernary": "off"
+      },
+      "suspicious": {
+        // Array index keys are acceptable for static lists
+        "noArrayIndexKey": "off",
+        // Tailwind uses @tailwind, @apply, @layer directives
+        "noUnknownAtRules": "off",
+        // Map component intentionally shadows global Map
+        "noShadowRestrictedNames": "off",
+        // Assignment in while loop is a common pattern
+        "noAssignInExpressions": "off"
+      },
+      "performance": {
+        // Namespace imports are the standard pattern for Radix UI
+        "noNamespaceImport": "off",
+        // External images (like GitHub avatars) can use <img>
+        "noImgElement": "off"
+      },
+      "a11y": {
+        // Decorative SVGs don't always need titles
+        "noSvgWithoutTitle": "off",
+        // These buttons are not in forms, type is optional
+        "useButtonType": "off",
+        // Custom form controls don't always use standard associations
+        "noLabelWithoutControl": "off"
+      },
+      "correctness": {
+        // External images may not need explicit dimensions with CSS sizing
+        "useImageSize": "off",
+        // Map component has complex dependency patterns
+        "useExhaustiveDependencies": "warn"
+      }
+    }
+  }
+}

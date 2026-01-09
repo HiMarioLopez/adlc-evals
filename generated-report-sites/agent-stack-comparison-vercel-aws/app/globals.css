@@ -84,13 +84,16 @@
     @apply border-border;
   }
 
-  html, body {
+  html,
+  body {
     @apply overflow-x-hidden;
   }
 
   body {
     @apply bg-background text-foreground antialiased;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
   }
 
   ::selection {
@@ -120,7 +123,11 @@
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--chart-2)) 100%);
+  background: linear-gradient(
+    135deg,
+    hsl(var(--primary)) 0%,
+    hsl(var(--chart-2)) 100%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -128,7 +135,7 @@
 
 /* Subtle grid background */
 .grid-pattern {
-  background-image: 
+  background-image:
     linear-gradient(to right, hsl(var(--border) / 0.4) 1px, transparent 1px),
     linear-gradient(to bottom, hsl(var(--border) / 0.4) 1px, transparent 1px);
   background-size: 48px 48px;
@@ -144,17 +151,33 @@
 }
 
 /* Animation delays for staggered reveals */
-.delay-100 { animation-delay: 100ms; }
-.delay-200 { animation-delay: 200ms; }
-.delay-300 { animation-delay: 300ms; }
-.delay-400 { animation-delay: 400ms; }
-.delay-500 { animation-delay: 500ms; }
-.delay-600 { animation-delay: 600ms; }
+.delay-100 {
+  animation-delay: 100ms;
+}
+.delay-200 {
+  animation-delay: 200ms;
+}
+.delay-300 {
+  animation-delay: 300ms;
+}
+.delay-400 {
+  animation-delay: 400ms;
+}
+.delay-500 {
+  animation-delay: 500ms;
+}
+.delay-600 {
+  animation-delay: 600ms;
+}
 
 /* Shimmer animation for banner */
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .animate-shimmer {
@@ -200,7 +223,9 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: -8px;
   cursor: pointer;
   box-shadow: 0 2px 10px hsl(var(--primary) / 0.5);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 input[type="range"]::-webkit-slider-thumb:hover {
@@ -294,13 +319,13 @@ section {
     filter: none !important;
     opacity: 0.1;
   }
-  
+
   .animate-pulse,
   .animate-ping,
   .animate-shimmer {
     animation: none !important;
   }
-  
+
   .backdrop-blur-sm,
   .backdrop-blur {
     backdrop-filter: none !important;

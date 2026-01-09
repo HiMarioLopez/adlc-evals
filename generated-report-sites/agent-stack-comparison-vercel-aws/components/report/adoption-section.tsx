@@ -1,6 +1,12 @@
-"use client"
+"use client";
 
-import { BarChart3, GitFork, CircleDot, Clock, ExternalLink } from "lucide-react"
+import {
+  BarChart3,
+  CircleDot,
+  Clock,
+  ExternalLink,
+  GitFork,
+} from "lucide-react";
 
 const repositories = [
   {
@@ -51,7 +57,7 @@ const repositories = [
     link: "https://github.com/aws/bedrock-agentcore-sdk-python",
     color: "aws",
   },
-]
+];
 
 const activitySignals = [
   {
@@ -72,117 +78,144 @@ const activitySignals = [
       "TypeScript SDK preview Dec 2025",
     ],
   },
-]
+];
 
 export function AdoptionSection() {
   return (
-    <section id="adoption" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="px-6 py-24" id="adoption">
+      <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">
-          <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-primary mb-4">
-            <BarChart3 className="w-4 h-4" />
+          <span className="mb-4 inline-flex items-center gap-2 font-mono text-primary text-xs uppercase tracking-widest">
+            <BarChart3 className="h-4 w-4" />
             Section 6
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h2 className="mb-4 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
             Adoption Metrics
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl">
+          <p className="max-w-2xl text-lg text-muted-foreground">
             GitHub repository statistics and development velocity indicators
           </p>
         </div>
 
         {/* Repository cards */}
-        <div className="grid gap-6 mb-12">
+        <div className="mb-12 grid gap-6">
           {repositories.map((repo) => (
             <div
+              className={`overflow-hidden rounded-2xl border border-border bg-card hover:border-${repo.color}/30 transition-colors`}
               key={repo.name}
-              className={`rounded-2xl border border-border bg-card overflow-hidden hover:border-${repo.color}/30 transition-colors`}
             >
               <div className="p-6 sm:p-8">
-                <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+                <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
                   {/* Repo info */}
                   <div className="lg:w-1/3">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className={`w-10 h-10 rounded-xl bg-${repo.color}/10 flex items-center justify-center`}>
-                        <GitFork className={`w-5 h-5 text-${repo.color}`} />
+                    <div className="mb-3 flex items-center gap-3">
+                      <div
+                        className={`h-10 w-10 rounded-xl bg-${repo.color}/10 flex items-center justify-center`}
+                      >
+                        <GitFork className={`h-5 w-5 text-${repo.color}`} />
                       </div>
                       <div>
                         <h3 className="font-semibold">{repo.name}</h3>
-                        <p className="text-xs text-muted-foreground">{repo.description}</p>
+                        <p className="text-muted-foreground text-xs">
+                          {repo.description}
+                        </p>
                       </div>
                     </div>
                     <a
-                      href={repo.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className={`inline-flex items-center gap-1.5 text-sm text-${repo.color} hover:underline`}
+                      href={repo.link}
+                      rel="noopener noreferrer"
+                      target="_blank"
                     >
                       View repository
-                      <ExternalLink className="w-3 h-3" />
+                      <ExternalLink className="h-3 w-3" />
                     </a>
                   </div>
 
                   {/* Stats */}
-                  <div className="lg:w-1/3 grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4 lg:w-1/3">
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Latest Tag</p>
+                      <p className="mb-1 text-muted-foreground text-xs uppercase tracking-widest">
+                        Latest Tag
+                      </p>
                       <p className="font-mono text-sm">{repo.latestTag}</p>
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Language</p>
+                      <p className="mb-1 text-muted-foreground text-xs uppercase tracking-widest">
+                        Language
+                      </p>
                       <p className="text-sm">{repo.language}</p>
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Forks</p>
+                      <p className="mb-1 text-muted-foreground text-xs uppercase tracking-widest">
+                        Forks
+                      </p>
                       <p className="font-mono text-sm">{repo.forks}</p>
                     </div>
                     <div>
-                      <p className="text-xs uppercase tracking-widest text-muted-foreground mb-1">Open Issues</p>
+                      <p className="mb-1 text-muted-foreground text-xs uppercase tracking-widest">
+                        Open Issues
+                      </p>
                       <p className="font-mono text-sm">{repo.openIssues}</p>
                     </div>
                   </div>
 
                   {/* Issue velocity */}
                   <div className="lg:w-1/3">
-                    <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+                    <p className="mb-3 text-muted-foreground text-xs uppercase tracking-widest">
                       60-Day Issue Activity
                     </p>
-                    <div className="flex items-center gap-4 mb-3">
+                    <div className="mb-3 flex items-center gap-4">
                       <div className="flex items-center gap-2">
-                        <CircleDot className="w-4 h-4 text-chart-3" />
-                        <span className="text-sm">{repo.recentOpen} opened</span>
+                        <CircleDot className="h-4 w-4 text-chart-3" />
+                        <span className="text-sm">
+                          {repo.recentOpen} opened
+                        </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <CircleDot className="w-4 h-4 text-primary" />
-                        <span className="text-sm">{repo.recentClosed} closed</span>
+                        <CircleDot className="h-4 w-4 text-primary" />
+                        <span className="text-sm">
+                          {repo.recentClosed} closed
+                        </span>
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-muted-foreground">Ratio:</span>
-                      <span className={`text-sm font-mono ${
-                        parseFloat(repo.ratio) <= 1 ? 'text-primary' :
-                        parseFloat(repo.ratio) <= 2 ? 'text-chart-3' :
-                        'text-aws'
-                      }`}>
+                      <span className="text-muted-foreground text-xs">
+                        Ratio:
+                      </span>
+                      <span
+                        className={`font-mono text-sm ${
+                          Number.parseFloat(repo.ratio) <= 1
+                            ? "text-primary"
+                            : Number.parseFloat(repo.ratio) <= 2
+                              ? "text-chart-3"
+                              : "text-aws"
+                        }`}
+                      >
                         {repo.ratio}
                       </span>
-                      <span className="text-xs text-muted-foreground">({repo.ratioLabel})</span>
+                      <span className="text-muted-foreground text-xs">
+                        ({repo.ratioLabel})
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Footer */}
-              <div className="px-6 sm:px-8 py-4 bg-muted/30 border-t border-border flex items-center gap-4 text-xs text-muted-foreground">
-                <Clock className="w-3.5 h-3.5" />
-                <span>Last commit: {new Date(repo.latestCommit).toLocaleDateString('en-US', { 
-                  month: 'short', 
-                  day: 'numeric', 
-                  year: 'numeric',
-                  hour: '2-digit',
-                  minute: '2-digit'
-                })}</span>
+              <div className="flex items-center gap-4 border-border border-t bg-muted/30 px-6 py-4 text-muted-foreground text-xs sm:px-8">
+                <Clock className="h-3.5 w-3.5" />
+                <span>
+                  Last commit:{" "}
+                  {new Date(repo.latestCommit).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
                 <span className="text-border">•</span>
                 <span>{repo.ecosystem}</span>
               </div>
@@ -191,17 +224,23 @@ export function AdoptionSection() {
         </div>
 
         {/* Activity signals */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           {activitySignals.map((platform) => (
-            <div key={platform.platform} className="p-6 rounded-2xl bg-card border border-border">
-              <h4 className="font-semibold mb-4">{platform.platform}</h4>
-              <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">
+            <div
+              className="rounded-2xl border border-border bg-card p-6"
+              key={platform.platform}
+            >
+              <h4 className="mb-4 font-semibold">{platform.platform}</h4>
+              <p className="mb-3 text-muted-foreground text-xs uppercase tracking-widest">
                 Active Development Signals
               </p>
               <ul className="space-y-2">
                 {platform.signals.map((signal, i) => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                  <li
+                    className="flex items-center gap-2 text-muted-foreground text-sm"
+                    key={i}
+                  >
+                    <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-primary" />
                     {signal}
                   </li>
                 ))}
@@ -211,13 +250,13 @@ export function AdoptionSection() {
         </div>
 
         {/* Data note */}
-        <div className="mt-8 p-4 rounded-xl bg-muted/50 border border-border">
-          <p className="text-xs text-muted-foreground text-center">
-            Issue counts based on GitHub API data filtered by created_at ≥ 2025-11-09. 
-            Ratio = Open/Closed issues created in period.
+        <div className="mt-8 rounded-xl border border-border bg-muted/50 p-4">
+          <p className="text-center text-muted-foreground text-xs">
+            Issue counts based on GitHub API data filtered by created_at ≥
+            2025-11-09. Ratio = Open/Closed issues created in period.
           </p>
         </div>
       </div>
     </section>
-  )
+  );
 }

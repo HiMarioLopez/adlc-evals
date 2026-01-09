@@ -1,103 +1,126 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { ArrowUpDown, Sparkles } from "lucide-react"
+import { ArrowUpDown, Sparkles } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function Hero() {
-  const [mounted, setMounted] = useState(false)
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   return (
-    <section className="relative md:min-h-[calc(100vh-7rem)] flex items-center justify-center py-8 md:py-12">
+    <section className="relative flex items-center justify-center py-8 md:min-h-[calc(100vh-7rem)] md:py-12">
       {/* Background layers */}
-      <div className="absolute inset-0 grid-pattern opacity-50" />
-      
+      <div className="grid-pattern absolute inset-0 opacity-50" />
+
       {/* Gradient orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[150px] animate-pulse" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-aws/15 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-chart-2/10 rounded-full blur-[180px]" />
-      
+      <div className="absolute top-1/4 left-1/4 h-[500px] w-[500px] animate-pulse rounded-full bg-primary/20 blur-[150px]" />
+      <div
+        className="absolute right-1/4 bottom-1/4 h-[400px] w-[400px] animate-pulse rounded-full bg-aws/15 blur-[120px]"
+        style={{ animationDelay: "1s" }}
+      />
+      <div className="absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-chart-2/10 blur-[180px]" />
+
       {/* Content */}
-      <div className={`relative z-10 max-w-5xl mx-auto px-6 text-center transition-all duration-1000 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+      <div
+        className={`relative z-10 mx-auto max-w-5xl px-6 text-center transition-all duration-1000 ${mounted ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"}`}
+      >
         {/* Status badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card/60 backdrop-blur-sm mb-8 opacity-0 animate-fade-up">
+        <div className="mb-8 inline-flex animate-fade-up items-center gap-2 rounded-full border border-border bg-card/60 px-4 py-2 opacity-0 backdrop-blur-sm">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
           </span>
-          <span className="text-sm font-mono text-muted-foreground">
+          <span className="font-mono text-muted-foreground text-sm">
             Last Updated: January 8, 2026
           </span>
-          <Sparkles className="w-3.5 h-3.5 text-primary" />
+          <Sparkles className="h-3.5 w-3.5 text-primary" />
         </div>
 
         {/* Main heading */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 opacity-0 animate-fade-up delay-100">
+        <h1 className="mb-6 animate-fade-up font-bold text-5xl tracking-tight opacity-0 delay-100 sm:text-6xl md:text-7xl lg:text-8xl">
           <span className="text-vercel">Vercel</span>
-          <span className="text-muted-foreground/50 mx-3 sm:mx-4 font-light">vs</span>
+          <span className="mx-3 font-light text-muted-foreground/50 sm:mx-4">
+            vs
+          </span>
           <span className="text-aws">AWS</span>
         </h1>
-        
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-light text-muted-foreground mb-6 opacity-0 animate-fade-up delay-200">
+
+        <h2 className="mb-6 animate-fade-up font-light text-muted-foreground text-xl opacity-0 delay-200 sm:text-2xl md:text-3xl">
           Agent Stack Technical Evaluation
         </h2>
 
         {/* Subtitle */}
-        <p className="text-muted-foreground max-w-2xl mx-auto mb-10 text-balance leading-relaxed opacity-0 animate-fade-up delay-300">
+        <p className="mx-auto mb-10 max-w-2xl animate-fade-up text-balance text-muted-foreground leading-relaxed opacity-0 delay-300">
           A comprehensive comparison of{" "}
-          <span className="text-foreground font-medium">Vercel + AI SDK</span>{" "}
+          <span className="font-medium text-foreground">Vercel + AI SDK</span>{" "}
           versus{" "}
-          <span className="text-foreground font-medium">AWS Bedrock AgentCore + Strands SDK</span>{" "}
+          <span className="font-medium text-foreground">
+            AWS Bedrock AgentCore + Strands SDK
+          </span>{" "}
           for building production-ready AI agents.
         </p>
 
         {/* Stack badges - stacked vertically */}
-        <div className="flex flex-col items-center gap-3 mb-16 opacity-0 animate-fade-up delay-400">
+        <div className="mb-16 flex animate-fade-up flex-col items-center gap-3 opacity-0 delay-400">
           {/* Vercel card */}
-          <div className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-card/80 border border-border backdrop-blur-sm hover:border-foreground/20 transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-foreground flex items-center justify-center shrink-0">
-              <svg className="w-7 h-7 text-background" viewBox="0 0 76 65" fill="currentColor">
+          <div className="flex items-center gap-4 rounded-2xl border border-border bg-card/80 px-6 py-4 backdrop-blur-sm transition-colors hover:border-foreground/20">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-foreground">
+              <svg
+                className="h-7 w-7 text-background"
+                fill="currentColor"
+                viewBox="0 0 76 65"
+              >
                 <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
               </svg>
             </div>
             <div className="text-left">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Infra + Framework</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+                Infra + Framework
+              </p>
               <p className="font-semibold">Vercel + AI SDK</p>
             </div>
           </div>
 
           {/* Arrows */}
-          <div className="flex items-center gap-2 text-muted-foreground/40 py-1">
-            <ArrowUpDown className="w-5 h-5" />
+          <div className="flex items-center gap-2 py-1 text-muted-foreground/40">
+            <ArrowUpDown className="h-5 w-5" />
           </div>
 
           {/* AWS card */}
-          <div className="flex items-center gap-4 px-6 py-4 rounded-2xl bg-card/80 border border-border backdrop-blur-sm hover:border-aws/30 transition-colors">
-            <div className="w-12 h-12 rounded-xl bg-aws flex items-center justify-center shrink-0">
-              <span className="text-white font-bold text-xl">A</span>
+          <div className="flex items-center gap-4 rounded-2xl border border-border bg-card/80 px-6 py-4 backdrop-blur-sm transition-colors hover:border-aws/30">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-aws">
+              <span className="font-bold text-white text-xl">A</span>
             </div>
             <div className="text-left">
-              <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Infra + Framework</p>
-              <p className="font-semibold">AWS Bedrock AgentCore + Strands SDK</p>
+              <p className="text-[10px] text-muted-foreground uppercase tracking-widest">
+                Infra + Framework
+              </p>
+              <p className="font-semibold">
+                AWS Bedrock AgentCore + Strands SDK
+              </p>
             </div>
           </div>
         </div>
 
         {/* Key insights - combined */}
-        <div className="inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 px-5 py-3 rounded-xl bg-primary/5 border border-primary/20 opacity-0 animate-fade-up delay-500">
-          <span className="text-xs uppercase tracking-wider text-primary font-semibold">Key Findings</span>
-          <span className="hidden sm:block w-px h-4 bg-primary/30" />
-          <span className="text-sm text-muted-foreground text-center sm:text-left">
-            Infra ≈ <span className="text-primary font-mono font-bold">3%</span> of TCO
+        <div className="inline-flex animate-fade-up flex-col items-center gap-2 rounded-xl border border-primary/20 bg-primary/5 px-5 py-3 opacity-0 delay-500 sm:flex-row sm:gap-3">
+          <span className="font-semibold text-primary text-xs uppercase tracking-wider">
+            Key Findings
+          </span>
+          <span className="hidden h-4 w-px bg-primary/30 sm:block" />
+          <span className="text-center text-muted-foreground text-sm sm:text-left">
+            Infra ≈ <span className="font-bold font-mono text-primary">3%</span>{" "}
+            of TCO
             <span className="mx-2 text-primary/40">•</span>
-            Time-to-first-agent: <span className="text-primary font-mono font-bold">3 min</span> vs <span className="text-aws font-mono font-bold">60+ min</span>
+            Time-to-first-agent:{" "}
+            <span className="font-bold font-mono text-primary">3 min</span> vs{" "}
+            <span className="font-bold font-mono text-aws">60+ min</span>
           </span>
         </div>
-
       </div>
     </section>
-  )
+  );
 }

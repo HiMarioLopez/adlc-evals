@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Code2 } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { LightCodeBlock } from "@/components/ui/code-block"
+import { Code2 } from "lucide-react";
+import { useState } from "react";
+import { LightCodeBlock } from "@/components/ui/code-block";
+import { cn } from "@/lib/utils";
 
 const codeExamples = {
   vercel: {
@@ -101,157 +101,174 @@ list_events(session_id)
 # Built-in Override: $0.25/1K records/month
 # Self-Managed: $0.25/1K + inference`,
   },
-}
+};
 
-type VercelTab = keyof typeof codeExamples.vercel
-type AwsTab = keyof typeof codeExamples.aws
+type VercelTab = keyof typeof codeExamples.vercel;
+type AwsTab = keyof typeof codeExamples.aws;
 
 const vercelTabs: { key: VercelTab; label: string }[] = [
   { key: "agent", label: "ToolLoopAgent" },
   { key: "sandbox", label: "Sandbox" },
   { key: "workflow", label: "Workflow" },
   { key: "bashTool", label: "bash-tool" },
-]
+];
 
 const awsTabs: { key: AwsTab; label: string }[] = [
   { key: "agent", label: "Strands Agent" },
   { key: "infrastructure", label: "Bedrock AgentCoreApp" },
   { key: "policy", label: "Cedar Policy" },
   { key: "memory", label: "Memory" },
-]
+];
 
 export function CodeSection() {
-  const [activeVercelTab, setActiveVercelTab] = useState<VercelTab>("agent")
-  const [activeAwsTab, setActiveAwsTab] = useState<AwsTab>("agent")
+  const [activeVercelTab, setActiveVercelTab] = useState<VercelTab>("agent");
+  const [activeAwsTab, setActiveAwsTab] = useState<AwsTab>("agent");
 
   return (
-    <section id="code" className="py-24 px-6">
-      <div className="max-w-6xl mx-auto">
+    <section className="px-6 py-24" id="code">
+      <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">
-          <span className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-primary mb-4">
-            <Code2 className="w-4 h-4" />
+          <span className="mb-4 inline-flex items-center gap-2 font-mono text-primary text-xs uppercase tracking-widest">
+            <Code2 className="h-4 w-4" />
             Section 3
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+          <h2 className="mb-4 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
             Code Examples
           </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl">
+          <p className="max-w-2xl text-lg text-muted-foreground">
             Side-by-side comparison of agent implementation patterns
           </p>
         </div>
 
         {/* Code panels */}
-        <div className="grid lg:grid-cols-2 gap-6 mb-12">
+        <div className="mb-12 grid gap-6 lg:grid-cols-2">
           {/* Vercel */}
-          <div className="rounded-2xl bg-card border border-border overflow-hidden">
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-border bg-muted/30">
-              <div className="w-8 h-8 rounded-lg bg-foreground flex items-center justify-center">
-                <svg className="w-5 h-5 text-background" viewBox="0 0 76 65" fill="currentColor">
+          <div className="overflow-hidden rounded-2xl border border-border bg-card">
+            <div className="flex items-center gap-3 border-border border-b bg-muted/30 px-5 py-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-foreground">
+                <svg
+                  className="h-5 w-5 text-background"
+                  fill="currentColor"
+                  viewBox="0 0 76 65"
+                >
                   <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
                 </svg>
               </div>
               <span className="font-semibold">Vercel Stack</span>
-              <span className="ml-auto text-xs font-mono text-muted-foreground">TypeScript</span>
+              <span className="ml-auto font-mono text-muted-foreground text-xs">
+                TypeScript
+              </span>
             </div>
-            <div className="flex border-b border-border overflow-x-auto">
+            <div className="flex overflow-x-auto border-border border-b">
               {vercelTabs.map((tab) => (
                 <button
-                  key={tab.key}
-                  onClick={() => setActiveVercelTab(tab.key)}
                   className={cn(
-                    "px-4 py-2.5 text-sm whitespace-nowrap transition-all border-b-2",
+                    "whitespace-nowrap border-b-2 px-4 py-2.5 text-sm transition-all",
                     activeVercelTab === tab.key
-                      ? "border-primary text-primary bg-primary/5"
+                      ? "border-primary bg-primary/5 text-primary"
                       : "border-transparent text-muted-foreground hover:text-foreground"
                   )}
+                  key={tab.key}
+                  onClick={() => setActiveVercelTab(tab.key)}
                 >
                   {tab.label}
                 </button>
               ))}
             </div>
-            <LightCodeBlock 
-              code={codeExamples.vercel[activeVercelTab]} 
-              language="typescript" 
+            <LightCodeBlock
+              code={codeExamples.vercel[activeVercelTab]}
+              language="typescript"
             />
           </div>
 
           {/* AWS */}
-          <div className="rounded-2xl bg-card border border-border overflow-hidden">
-            <div className="flex items-center gap-3 px-5 py-4 border-b border-border bg-aws/5">
-              <div className="w-8 h-8 rounded-lg bg-aws flex items-center justify-center">
-                <span className="text-white font-bold text-sm">A</span>
+          <div className="overflow-hidden rounded-2xl border border-border bg-card">
+            <div className="flex items-center gap-3 border-border border-b bg-aws/5 px-5 py-4">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-aws">
+                <span className="font-bold text-sm text-white">A</span>
               </div>
               <span className="font-semibold">AWS Stack</span>
-              <span className="ml-auto text-xs font-mono text-muted-foreground">Python / Cedar</span>
+              <span className="ml-auto font-mono text-muted-foreground text-xs">
+                Python / Cedar
+              </span>
             </div>
-            <div className="flex border-b border-border overflow-x-auto">
+            <div className="flex overflow-x-auto border-border border-b">
               {awsTabs.map((tab) => (
                 <button
-                  key={tab.key}
-                  onClick={() => setActiveAwsTab(tab.key)}
                   className={cn(
-                    "px-4 py-2.5 text-sm whitespace-nowrap transition-all border-b-2",
+                    "whitespace-nowrap border-b-2 px-4 py-2.5 text-sm transition-all",
                     activeAwsTab === tab.key
-                      ? "border-aws text-aws bg-aws/5"
+                      ? "border-aws bg-aws/5 text-aws"
                       : "border-transparent text-muted-foreground hover:text-foreground"
                   )}
+                  key={tab.key}
+                  onClick={() => setActiveAwsTab(tab.key)}
                 >
                   {tab.label}
                 </button>
               ))}
             </div>
-            <LightCodeBlock 
-              code={codeExamples.aws[activeAwsTab]} 
-              language={activeAwsTab === 'policy' ? 'hcl' : 'python'} 
+            <LightCodeBlock
+              code={codeExamples.aws[activeAwsTab]}
+              language={activeAwsTab === "policy" ? "hcl" : "python"}
             />
           </div>
         </div>
 
         {/* Pattern comparison */}
-        <div className="grid md:grid-cols-3 gap-4 mb-12">
-          <div className="p-6 rounded-2xl bg-card border border-border">
-            <h4 className="font-semibold mb-3">Agent Abstraction</h4>
-            <div className="space-y-2 text-sm text-muted-foreground">
+        <div className="mb-12 grid gap-4 md:grid-cols-3">
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <h4 className="mb-3 font-semibold">Agent Abstraction</h4>
+            <div className="space-y-2 text-muted-foreground text-sm">
               <p>
                 <span className="text-foreground">Vercel:</span>{" "}
-                <code className="text-xs bg-muted px-1.5 py-0.5 rounded">ToolLoopAgent</code> class
+                <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+                  ToolLoopAgent
+                </code>{" "}
+                class
               </p>
               <p>
                 <span className="text-foreground">AWS:</span>{" "}
-                <code className="text-xs bg-muted px-1.5 py-0.5 rounded">Agent</code> from Strands
+                <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+                  Agent
+                </code>{" "}
+                from Strands
               </p>
             </div>
           </div>
-          <div className="p-6 rounded-2xl bg-card border border-border">
-            <h4 className="font-semibold mb-3">Loop Control</h4>
-            <div className="space-y-2 text-sm text-muted-foreground">
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <h4 className="mb-3 font-semibold">Loop Control</h4>
+            <div className="space-y-2 text-muted-foreground text-sm">
               <p>
                 <span className="text-foreground">Vercel:</span>{" "}
-                <code className="text-xs bg-muted px-1.5 py-0.5 rounded">stopWhen: stepCountIs(N)</code>
+                <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+                  stopWhen: stepCountIs(N)
+                </code>
               </p>
               <p>
-                <span className="text-foreground">AWS:</span>{" "}
-                Policy-driven via Cedar
+                <span className="text-foreground">AWS:</span> Policy-driven via
+                Cedar
               </p>
             </div>
           </div>
-          <div className="p-6 rounded-2xl bg-card border border-border">
-            <h4 className="font-semibold mb-3">Infrastructure Wrapper</h4>
-            <div className="space-y-2 text-sm text-muted-foreground">
+          <div className="rounded-2xl border border-border bg-card p-6">
+            <h4 className="mb-3 font-semibold">Infrastructure Wrapper</h4>
+            <div className="space-y-2 text-muted-foreground text-sm">
               <p>
-                <span className="text-foreground">Vercel:</span>{" "}
-                Platform handles deployment
+                <span className="text-foreground">Vercel:</span> Platform
+                handles deployment
               </p>
               <p>
                 <span className="text-foreground">AWS:</span>{" "}
-                <code className="text-xs bg-muted px-1.5 py-0.5 rounded">@app.entrypoint</code>
+                <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
+                  @app.entrypoint
+                </code>
               </p>
             </div>
           </div>
         </div>
-
       </div>
     </section>
-  )
+  );
 }

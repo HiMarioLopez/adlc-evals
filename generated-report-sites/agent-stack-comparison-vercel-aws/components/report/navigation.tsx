@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Menu, X, Sun, Moon, ExternalLink } from "lucide-react"
-import { useTheme } from "next-themes"
-import { cn } from "@/lib/utils"
+import { ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 
 const sections = [
   { id: "foreword", label: "Foreword" },
@@ -15,94 +15,104 @@ const sections = [
   { id: "regions", label: "Regions" },
   { id: "adoption", label: "Adoption" },
   { id: "delta", label: "Updates" },
-]
+];
 
 export function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("")
-  const [mobileOpen, setMobileOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-  const { resolvedTheme, setTheme } = useTheme()
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme, setTheme } = useTheme();
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-      
+      setIsScrolled(window.scrollY > 50);
+
       // Find active section
-      const sectionElements = sections.map(s => ({
-        id: s.id,
-        el: document.getElementById(s.id)
-      })).filter(s => s.el)
-      
+      const sectionElements = sections
+        .map((s) => ({
+          id: s.id,
+          el: document.getElementById(s.id),
+        }))
+        .filter((s) => s.el);
+
       for (const section of [...sectionElements].reverse()) {
         if (section.el) {
-          const rect = section.el.getBoundingClientRect()
+          const rect = section.el.getBoundingClientRect();
           if (rect.top <= 150) {
-            setActiveSection(section.id)
-            break
+            setActiveSection(section.id);
+            break;
           }
         }
       }
-    }
+    };
 
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id)
+    const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" })
-      setMobileOpen(false)
+      el.scrollIntoView({ behavior: "smooth" });
+      setMobileOpen(false);
     }
-  }
+  };
 
   return (
     <>
       <nav
         className={cn(
-          "fixed top-0 inset-x-0 w-full z-50 transition-all duration-300",
+          "fixed inset-x-0 top-0 z-50 w-full transition-all duration-300",
           isScrolled
-            ? "bg-background/85 backdrop-blur-xl border-b border-border shadow-sm"
+            ? "border-border border-b bg-background/85 shadow-sm backdrop-blur-xl"
             : "bg-transparent"
         )}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="relative">
-              <div className="absolute inset-0 bg-primary/20 rounded-lg blur-md" />
-              <div className="relative flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-card border border-border">
-                <svg className="w-4 h-4 text-foreground" viewBox="0 0 76 65" fill="currentColor">
+              <div className="absolute inset-0 rounded-lg bg-primary/20 blur-md" />
+              <div className="relative flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5">
+                <svg
+                  className="h-4 w-4 text-foreground"
+                  fill="currentColor"
+                  viewBox="0 0 76 65"
+                >
                   <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
                 </svg>
-                <span className="text-muted-foreground text-sm font-medium">vs</span>
-                <span className="text-aws font-bold text-sm">A</span>
+                <span className="font-medium text-muted-foreground text-sm">
+                  vs
+                </span>
+                <span className="font-bold text-aws text-sm">A</span>
               </div>
             </div>
             <div className="hidden sm:block">
               <span className="font-semibold text-sm">Agent Stack Report</span>
-              <span className="text-muted-foreground text-xs ml-2 font-mono">2026</span>
+              <span className="ml-2 font-mono text-muted-foreground text-xs">
+                2026
+              </span>
             </div>
           </div>
 
           {/* Desktop nav */}
-          <div className="hidden xl:flex items-center gap-0.5">
+          <div className="hidden items-center gap-0.5 xl:flex">
             {sections.map((section) => (
               <button
+                className={cn(
+                  "rounded-lg px-3 py-1.5 text-sm transition-all duration-200",
+                  activeSection === section.id
+                    ? "bg-primary/10 font-medium text-primary"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                )}
                 key={section.id}
                 onClick={() => scrollTo(section.id)}
-                className={cn(
-                  "px-3 py-1.5 text-sm rounded-lg transition-all duration-200",
-                  activeSection === section.id
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                )}
               >
                 {section.label}
               </button>
@@ -112,31 +122,38 @@ export function Navigation() {
           {/* Actions */}
           <div className="flex items-center gap-2">
             <button
+              className="hidden items-center gap-1.5 rounded-lg px-3 py-1.5 font-medium text-muted-foreground text-xs transition-colors hover:bg-muted/50 hover:text-foreground sm:flex"
               onClick={() => scrollTo("sources")}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-muted/50"
             >
               View Sources
-              <ExternalLink className="w-3 h-3" />
-            </button>
-            
-            <button
-              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-lg bg-secondary/50 hover:bg-secondary transition-colors"
-              aria-label="Toggle theme"
-            >
-              {mounted && (
-                resolvedTheme === "dark" 
-                  ? <Sun className="w-4 h-4" />
-                  : <Moon className="w-4 h-4" />
-              )}
+              <ExternalLink className="h-3 w-3" />
             </button>
 
             <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="xl:hidden p-2 rounded-lg hover:bg-muted/50 transition-colors"
-              aria-label="Toggle menu"
+              aria-label="Toggle theme"
+              className="rounded-lg bg-secondary/50 p-2 transition-colors hover:bg-secondary"
+              onClick={() =>
+                setTheme(resolvedTheme === "dark" ? "light" : "dark")
+              }
             >
-              {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              {mounted &&
+                (resolvedTheme === "dark" ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                ))}
+            </button>
+
+            <button
+              aria-label="Toggle menu"
+              className="rounded-lg p-2 transition-colors hover:bg-muted/50 xl:hidden"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
             </button>
           </div>
         </div>
@@ -144,18 +161,18 @@ export function Navigation() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[55] bg-background/98 backdrop-blur-xl xl:hidden pt-20">
-          <div className="flex flex-col p-6 gap-1">
+        <div className="fixed inset-0 z-[55] bg-background/98 pt-20 backdrop-blur-xl xl:hidden">
+          <div className="flex flex-col gap-1 p-6">
             {sections.map((section, idx) => (
               <button
+                className={cn(
+                  "w-full animate-fade-up rounded-xl px-4 py-3 text-left text-lg opacity-0 transition-all duration-200",
+                  activeSection === section.id
+                    ? "bg-primary/10 font-medium text-primary"
+                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                )}
                 key={section.id}
                 onClick={() => scrollTo(section.id)}
-                className={cn(
-                  "w-full px-4 py-3 text-left text-lg rounded-xl transition-all duration-200 opacity-0 animate-fade-up",
-                  activeSection === section.id
-                    ? "bg-primary/10 text-primary font-medium"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                )}
                 style={{ animationDelay: `${idx * 50}ms` }}
               >
                 {section.label}
@@ -165,5 +182,5 @@ export function Navigation() {
         </div>
       )}
     </>
-  )
+  );
 }

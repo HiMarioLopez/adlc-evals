@@ -1,55 +1,61 @@
-import dynamic from "next/dynamic"
-import { DataFreshnessBanner } from "@/components/report/data-freshness-banner"
-import { Navigation } from "@/components/report/navigation"
-import { Hero } from "@/components/report/hero"
-import { ForewordSection } from "@/components/report/foreword-section"
-import { InfrastructureSection } from "@/components/report/infrastructure-section"
-import { PricingSection } from "@/components/report/pricing-section"
-import { CostCalculator } from "@/components/report/cost-calculator"
-import { DeploymentSection } from "@/components/report/deployment-section"
-import { AdoptionSection } from "@/components/report/adoption-section"
-import { DeltaSection } from "@/components/report/delta-section"
-import { Footer } from "@/components/report/footer"
+import dynamic from "next/dynamic";
+import { AdoptionSection } from "@/components/report/adoption-section";
+import { CostCalculator } from "@/components/report/cost-calculator";
+import { DataFreshnessBanner } from "@/components/report/data-freshness-banner";
+import { DeltaSection } from "@/components/report/delta-section";
+import { DeploymentSection } from "@/components/report/deployment-section";
+import { Footer } from "@/components/report/footer";
+import { ForewordSection } from "@/components/report/foreword-section";
+import { Hero } from "@/components/report/hero";
+import { InfrastructureSection } from "@/components/report/infrastructure-section";
+import { Navigation } from "@/components/report/navigation";
+import { PricingSection } from "@/components/report/pricing-section";
 
 // Loading skeleton for heavy sections
 function SectionSkeleton({ height = "600px" }: { height?: string }) {
   return (
-    <div 
-      className="w-full bg-muted/30 animate-pulse rounded-lg"
-      style={{ height }}
+    <div
       aria-hidden="true"
+      className="w-full animate-pulse rounded-lg bg-muted/30"
+      style={{ height }}
     />
-  )
+  );
 }
 
 // Dynamic imports for heavy components - defer loading until needed
 // Note: ssr: false must be used in Client Components, but these components
 // already have "use client" so they handle client-only rendering internally
 const CodeSection = dynamic(
-  () => import("@/components/report/code-section").then(m => ({ default: m.CodeSection })),
-  { 
+  () =>
+    import("@/components/report/code-section").then((m) => ({
+      default: m.CodeSection,
+    })),
+  {
     loading: () => (
-      <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto">
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-6xl">
           <SectionSkeleton height="600px" />
         </div>
       </section>
     ),
   }
-)
+);
 
 const RegionalSection = dynamic(
-  () => import("@/components/report/regional-section").then(m => ({ default: m.RegionalSection })),
-  { 
+  () =>
+    import("@/components/report/regional-section").then((m) => ({
+      default: m.RegionalSection,
+    })),
+  {
     loading: () => (
-      <section className="py-24 px-6 bg-muted/30">
-        <div className="max-w-7xl mx-auto">
+      <section className="bg-muted/30 px-6 py-24">
+        <div className="mx-auto max-w-7xl">
           <SectionSkeleton height="800px" />
         </div>
       </section>
     ),
   }
-)
+);
 
 export default function Page() {
   return (
@@ -57,7 +63,7 @@ export default function Page() {
       <DataFreshnessBanner />
       <Navigation />
       {/* Spacer for fixed nav (h-16 = 64px) + banner (~44px) */}
-      <div className="h-28" aria-hidden="true" />
+      <div aria-hidden="true" className="h-28" />
       <Hero />
       <ForewordSection />
       <InfrastructureSection />
@@ -70,5 +76,5 @@ export default function Page() {
       <DeltaSection />
       <Footer />
     </main>
-  )
+  );
 }

@@ -1,11 +1,13 @@
 "use client";
 
-import MapLibreGL, { type PopupOptions, type MarkerOptions } from "maplibre-gl";
+import MapLibreGL, { type MarkerOptions, type PopupOptions } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import { Loader2, Locate, Maximize, Minus, Plus, X } from "lucide-react";
 import { useTheme } from "next-themes";
-import {
+import React, {
   createContext,
   forwardRef,
+  type ReactNode,
   useCallback,
   useContext,
   useEffect,
@@ -14,18 +16,14 @@ import {
   useMemo,
   useRef,
   useState,
-  type ReactNode,
 } from "react";
 import { createPortal } from "react-dom";
-import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-import React from "react";
 
-type MapContextValue = {
+interface MapContextValue {
   map: MapLibreGL.Map | null;
   isLoaded: boolean;
-};
+}
 
 const MapContext = createContext<MapContextValue | null>(null);
 
@@ -58,9 +56,9 @@ type MapRef = MapLibreGL.Map;
 const DefaultLoader = () => (
   <div className="absolute inset-0 flex items-center justify-center">
     <div className="flex gap-1">
-      <span className="size-1.5 rounded-full bg-muted-foreground/60 animate-pulse" />
-      <span className="size-1.5 rounded-full bg-muted-foreground/60 animate-pulse [animation-delay:150ms]" />
-      <span className="size-1.5 rounded-full bg-muted-foreground/60 animate-pulse [animation-delay:300ms]" />
+      <span className="size-1.5 animate-pulse rounded-full bg-muted-foreground/60" />
+      <span className="size-1.5 animate-pulse rounded-full bg-muted-foreground/60 [animation-delay:150ms]" />
+      <span className="size-1.5 animate-pulse rounded-full bg-muted-foreground/60 [animation-delay:300ms]" />
     </div>
   </div>
 );
@@ -87,7 +85,9 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
   useImperativeHandle(ref, () => mapInstance as MapLibreGL.Map, [mapInstance]);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current) {
+      return;
+    }
 
     const initialStyle =
       resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
@@ -119,15 +119,19 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       setMapInstance(null);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [mapStyles.dark, mapStyles.light, props, resolvedTheme]);
 
   useEffect(() => {
-    if (!mapInstance || !resolvedTheme) return;
+    if (!(mapInstance && resolvedTheme)) {
+      return;
+    }
 
     const newStyle =
       resolvedTheme === "dark" ? mapStyles.dark : mapStyles.light;
 
-    if (currentStyleRef.current === newStyle) return;
+    if (currentStyleRef.current === newStyle) {
+      return;
+    }
 
     currentStyleRef.current = newStyle;
     setIsStyleLoaded(false);
@@ -139,7 +143,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
     return () => cancelAnimationFrame(frameId);
   }, [mapInstance, resolvedTheme, mapStyles]);
 
-  const isLoading = !isLoaded || !isStyleLoaded;
+  const isLoading = !(isLoaded && isStyleLoaded);
 
   const contextValue = useMemo(
     () => ({
@@ -151,7 +155,7 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
 
   return (
     <MapContext.Provider value={contextValue}>
-      <div ref={containerRef} className="relative w-full h-full">
+      <div className="relative h-full w-full" ref={containerRef}>
         {isLoading && <DefaultLoader />}
         {/* SSR-safe: children render only when map is loaded on client */}
         {mapInstance && children}
@@ -160,10 +164,10 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
   );
 });
 
-type MarkerContextValue = {
+interface MarkerContextValue {
   marker: MapLibreGL.Marker;
   map: MapLibreGL.Map | null;
-};
+}
 
 const MarkerContext = createContext<MarkerContextValue | null>(null);
 
@@ -250,10 +254,23 @@ function MapMarker({
     return markerInstance;
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    draggable,
+    latitude,
+    longitude,
+    markerOptions,
+    onClick,
+    onDrag,
+    onDragEnd,
+    onDragStart,
+    onMouseEnter,
+    onMouseLeave,
+  ]);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map) {
+      return;
+    }
 
     marker.addTo(map);
 
@@ -262,7 +279,7 @@ function MapMarker({
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map]);
+  }, [map, marker.addTo, marker.remove]);
 
   if (
     marker.getLngLat().lng !== longitude ||
@@ -300,12 +317,12 @@ function MapMarker({
   );
 }
 
-type MarkerContentProps = {
+interface MarkerContentProps {
   /** Custom marker content. Defaults to a blue dot if not provided */
   children?: ReactNode;
   /** Additional CSS classes for the marker container */
   className?: string;
-};
+}
 
 function MarkerContent({ children, className }: MarkerContentProps) {
   const { marker } = useMarkerContext();
@@ -354,10 +371,12 @@ function MarkerPopup({
 
     return popupInstance;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [container, popupOptions]);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map) {
+      return;
+    }
 
     popup.setDOMContent(container);
     marker.setPopup(popup);
@@ -366,7 +385,7 @@ function MarkerPopup({
       marker.setPopup(null);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map]);
+  }, [map, container, marker.setPopup, popup]);
 
   if (popup.isOpen()) {
     const prev = prevPopupOptions.current;
@@ -386,16 +405,16 @@ function MarkerPopup({
   return createPortal(
     <div
       className={cn(
-        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "fade-in-0 zoom-in-95 relative animate-in rounded-md border bg-popover p-3 text-popover-foreground shadow-md",
         className
       )}
     >
       {closeButton && (
         <button
-          type="button"
-          onClick={handleClose}
-          className="absolute top-1 right-1 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           aria-label="Close popup"
+          className="absolute top-1 right-1 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          onClick={handleClose}
+          type="button"
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
@@ -433,10 +452,12 @@ function MarkerTooltip({
 
     return tooltipInstance;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [popupOptions]);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map) {
+      return;
+    }
 
     tooltip.setDOMContent(container);
 
@@ -454,7 +475,15 @@ function MarkerTooltip({
       tooltip.remove();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map]);
+  }, [
+    map,
+    container,
+    marker.getElement,
+    marker.getLngLat,
+    tooltip.remove,
+    tooltip.setDOMContent,
+    tooltip.setLngLat,
+  ]);
 
   if (tooltip.isOpen()) {
     const prev = prevTooltipOptions.current;
@@ -472,7 +501,7 @@ function MarkerTooltip({
   return createPortal(
     <div
       className={cn(
-        "rounded-md bg-foreground px-2 py-1 text-xs text-background shadow-md animate-in fade-in-0 zoom-in-95",
+        "fade-in-0 zoom-in-95 animate-in rounded-md bg-foreground px-2 py-1 text-background text-xs shadow-md",
         className
       )}
     >
@@ -482,14 +511,14 @@ function MarkerTooltip({
   );
 }
 
-type MarkerLabelProps = {
+interface MarkerLabelProps {
   /** Label text content */
   children: ReactNode;
   /** Additional CSS classes for the label */
   className?: string;
   /** Position of the label relative to the marker (default: "top") */
   position?: "top" | "bottom";
-};
+}
 
 function MarkerLabel({
   children,
@@ -505,7 +534,7 @@ function MarkerLabel({
     <div
       className={cn(
         "absolute left-1/2 -translate-x-1/2 whitespace-nowrap",
-        "text-[10px] font-medium text-foreground",
+        "font-medium text-[10px] text-foreground",
         positionClasses[position],
         className
       )}
@@ -515,7 +544,7 @@ function MarkerLabel({
   );
 }
 
-type MapControlsProps = {
+interface MapControlsProps {
   /** Position of the controls on the map (default: "bottom-right") */
   position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
   /** Show zoom in/out buttons (default: true) */
@@ -530,7 +559,7 @@ type MapControlsProps = {
   className?: string;
   /** Callback with user coordinates when located */
   onLocate?: (coords: { longitude: number; latitude: number }) => void;
-};
+}
 
 const positionClasses = {
   "top-left": "top-2 left-2",
@@ -541,7 +570,7 @@ const positionClasses = {
 
 function ControlGroup({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col rounded-md border border-border bg-background shadow-sm overflow-hidden [&>button:not(:last-child)]:border-b [&>button:not(:last-child)]:border-border">
+    <div className="flex flex-col overflow-hidden rounded-md border border-border bg-background shadow-sm [&>button:not(:last-child)]:border-border [&>button:not(:last-child)]:border-b">
       {children}
     </div>
   );
@@ -560,14 +589,14 @@ function ControlButton({
 }) {
   return (
     <button
-      onClick={onClick}
       aria-label={label}
-      type="button"
       className={cn(
-        "flex items-center justify-center size-8 hover:bg-accent dark:hover:bg-accent/40 transition-colors",
-        disabled && "opacity-50 pointer-events-none cursor-not-allowed"
+        "flex size-8 items-center justify-center transition-colors hover:bg-accent dark:hover:bg-accent/40",
+        disabled && "pointer-events-none cursor-not-allowed opacity-50"
       )}
       disabled={disabled}
+      onClick={onClick}
+      type="button"
     >
       {children}
     </button>
@@ -625,7 +654,9 @@ function MapControls({
 
   const handleFullscreen = useCallback(() => {
     const container = map?.getContainer();
-    if (!container) return;
+    if (!container) {
+      return;
+    }
     if (document.fullscreenElement) {
       document.exitFullscreen();
     } else {
@@ -633,7 +664,9 @@ function MapControls({
     }
   }, [map]);
 
-  if (!isLoaded) return null;
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <div
@@ -645,10 +678,10 @@ function MapControls({
     >
       {showZoom && (
         <ControlGroup>
-          <ControlButton onClick={handleZoomIn} label="Zoom in">
+          <ControlButton label="Zoom in" onClick={handleZoomIn}>
             <Plus className="size-4" />
           </ControlButton>
-          <ControlButton onClick={handleZoomOut} label="Zoom out">
+          <ControlButton label="Zoom out" onClick={handleZoomOut}>
             <Minus className="size-4" />
           </ControlButton>
         </ControlGroup>
@@ -661,9 +694,9 @@ function MapControls({
       {showLocate && (
         <ControlGroup>
           <ControlButton
-            onClick={handleLocate}
-            label="Find my location"
             disabled={waitingForLocation}
+            label="Find my location"
+            onClick={handleLocate}
           >
             {waitingForLocation ? (
               <Loader2 className="size-4 animate-spin" />
@@ -675,7 +708,7 @@ function MapControls({
       )}
       {showFullscreen && (
         <ControlGroup>
-          <ControlButton onClick={handleFullscreen} label="Toggle fullscreen">
+          <ControlButton label="Toggle fullscreen" onClick={handleFullscreen}>
             <Maximize className="size-4" />
           </ControlButton>
         </ControlGroup>
@@ -689,7 +722,9 @@ function CompassButton({ onClick }: { onClick: () => void }) {
   const compassRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    if (!isLoaded || !map || !compassRef.current) return;
+    if (!(isLoaded && map && compassRef.current)) {
+      return;
+    }
 
     const compass = compassRef.current;
 
@@ -710,17 +745,17 @@ function CompassButton({ onClick }: { onClick: () => void }) {
   }, [isLoaded, map]);
 
   return (
-    <ControlButton onClick={onClick} label="Reset bearing to north">
+    <ControlButton label="Reset bearing to north" onClick={onClick}>
       <svg
-        ref={compassRef}
-        viewBox="0 0 24 24"
         className="size-5 transition-transform duration-200"
+        ref={compassRef}
         style={{ transformStyle: "preserve-3d" }}
+        viewBox="0 0 24 24"
       >
-        <path d="M12 2L16 12H12V2Z" className="fill-red-500" />
-        <path d="M12 2L8 12H12V2Z" className="fill-red-300" />
-        <path d="M12 22L16 12H12V22Z" className="fill-muted-foreground/60" />
-        <path d="M12 22L8 12H12V22Z" className="fill-muted-foreground/30" />
+        <path className="fill-red-500" d="M12 2L16 12H12V2Z" />
+        <path className="fill-red-300" d="M12 2L8 12H12V2Z" />
+        <path className="fill-muted-foreground/60" d="M12 22L16 12H12V22Z" />
+        <path className="fill-muted-foreground/30" d="M12 22L8 12H12V22Z" />
       </svg>
     </ControlButton>
   );
@@ -765,10 +800,12 @@ function MapPopup({
 
     return popupInstance;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [latitude, longitude, popupOptions]);
 
   useEffect(() => {
-    if (!map) return;
+    if (!map) {
+      return;
+    }
 
     const onCloseProp = () => onClose?.();
     popup.on("close", onCloseProp);
@@ -783,7 +820,17 @@ function MapPopup({
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [map]);
+  }, [
+    map,
+    container,
+    onClose,
+    popup.addTo,
+    popup.isOpen,
+    popup.off,
+    popup.on,
+    popup.remove,
+    popup.setDOMContent,
+  ]);
 
   if (popup.isOpen()) {
     const prev = popupOptionsRef.current;
@@ -812,16 +859,16 @@ function MapPopup({
   return createPortal(
     <div
       className={cn(
-        "relative rounded-md border bg-popover p-3 text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95",
+        "fade-in-0 zoom-in-95 relative animate-in rounded-md border bg-popover p-3 text-popover-foreground shadow-md",
         className
       )}
     >
       {closeButton && (
         <button
-          type="button"
-          onClick={handleClose}
-          className="absolute top-1 right-1 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
           aria-label="Close popup"
+          className="absolute top-1 right-1 z-10 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+          onClick={handleClose}
+          type="button"
         >
           <X className="h-4 w-4" />
           <span className="sr-only">Close</span>
@@ -833,7 +880,7 @@ function MapPopup({
   );
 }
 
-type MapRouteProps = {
+interface MapRouteProps {
   /** Optional unique identifier for the route layer */
   id?: string;
   /** Array of [longitude, latitude] coordinate pairs defining the route */
@@ -854,7 +901,7 @@ type MapRouteProps = {
   onMouseLeave?: () => void;
   /** Whether the route is interactive - shows pointer cursor on hover (default: true) */
   interactive?: boolean;
-};
+}
 
 function MapRoute({
   id: propId,
@@ -876,7 +923,9 @@ function MapRoute({
 
   // Add source and layer on mount
   useEffect(() => {
-    if (!isLoaded || !map) return;
+    if (!(isLoaded && map)) {
+      return;
+    }
 
     map.addSource(sourceId, {
       type: "geojson",
@@ -902,18 +951,24 @@ function MapRoute({
 
     return () => {
       try {
-        if (map.getLayer(layerId)) map.removeLayer(layerId);
-        if (map.getSource(sourceId)) map.removeSource(sourceId);
+        if (map.getLayer(layerId)) {
+          map.removeLayer(layerId);
+        }
+        if (map.getSource(sourceId)) {
+          map.removeSource(sourceId);
+        }
       } catch {
         // ignore
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoaded, map]);
+  }, [isLoaded, map, color, dashArray, layerId, opacity, sourceId, width]);
 
   // When coordinates change, update the source data
   useEffect(() => {
-    if (!isLoaded || !map || coordinates.length < 2) return;
+    if (!(isLoaded && map) || coordinates.length < 2) {
+      return;
+    }
 
     const source = map.getSource(sourceId) as MapLibreGL.GeoJSONSource;
     if (source) {
@@ -926,7 +981,9 @@ function MapRoute({
   }, [isLoaded, map, coordinates, sourceId]);
 
   useEffect(() => {
-    if (!isLoaded || !map || !map.getLayer(layerId)) return;
+    if (!(isLoaded && map && map.getLayer(layerId))) {
+      return;
+    }
 
     map.setPaintProperty(layerId, "line-color", color);
     map.setPaintProperty(layerId, "line-width", width);
@@ -938,7 +995,9 @@ function MapRoute({
 
   // Handle click and hover events
   useEffect(() => {
-    if (!isLoaded || !map || !interactive) return;
+    if (!(isLoaded && map && interactive)) {
+      return;
+    }
 
     const handleClick = () => {
       onClick?.();
@@ -974,9 +1033,9 @@ function MapRoute({
   return null;
 }
 
-type MapClusterLayerProps<
-  P extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties
-> = {
+interface MapClusterLayerProps<
+  P extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties,
+> {
   /** GeoJSON FeatureCollection data or URL to fetch GeoJSON from */
   data: string | GeoJSON.FeatureCollection<GeoJSON.Point, P>;
   /** Maximum zoom level to cluster points on (default: 14) */
@@ -1000,10 +1059,10 @@ type MapClusterLayerProps<
     coordinates: [number, number],
     pointCount: number
   ) => void;
-};
+}
 
 function MapClusterLayer<
-  P extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties
+  P extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties,
 >({
   data,
   clusterMaxZoom = 14,
@@ -1029,7 +1088,9 @@ function MapClusterLayer<
 
   // Add source and layers on mount
   useEffect(() => {
-    if (!isLoaded || !map) return;
+    if (!(isLoaded && map)) {
+      return;
+    }
 
     // Add clustered GeoJSON source
     map.addSource(sourceId, {
@@ -1097,22 +1158,43 @@ function MapClusterLayer<
 
     return () => {
       try {
-        if (map.getLayer(clusterCountLayerId))
+        if (map.getLayer(clusterCountLayerId)) {
           map.removeLayer(clusterCountLayerId);
-        if (map.getLayer(unclusteredLayerId))
+        }
+        if (map.getLayer(unclusteredLayerId)) {
           map.removeLayer(unclusteredLayerId);
-        if (map.getLayer(clusterLayerId)) map.removeLayer(clusterLayerId);
-        if (map.getSource(sourceId)) map.removeSource(sourceId);
+        }
+        if (map.getLayer(clusterLayerId)) {
+          map.removeLayer(clusterLayerId);
+        }
+        if (map.getSource(sourceId)) {
+          map.removeSource(sourceId);
+        }
       } catch {
         // ignore
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoaded, map, sourceId]);
+  }, [
+    isLoaded,
+    map,
+    sourceId,
+    clusterColors[0],
+    clusterCountLayerId,
+    clusterLayerId,
+    clusterMaxZoom,
+    clusterRadius,
+    clusterThresholds[0],
+    data,
+    pointColor,
+    unclusteredLayerId,
+  ]);
 
   // Update source data when data prop changes (only for non-URL data)
   useEffect(() => {
-    if (!isLoaded || !map || typeof data === "string") return;
+    if (!(isLoaded && map) || typeof data === "string") {
+      return;
+    }
 
     const source = map.getSource(sourceId) as MapLibreGL.GeoJSONSource;
     if (source) {
@@ -1122,7 +1204,9 @@ function MapClusterLayer<
 
   // Update layer styles when props change
   useEffect(() => {
-    if (!isLoaded || !map) return;
+    if (!(isLoaded && map)) {
+      return;
+    }
 
     const prev = stylePropsRef.current;
     const colorsChanged =
@@ -1169,7 +1253,9 @@ function MapClusterLayer<
 
   // Handle click events
   useEffect(() => {
-    if (!isLoaded || !map) return;
+    if (!(isLoaded && map)) {
+      return;
+    }
 
     // Cluster click handler - zoom into cluster
     const handleClusterClick = async (
@@ -1180,14 +1266,16 @@ function MapClusterLayer<
       const features = map.queryRenderedFeatures(e.point, {
         layers: [clusterLayerId],
       });
-      if (!features.length) return;
+      if (!features.length) {
+        return;
+      }
 
       const feature = features[0];
       const clusterId = feature.properties?.cluster_id as number;
       const pointCount = feature.properties?.point_count as number;
       const coordinates = (feature.geometry as GeoJSON.Point).coordinates as [
         number,
-        number
+        number,
       ];
 
       if (onClusterClick) {
@@ -1209,7 +1297,9 @@ function MapClusterLayer<
         features?: MapLibreGL.MapGeoJSONFeature[];
       }
     ) => {
-      if (!onPointClick || !e.features?.length) return;
+      if (!(onPointClick && e.features?.length)) {
+        return;
+      }
 
       const feature = e.features[0];
       const coordinates = (
