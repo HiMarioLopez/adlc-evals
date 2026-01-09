@@ -1,12 +1,44 @@
 "use client"
 
-import { useState } from "react"
-import { Calculator, Info, AlertCircle, Network, ExternalLink } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Calculator, Info, AlertCircle, Network, ExternalLink, ChevronDown } from "lucide-react"
 
 export function CostCalculator() {
   const [turns, setTurns] = useState(1000)
   const [model, setModel] = useState<'sonnet' | 'opus' | 'haiku'>('sonnet')
   const [useBedrockRegional, setUseBedrockRegional] = useState(true)
+  const [showFloatingBar, setShowFloatingBar] = useState(false)
+
+  // Track scroll position to show floating bar when controls are visible but results aren't
+  useEffect(() => {
+    const handleScroll = () => {
+      const controlsEl = document.getElementById('calculator-controls')
+      const resultsEl = document.getElementById('calculator-results')
+      
+      if (!controlsEl || !resultsEl) return
+      
+      const controlsRect = controlsEl.getBoundingClientRect()
+      const resultsRect = resultsEl.getBoundingClientRect()
+      const windowHeight = window.innerHeight
+      
+      // Show floating bar when:
+      // - Controls are at least partially visible (top is above viewport bottom)
+      // - Results are not visible (top is below viewport)
+      const controlsInView = controlsRect.top < windowHeight && controlsRect.bottom > 0
+      const resultsNotVisible = resultsRect.top > windowHeight - 80
+      
+      setShowFloatingBar(controlsInView && resultsNotVisible && window.innerWidth < 1024)
+    }
+    
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleScroll, { passive: true })
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleScroll)
+    }
+  }, [])
 
   // Model pricing (Anthropic direct / Vercel AI Gateway passthrough pricing per MTok)
   const pricing = {
@@ -68,7 +100,7 @@ export function CostCalculator() {
         </div>
 
         {/* Controls */}
-        <div className="mb-12 p-8 rounded-2xl bg-card border border-border">
+        <div id="calculator-controls" className="mb-12 p-8 rounded-2xl bg-card border border-border">
           <div className="grid sm:grid-cols-2 gap-8">
             {/* Turns slider */}
             <div>
@@ -175,7 +207,7 @@ export function CostCalculator() {
         </div>
 
         {/* Results */}
-        <div className="grid lg:grid-cols-2 gap-6">
+        <div id="calculator-results" className="grid lg:grid-cols-2 gap-6">
           {/* AWS */}
           <div className="rounded-2xl border border-aws/30 bg-card overflow-hidden">
             <div className="p-6 border-b border-border bg-aws/5">
@@ -352,6 +384,65 @@ export function CostCalculator() {
           </div>
         </div>
 
+      </div>
+
+      {/* Floating Mobile Cost Summary */}
+      <div 
+        className={`fixed bottom-0 left-0 right-0 z-50 lg:hidden transition-all duration-300 ${
+          showFloatingBar 
+            ? 'translate-y-0 opacity-100' 
+            : 'translate-y-full opacity-0 pointer-events-none'
+        }`}
+      >
+        <div className="bg-card/95 backdrop-blur-lg border-t border-border shadow-2xl">
+          <div className="px-4 py-3">
+            {/* Cost comparison row */}
+            <div className="flex items-center justify-between gap-3">
+              {/* AWS */}
+              <div className="flex items-center gap-2 flex-1">
+                <div className="w-7 h-7 rounded-lg bg-aws flex items-center justify-center shrink-0">
+                  <span className="text-white text-xs font-bold">A</span>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[10px] text-muted-foreground truncate">AWS</p>
+                  <p className="text-lg font-bold font-mono text-aws leading-none">{formatCost(awsTotal)}</p>
+                </div>
+              </div>
+              
+              {/* VS divider */}
+              <div className="text-xs text-muted-foreground font-medium">vs</div>
+              
+              {/* Vercel */}
+              <div className="flex items-center gap-2 flex-1 justify-end">
+                <div className="min-w-0 text-right">
+                  <p className="text-[10px] text-muted-foreground truncate">Vercel</p>
+                  <p className="text-lg font-bold font-mono text-primary leading-none">{formatCost(vercelTotal)}</p>
+                </div>
+                <div className="w-7 h-7 rounded-lg bg-foreground flex items-center justify-center shrink-0">
+                  <svg className="w-4 h-4 text-background" viewBox="0 0 76 65" fill="currentColor">
+                    <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            
+            {/* Scroll hint */}
+            <button
+              onClick={() => {
+                document.getElementById('calculator-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              }}
+              className="w-full mt-2 flex items-center justify-center gap-1 text-[10px] text-muted-foreground hover:text-foreground transition-colors"
+            >
+              <span>Scroll for details</span>
+              <ChevronDown className="w-3 h-3 animate-bounce" />
+            </button>
+          </div>
+          
+          {/* Drag handle indicator */}
+          <div className="flex justify-center pb-2">
+            <div className="w-12 h-1 rounded-full bg-muted-foreground/30" />
+          </div>
+        </div>
       </div>
     </section>
   )
