@@ -54,6 +54,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link href="https://basemaps.cartocdn.com" rel="preconnect" />
+        <link href="https://basemaps.cartocdn.com" rel="dns-prefetch" />
+      </head>
       <body
         className={`${sora.variable} ${firaCode.variable} overflow-x-hidden font-sans`}
       >

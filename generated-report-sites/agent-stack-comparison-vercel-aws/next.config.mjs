@@ -5,6 +5,16 @@ const nextConfig = {
     optimizePackageImports: ["lucide-react"],
   },
 
+  // Image optimization for external sources
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
+  },
+
   // Empty turbopack config to acknowledge we're using Turbopack (Next.js 16 default)
   // maplibre-gl is already client-only via "use client" directive, no externals needed
   turbopack: {},

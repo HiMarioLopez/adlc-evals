@@ -1,6 +1,7 @@
 "use client";
 
 import { ExternalLink, Github } from "lucide-react";
+import Image from "next/image";
 
 const vercelLinks = [
   { label: "AI SDK 6 Blog", url: "https://vercel.com/blog/ai-sdk-6" },
@@ -132,10 +133,12 @@ export function Footer() {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                <img
+                <Image
                   alt={contributor.name}
-                  className="h-5 w-5 rounded-full"
-                  src={`https://github.com/${contributor.github}.png`}
+                  className="rounded-full"
+                  height={20}
+                  src={`https://avatars.githubusercontent.com/${contributor.github}`}
+                  width={20}
                 />
                 <span className="text-muted-foreground text-sm transition-colors group-hover:text-foreground">
                   {contributor.name}
