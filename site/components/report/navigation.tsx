@@ -69,7 +69,8 @@ export function Navigation() {
     <>
       <nav
         className={cn(
-          "fixed inset-x-0 top-0 z-50 w-full transition-all duration-300",
+          "fixed inset-x-0 top-0 w-full transition-all duration-300",
+          mobileOpen ? "z-[60]" : "z-50",
           isScrolled
             ? "border-border border-b bg-background/85 shadow-sm backdrop-blur-xl"
             : "bg-transparent"

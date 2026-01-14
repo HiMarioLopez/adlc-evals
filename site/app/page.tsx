@@ -18,6 +18,12 @@ const siteContributors = [
   { name: "Mario Lopez Martinez", github: "HiMarioLopez" },
 ];
 
+const VercelIcon = () => (
+  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 76 65">
+    <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
+  </svg>
+);
+
 const reports = [
   {
     id: "vercel-aws",
@@ -33,11 +39,7 @@ const reports = [
         name: "Vercel",
         color: "bg-foreground",
         textColor: "text-background",
-        icon: (
-          <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 76 65">
-            <path d="M37.5274 0L75.0548 65H0L37.5274 0Z" />
-          </svg>
-        ),
+        icon: <VercelIcon />,
       },
       {
         name: "AWS",
@@ -52,6 +54,109 @@ const reports = [
       "Detailed pricing analysis",
     ],
     contributors: [{ name: "Mario Lopez Martinez", github: "HiMarioLopez" }],
+  },
+];
+
+const upcomingReports = [
+  {
+    id: "vercel-gcp",
+    title: "Vercel vs GCP",
+    subtitle: "Agent Stack Technical Evaluation",
+    description:
+      "Comparing Vercel + AI SDK against Google Cloud's Vertex AI Agent Builder and Agent Development Kit for enterprise AI agents.",
+    platforms: [
+      {
+        name: "Vercel",
+        color: "bg-foreground",
+        textColor: "text-background",
+        icon: <VercelIcon />,
+      },
+      {
+        name: "GCP",
+        color: "bg-[#4285F4]",
+        textColor: "text-white",
+        icon: <span className="font-bold text-sm">G</span>,
+      },
+    ],
+    teaser: [
+      "Vertex AI Agent Builder",
+      "Agent Development Kit",
+      "Cloud Run integration",
+    ],
+  },
+  {
+    id: "vercel-azure",
+    title: "Vercel vs Azure",
+    subtitle: "Agent Stack Technical Evaluation",
+    description:
+      "Evaluating Vercel + AI SDK versus Azure AI Agent Service and Semantic Kernel for building scalable AI agent solutions.",
+    platforms: [
+      {
+        name: "Vercel",
+        color: "bg-foreground",
+        textColor: "text-background",
+        icon: <VercelIcon />,
+      },
+      {
+        name: "Azure",
+        color: "bg-[#0078D4]",
+        textColor: "text-white",
+        icon: <span className="font-bold text-sm">Az</span>,
+      },
+    ],
+    teaser: [
+      "Azure AI Agent Service",
+      "Semantic Kernel",
+      "Azure Functions integration",
+    ],
+  },
+  {
+    id: "vercel-cloudflare",
+    title: "Vercel vs Cloudflare",
+    subtitle: "Agent Stack Technical Evaluation",
+    description:
+      "Comparing Vercel + AI SDK against Cloudflare Workers AI and the Agents SDK for edge-native AI agent deployment.",
+    platforms: [
+      {
+        name: "Vercel",
+        color: "bg-foreground",
+        textColor: "text-background",
+        icon: <VercelIcon />,
+      },
+      {
+        name: "Cloudflare",
+        color: "bg-[#F38020]",
+        textColor: "text-white",
+        icon: <span className="font-bold text-sm">CF</span>,
+      },
+    ],
+    teaser: ["Workers AI", "Agents SDK", "Edge-first architecture"],
+  },
+  {
+    id: "vercel-modal",
+    title: "Vercel vs Modal",
+    subtitle: "Agent Stack Technical Evaluation",
+    description:
+      "Evaluating Vercel + AI SDK versus Modal's Python-first serverless platform for GPU-accelerated AI agent workloads.",
+    platforms: [
+      {
+        name: "Vercel",
+        color: "bg-foreground",
+        textColor: "text-background",
+        icon: <VercelIcon />,
+      },
+      {
+        name: "Modal",
+        color: "bg-[#00DC82]",
+        textColor: "text-black",
+        icon: <span className="font-bold text-sm">M</span>,
+      },
+    ],
+    teaser: [
+      "Python-native serverless",
+      "GPU acceleration",
+      "Custom container support",
+    ],
   },
 ];
 
@@ -166,7 +271,7 @@ export default function DirectoryPage() {
       </section>
 
       {/* Reports Grid */}
-      <section className="px-6 pb-24">
+      <section className="px-6 pb-12">
         <div className="mx-auto max-w-4xl">
           <h2 className="mb-8 font-semibold text-2xl">Available Reports</h2>
 
@@ -267,6 +372,78 @@ export default function DirectoryPage() {
                   </div>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Upcoming Reports Grid */}
+      <section className="px-6 pb-24">
+        <div className="mx-auto max-w-4xl">
+          <div className="mb-8 flex items-center gap-3">
+            <h2 className="font-semibold text-2xl text-muted-foreground">
+              Coming Soon
+            </h2>
+            <span className="rounded-full bg-muted/50 px-3 py-1 font-medium text-muted-foreground/60 text-xs">
+              In Development
+            </span>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {upcomingReports.map((report) => (
+              <div
+                className="relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 opacity-60 transition-opacity hover:opacity-80"
+                key={report.id}
+              >
+                {/* Diagonal "Coming Soon" ribbon */}
+                <div className="absolute top-3 -right-10 z-10 rotate-45 bg-muted px-12 py-1 shadow-sm">
+                  <span className="font-medium text-muted-foreground text-xs">
+                    Soon
+                  </span>
+                </div>
+
+                <div className="relative p-6">
+                  {/* Platform badges */}
+                  <div className="mb-4 flex items-center gap-2">
+                    {report.platforms.map((platform, idx) => (
+                      <div className="flex items-center" key={platform.name}>
+                        <div
+                          className={`flex h-7 w-7 items-center justify-center rounded-lg ${platform.color} ${platform.textColor} opacity-70`}
+                        >
+                          {platform.icon}
+                        </div>
+                        {idx < report.platforms.length - 1 && (
+                          <span className="mx-2 text-muted-foreground/40 text-sm">
+                            vs
+                          </span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+
+                  <h3 className="mb-1 font-bold text-muted-foreground text-xl">
+                    {report.title}
+                  </h3>
+                  <p className="mb-3 font-medium text-muted-foreground/60 text-sm">
+                    {report.subtitle}
+                  </p>
+                  <p className="mb-4 text-muted-foreground/60 text-sm leading-relaxed">
+                    {report.description}
+                  </p>
+
+                  {/* Teaser topics */}
+                  <div className="flex flex-wrap gap-2">
+                    {report.teaser.map((topic) => (
+                      <span
+                        className="rounded-full bg-muted/30 px-3 py-1 font-medium text-muted-foreground/50 text-xs"
+                        key={topic}
+                      >
+                        {topic}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
