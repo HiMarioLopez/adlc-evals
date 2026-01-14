@@ -1,53 +1,13 @@
 "use client";
 
 import { ArrowRight, ExternalLink, GitBranch } from "lucide-react";
+import type { DeltaData } from "@/data/report-schema";
 
-const deltas = [
-  {
-    platform: "Vercel AI SDK",
-    previous: "SDK 5.x (generateText, streamText with maxSteps)",
-    current: "SDK 6.x (ToolLoopAgent class)",
-    changes: [
-      "New agent-first abstraction with ToolLoopAgent",
-      "stopWhen conditions for loop control",
-      "Built-in loop management with 20-step default",
-      "system renamed to instructions",
-    ],
-    version: "ai@6.0.23",
-    link: "https://github.com/vercel/ai",
-    color: "primary",
-  },
-  {
-    platform: "Bedrock AgentCore",
-    previous: "Preview (July 2025)",
-    current: "GA (October 2025)",
-    changes: [
-      "Production SLAs and consumption-based pricing",
-      "Cedar-based Policy (preview)",
-      "Evaluations capability (preview)",
-      "Browser Tool + Code Interpreter GA",
-    ],
-    version: "v1.1.4",
-    link: "https://github.com/aws/bedrock-agentcore-sdk-python",
-    color: "aws",
-  },
-  {
-    platform: "Strands SDK",
-    previous: "Initial Python Release",
-    current: "v1.21.0 Stable",
-    changes: [
-      "TypeScript preview announced (Dec 2025)",
-      "Multi-agent orchestration support",
-      "Model-agnostic provider routing",
-      "Extended tool ecosystem",
-    ],
-    version: "v1.21.0",
-    link: "https://github.com/strands-agents/sdk-python",
-    color: "chart-2",
-  },
-];
+interface DeltaSectionProps {
+  data: DeltaData;
+}
 
-export function DeltaSection() {
+export function DeltaSection({ data }: DeltaSectionProps) {
   return (
     <section className="px-6 py-24" id="delta">
       <div className="mx-auto max-w-6xl">
@@ -58,17 +18,16 @@ export function DeltaSection() {
             Changelog
           </span>
           <h2 className="mb-4 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
-            Recent Platform Updates
+            {data.title}
           </h2>
           <p className="max-w-2xl text-lg text-muted-foreground">
-            Key changes affecting agent development and infrastructure
-            decisions.
+            {data.description}
           </p>
         </div>
 
         {/* Delta cards */}
         <div className="grid gap-6">
-          {deltas.map((delta, idx) => (
+          {data.deltas.map((delta, idx) => (
             <div
               className={`group relative overflow-hidden rounded-2xl border border-border bg-card/50 backdrop-blur-sm transition-all duration-300 hover:border-${delta.color}/30 hover:bg-card/80`}
               key={delta.platform}

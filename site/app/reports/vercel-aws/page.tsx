@@ -11,6 +11,7 @@ import { Hero } from "@/components/report/hero";
 import { InfrastructureSection } from "@/components/report/infrastructure-section";
 import { Navigation } from "@/components/report/navigation";
 import { PricingSection } from "@/components/report/pricing-section";
+import { vercelAwsReport } from "@/data/reports/vercel-aws";
 
 export const metadata: Metadata = {
   title: "Vercel vs AWS Agent Stack Comparison | 2026 Report",
@@ -69,23 +70,25 @@ const RegionalSection = dynamic(
 );
 
 export default function VercelAwsReportPage() {
+  const report = vercelAwsReport;
+
   return (
     <main className="min-h-screen bg-background">
       <DataFreshnessBanner />
-      <Navigation />
+      <Navigation sections={report.sections} />
       {/* Spacer for fixed nav (h-16 = 64px) + banner (~44px) */}
       <div aria-hidden="true" className="h-28" />
-      <Hero />
+      <Hero data={report.hero} platforms={report.metadata.platforms} />
       <ForewordSection />
-      <InfrastructureSection />
-      <PricingSection />
+      <InfrastructureSection data={report.infrastructure} />
+      <PricingSection data={report.pricing} />
       <CostCalculator />
-      <CodeSection />
-      <DeploymentSection />
-      <RegionalSection />
-      <AdoptionSection />
-      <DeltaSection />
-      <Footer />
+      <CodeSection data={report.code} />
+      <DeploymentSection data={report.deployment} />
+      <RegionalSection data={report.regions} />
+      <AdoptionSection data={report.adoption} />
+      <DeltaSection data={report.delta} />
+      <Footer data={report.footer} />
     </main>
   );
 }

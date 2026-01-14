@@ -2,13 +2,22 @@
 
 import { ArrowUpDown, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
+import type { HeroData, Platform } from "@/data/report-schema";
 
-export function Hero() {
+interface HeroProps {
+  data: HeroData;
+  platforms: Platform[];
+}
+
+export function Hero({ data, platforms }: HeroProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const primary = platforms[0];
+  const secondary = platforms[1];
 
   return (
     <section className="relative flex items-center justify-center py-8 md:min-h-[calc(100vh-7rem)] md:py-12">
@@ -34,38 +43,32 @@ export function Hero() {
             <span className="relative inline-flex h-2 w-2 rounded-full bg-primary" />
           </span>
           <span className="font-mono text-muted-foreground text-sm">
-            Last Updated: January 8, 2026
+            Last Updated: {data.lastUpdated}
           </span>
           <Sparkles className="h-3.5 w-3.5 text-primary" />
         </div>
 
         {/* Main heading */}
         <h1 className="mb-6 animate-fade-up font-bold text-5xl tracking-tight opacity-0 delay-100 sm:text-6xl md:text-7xl lg:text-8xl">
-          <span className="text-vercel">Vercel</span>
+          <span className="text-vercel">{data.title.primary}</span>
           <span className="mx-3 font-light text-muted-foreground/50 sm:mx-4">
             vs
           </span>
-          <span className="text-aws">AWS</span>
+          <span className="text-aws">{data.title.secondary}</span>
         </h1>
 
         <h2 className="mb-6 animate-fade-up font-light text-muted-foreground text-xl opacity-0 delay-200 sm:text-2xl md:text-3xl">
-          Agent Stack Technical Evaluation
+          {data.subtitle}
         </h2>
 
         {/* Subtitle */}
         <p className="mx-auto mb-10 max-w-2xl animate-fade-up text-balance text-muted-foreground leading-relaxed opacity-0 delay-300">
-          A comprehensive comparison of{" "}
-          <span className="font-medium text-foreground">Vercel + AI SDK</span>{" "}
-          versus{" "}
-          <span className="font-medium text-foreground">
-            AWS Bedrock AgentCore + Strands SDK
-          </span>{" "}
-          for building production-ready AI agents.
+          {data.description}
         </p>
 
         {/* Stack badges - stacked vertically */}
         <div className="mb-16 flex animate-fade-up flex-col items-center gap-3 opacity-0 delay-400">
-          {/* Vercel card */}
+          {/* Primary platform card */}
           <div className="flex items-center gap-4 rounded-2xl border border-border bg-card/80 px-6 py-4 backdrop-blur-sm transition-colors hover:border-foreground/20">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-foreground">
               <svg
@@ -89,7 +92,7 @@ export function Hero() {
             <ArrowUpDown className="h-5 w-5" />
           </div>
 
-          {/* AWS card */}
+          {/* Secondary platform card */}
           <div className="flex items-center gap-4 rounded-2xl border border-border bg-card/80 px-6 py-4 backdrop-blur-sm transition-colors hover:border-aws/30">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-aws">
               <span className="font-bold text-white text-xl">A</span>

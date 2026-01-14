@@ -1,128 +1,13 @@
 "use client";
 
 import { AlertTriangle, DollarSign, Info, TrendingUp } from "lucide-react";
+import type { PricingData } from "@/data/report-schema";
 
-const modelPricing = [
-  {
-    model: "Claude Opus 4.5",
-    input: "$5.00",
-    output: "$25.00",
-    tier: "flagship",
-  },
-  {
-    model: "Claude Sonnet 4.5",
-    input: "$3.00",
-    output: "$15.00",
-    tier: "balanced",
-  },
-  { model: "Claude Haiku 4.5", input: "$1.00", output: "$5.00", tier: "fast" },
-];
+interface PricingSectionProps {
+  data: PricingData;
+}
 
-const costBreakdown = {
-  vercel: [
-    {
-      component: "Model (Claude Sonnet 4.5)",
-      calc: "2M input × $3 + 0.5M output × $15",
-      cost: "$13.50",
-    },
-    {
-      component: "Sandbox SDK (CPU)",
-      calc: "1,000 turns × 5s × $0.128/hr",
-      cost: "$0.18",
-    },
-    {
-      component: "Sandbox Memory",
-      calc: "4 GB × 1.39 hrs × $0.0106/GB-hr",
-      cost: "$0.06",
-    },
-    {
-      component: "Sandbox Creations",
-      calc: "1,000 × $0.60/1M",
-      cost: "$0.0006",
-    },
-    { component: "Network (1 GB)", calc: "1 GB × $0.15", cost: "$0.15" },
-  ],
-  aws: [
-    {
-      component: "Model (Claude Sonnet 4.5)",
-      calc: "2M input × $3 + 0.5M output × $15",
-      cost: "$13.50",
-    },
-    {
-      component: "Bedrock AgentCore Runtime CPU",
-      calc: "5,000s × $0.0895/hr",
-      cost: "$0.12",
-    },
-    {
-      component: "Bedrock AgentCore Runtime Memory",
-      calc: "4 GB × 1.39 hrs × $0.00945/GB-hr",
-      cost: "$0.05",
-    },
-    {
-      component: "Gateway Invocations",
-      calc: "2,000 tool calls × $0.005/1K",
-      cost: "$0.01",
-    },
-    {
-      component: "Memory (short-term)",
-      calc: "1,000 × $0.25/1K",
-      cost: "$0.25",
-    },
-  ],
-};
-
-const effortLevels = [
-  {
-    level: "Low",
-    multiplier: "~1x baseline",
-    impact: "Minimal cost impact",
-    color: "primary",
-  },
-  {
-    level: "Medium",
-    multiplier: "~2-3x output",
-    impact: "Moderate increase",
-    color: "chart-3",
-  },
-  {
-    level: "High",
-    multiplier: "~5-10x output",
-    impact: "2-3x total cost",
-    color: "aws",
-  },
-];
-
-const bedrockTiers = [
-  {
-    tier: "On-Demand",
-    description: "Pay per token",
-    discount: "Baseline",
-    tooltip: null,
-  },
-  {
-    tier: "Provisioned",
-    description: "Reserved capacity",
-    discount: "Commitment discount",
-    tooltip:
-      "Purchase Model Units (MUs) with 1-month or 6-month commitments for guaranteed throughput. Longer commitments = lower hourly rates.",
-  },
-  {
-    tier: "Batch Mode",
-    description: "Async processing",
-    discount: "50% discount",
-    tooltip:
-      "Process multiple prompts asynchronously via S3. Results retrieved from bucket when complete. Not supported for provisioned models.",
-  },
-  {
-    tier: "Prompt Caching",
-    description: "Cache prompts",
-    discount: "Up to 90% off",
-    tooltip:
-      "Cache frequently-used prompt components to skip recomputation. 5-minute TTL. Cached tokens charged at reduced rate.",
-  },
-];
-
-export function PricingSection() {
+export function PricingSection({ data }: PricingSectionProps) {
   return (
     <section className="px-6 py-24" id="pricing">
       <div className="mx-auto max-w-6xl">
@@ -130,13 +15,13 @@ export function PricingSection() {
         <div className="mb-16">
           <span className="mb-4 inline-flex items-center gap-2 font-mono text-primary text-xs uppercase tracking-widest">
             <DollarSign className="h-4 w-4" />
-            Section 2
+            Section {data.sectionNumber}
           </span>
           <h2 className="mb-4 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
-            2026 Unit Economics
+            {data.title}
           </h2>
           <p className="max-w-2xl text-lg text-muted-foreground">
-            Cost analysis for 1,000 agent turns with Claude Sonnet 4.5
+            {data.description}
           </p>
         </div>
 
@@ -148,26 +33,28 @@ export function PricingSection() {
           <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
             <div>
               <p className="font-bold font-mono text-3xl text-foreground">
-                1,000
+                {data.workloadAssumptions.turns.toLocaleString()}
               </p>
               <p className="text-muted-foreground text-xs">Agent turns</p>
             </div>
             <div>
               <p className="font-bold font-mono text-3xl text-foreground">
-                2,000
+                {data.workloadAssumptions.inputTokensPerTurn.toLocaleString()}
               </p>
               <p className="text-muted-foreground text-xs">Input tokens/turn</p>
             </div>
             <div>
               <p className="font-bold font-mono text-3xl text-foreground">
-                500
+                {data.workloadAssumptions.outputTokensPerTurn}
               </p>
               <p className="text-muted-foreground text-xs">
                 Output tokens/turn
               </p>
             </div>
             <div>
-              <p className="font-bold font-mono text-3xl text-foreground">5s</p>
+              <p className="font-bold font-mono text-3xl text-foreground">
+                {data.workloadAssumptions.activeCpuPerTurn}
+              </p>
               <p className="text-muted-foreground text-xs">Active CPU/turn</p>
             </div>
           </div>
@@ -179,7 +66,7 @@ export function PricingSection() {
             Claude 4.5 Pricing (per 1M tokens)
           </h3>
           <div className="grid gap-4 sm:grid-cols-3">
-            {modelPricing.map((model) => (
+            {data.modelPricing.map((model) => (
               <div
                 className="rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/30"
                 key={model.model}
@@ -229,12 +116,7 @@ export function PricingSection() {
                   AWS Bedrock Pricing Note
                 </p>
                 <p className="text-muted-foreground text-xs">
-                  Bedrock{" "}
-                  <strong className="text-foreground">global endpoints</strong>{" "}
-                  match Anthropic direct pricing (shown above).
-                  <strong className="text-aws"> Regional endpoints</strong> add
-                  a 10% premium for data residency guarantees. This applies to
-                  Claude 4.5+ models.
+                  {data.bedrockPricingNote}
                 </p>
               </div>
             </div>
@@ -263,7 +145,7 @@ export function PricingSection() {
               </div>
             </div>
             <div className="space-y-4 p-6">
-              {costBreakdown.vercel.map((item) => (
+              {data.costBreakdown.vercel.map((item) => (
                 <div
                   className="flex items-start justify-between gap-4"
                   key={item.component}
@@ -282,7 +164,7 @@ export function PricingSection() {
               <div className="flex items-center justify-between border-border border-t pt-4">
                 <span className="font-semibold">Total</span>
                 <span className="font-bold font-mono text-2xl text-primary">
-                  $13.89
+                  {data.costBreakdown.vercelTotal}
                 </span>
               </div>
             </div>
@@ -302,7 +184,7 @@ export function PricingSection() {
               </div>
             </div>
             <div className="space-y-4 p-6">
-              {costBreakdown.aws.map((item) => (
+              {data.costBreakdown.aws.map((item) => (
                 <div
                   className="flex items-start justify-between gap-4"
                   key={item.component}
@@ -321,12 +203,14 @@ export function PricingSection() {
               <div className="flex items-center justify-between border-border border-t pt-4">
                 <div>
                   <span className="font-semibold">Total</span>
-                  <p className="text-[10px] text-muted-foreground">
-                    +$1.35 with regional endpoints
-                  </p>
+                  {data.costBreakdown.awsRegionalNote && (
+                    <p className="text-[10px] text-muted-foreground">
+                      {data.costBreakdown.awsRegionalNote}
+                    </p>
+                  )}
                 </div>
                 <span className="font-bold font-mono text-2xl text-aws">
-                  $13.93
+                  {data.costBreakdown.awsTotal}
                 </span>
               </div>
             </div>
@@ -341,22 +225,35 @@ export function PricingSection() {
                 <TrendingUp className="h-6 w-6 text-primary" />
               </div>
               <div>
-                <h4 className="mb-1 font-semibold">Key Insight</h4>
+                <h4 className="mb-1 font-semibold">{data.keyInsight.title}</h4>
                 <p className="text-muted-foreground text-sm">
-                  Infrastructure costs are negligible compared to model costs.
-                  The primary cost driver is{" "}
-                  <strong className="text-foreground">LLM inference</strong>.
+                  {data.keyInsight.description
+                    .split("LLM inference")
+                    .map((part, i, arr) =>
+                      i < arr.length - 1 ? (
+                        <span key={i}>
+                          {part}
+                          <strong className="text-foreground">
+                            LLM inference
+                          </strong>
+                        </span>
+                      ) : (
+                        <span key={i}>{part}</span>
+                      )
+                    )}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-8">
               <div className="text-center">
-                <p className="font-bold font-mono text-4xl text-primary">97%</p>
+                <p className="font-bold font-mono text-4xl text-primary">
+                  {data.keyInsight.modelPercent}%
+                </p>
                 <p className="text-muted-foreground text-xs">Model costs</p>
               </div>
               <div className="text-center">
                 <p className="font-bold font-mono text-4xl text-muted-foreground">
-                  3%
+                  {data.keyInsight.infraPercent}%
                 </p>
                 <p className="text-muted-foreground text-xs">Infrastructure</p>
               </div>
@@ -377,7 +274,7 @@ export function PricingSection() {
             platforms
           </p>
           <div className="grid gap-4 sm:grid-cols-3">
-            {effortLevels.map((effort) => (
+            {data.effortLevels.map((effort) => (
               <div
                 className={`rounded-2xl border border-border bg-card p-5 hover:border-${effort.color}/30 transition-colors`}
                 key={effort.level}
@@ -417,7 +314,7 @@ export function PricingSection() {
             Amazon Bedrock Pricing Tiers
           </h3>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {bedrockTiers.map((tier) => (
+            {data.bedrockTiers.map((tier) => (
               <div
                 className="group relative rounded-2xl border border-border bg-card p-5"
                 key={tier.tier}

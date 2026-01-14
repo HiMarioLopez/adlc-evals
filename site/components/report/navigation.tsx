@@ -4,21 +4,14 @@ import { ChevronLeft, ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import type { ReportSection } from "@/data/report-schema";
 import { cn } from "@/lib/utils";
 
-const sections = [
-  { id: "foreword", label: "Foreword" },
-  { id: "infrastructure", label: "Infrastructure" },
-  { id: "pricing", label: "Pricing" },
-  { id: "calculator", label: "Calculator" },
-  { id: "code", label: "Code" },
-  { id: "deployment", label: "Deployment" },
-  { id: "regions", label: "Regions" },
-  { id: "adoption", label: "Adoption" },
-  { id: "delta", label: "Updates" },
-];
+interface NavigationProps {
+  sections: ReportSection[];
+}
 
-export function Navigation() {
+export function Navigation({ sections }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -55,7 +48,7 @@ export function Navigation() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sections]);
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);

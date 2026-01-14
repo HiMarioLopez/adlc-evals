@@ -1,0 +1,80 @@
+import type { AdoptionData } from "@/data/report-schema";
+
+export const adoptionData: AdoptionData = {
+  sectionNumber: 6,
+  title: "Adoption Metrics",
+  description:
+    "GitHub repository statistics and development velocity indicators",
+  repositories: [
+    {
+      name: "vercel/ai",
+      description: "Vercel AI SDK for TypeScript",
+      latestTag: "ai@6.0.23",
+      language: "TypeScript",
+      forks: "~3,600",
+      openIssues: "~884",
+      ecosystem: "Fullstack (React, Next.js, Svelte, Vue)",
+      recentOpen: 356,
+      recentClosed: 366,
+      ratio: "0.97",
+      ratioLabel: "Healthy",
+      latestCommit: "2026-01-08T17:15:16Z",
+      link: "https://github.com/vercel/ai",
+      color: "primary",
+    },
+    {
+      name: "strands-agents/sdk-python",
+      description: "Strands Agents SDK",
+      latestTag: "v1.21.0",
+      language: "Python",
+      forks: "~609",
+      openIssues: "~137",
+      ecosystem: "Backend/ML (Python, boto3)",
+      recentOpen: 137,
+      recentClosed: 73,
+      ratio: "1.88",
+      ratioLabel: "Growing backlog",
+      latestCommit: "2026-01-08T15:50:24Z",
+      link: "https://github.com/strands-agents/sdk-python",
+      color: "chart-2",
+    },
+    {
+      name: "aws/bedrock-agentcore-sdk-python",
+      description: "Bedrock AgentCore Infrastructure SDK",
+      latestTag: "v1.1.4",
+      language: "Python",
+      forks: "~43",
+      openIssues: "~13",
+      ecosystem: "Infrastructure (Python)",
+      recentOpen: 13,
+      recentClosed: 3,
+      ratio: "4.33",
+      ratioLabel: "New project",
+      latestCommit: "2026-01-08T18:28:12Z",
+      link: "https://github.com/aws/bedrock-agentcore-sdk-python",
+      color: "aws",
+    },
+  ],
+  activitySignals: [
+    {
+      platform: "Vercel AI SDK",
+      signals: [
+        "V6 milestone active",
+        "Issues for generateImage()",
+        "Provider fixes (OpenAI, Anthropic)",
+        "Per-step timeouts in 6.0.23",
+      ],
+    },
+    {
+      platform: "Bedrock AgentCore",
+      signals: [
+        "GA announced Oct 2025",
+        "Policy + Evaluations in preview",
+        "Browser Tool GA",
+        "TypeScript SDK preview Dec 2025",
+      ],
+    },
+  ],
+  dataNote:
+    "Issue counts based on GitHub API data filtered by created_at ≥ 2025-11-09. Ratio = Open/Closed issues created in period.",
+};

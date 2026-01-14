@@ -13,6 +13,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import type { ReportMetadata } from "@/data/report-schema";
+import { getAllReportMetadata } from "@/data/reports";
 
 const siteContributors = [
   { name: "Mario Lopez Martinez", github: "HiMarioLopez" },
@@ -24,38 +26,25 @@ const VercelIcon = () => (
   </svg>
 );
 
-const reports = [
-  {
-    id: "vercel-aws",
-    title: "Vercel vs AWS",
-    subtitle: "Agent Stack Technical Evaluation",
-    description:
-      "Comprehensive comparison of Vercel + AI SDK versus AWS Bedrock AgentCore + Strands SDK for building production-ready AI agents.",
-    href: "/reports/vercel-aws",
-    date: "January 8, 2026",
-    version: "1.0.0",
-    platforms: [
-      {
-        name: "Vercel",
-        color: "bg-foreground",
-        textColor: "text-background",
-        icon: <VercelIcon />,
-      },
-      {
-        name: "AWS",
-        color: "bg-aws",
-        textColor: "text-white",
-        icon: <span className="font-bold text-sm">A</span>,
-      },
-    ],
-    highlights: [
-      "Infrastructure ≈ 3% of TCO",
-      "Time-to-first-agent: 3 min vs 60+ min",
-      "Detailed pricing analysis",
-    ],
-    contributors: [{ name: "Mario Lopez Martinez", github: "HiMarioLopez" }],
-  },
-];
+// Platform icon mapping
+function PlatformIcon({ icon }: { icon: string }) {
+  switch (icon) {
+    case "vercel":
+      return <VercelIcon />;
+    case "aws":
+      return <span className="font-bold text-sm">A</span>;
+    case "gcp":
+      return <span className="font-bold text-sm">G</span>;
+    case "azure":
+      return <span className="font-bold text-sm">Az</span>;
+    case "cloudflare":
+      return <span className="font-bold text-sm">CF</span>;
+    case "modal":
+      return <span className="font-bold text-sm">M</span>;
+    default:
+      return <span className="font-bold text-sm">?</span>;
+  }
+}
 
 const upcomingReports = [
   {
@@ -69,13 +58,13 @@ const upcomingReports = [
         name: "Vercel",
         color: "bg-foreground",
         textColor: "text-background",
-        icon: <VercelIcon />,
+        icon: "vercel" as const,
       },
       {
         name: "GCP",
         color: "bg-[#4285F4]",
         textColor: "text-white",
-        icon: <span className="font-bold text-sm">G</span>,
+        icon: "gcp" as const,
       },
     ],
     teaser: [
@@ -95,13 +84,13 @@ const upcomingReports = [
         name: "Vercel",
         color: "bg-foreground",
         textColor: "text-background",
-        icon: <VercelIcon />,
+        icon: "vercel" as const,
       },
       {
         name: "Azure",
         color: "bg-[#0078D4]",
         textColor: "text-white",
-        icon: <span className="font-bold text-sm">Az</span>,
+        icon: "azure" as const,
       },
     ],
     teaser: [
@@ -121,13 +110,13 @@ const upcomingReports = [
         name: "Vercel",
         color: "bg-foreground",
         textColor: "text-background",
-        icon: <VercelIcon />,
+        icon: "vercel" as const,
       },
       {
         name: "Cloudflare",
         color: "bg-[#F38020]",
         textColor: "text-white",
-        icon: <span className="font-bold text-sm">CF</span>,
+        icon: "cloudflare" as const,
       },
     ],
     teaser: ["Workers AI", "Agents SDK", "Edge-first architecture"],
@@ -143,13 +132,13 @@ const upcomingReports = [
         name: "Vercel",
         color: "bg-foreground",
         textColor: "text-background",
-        icon: <VercelIcon />,
+        icon: "vercel" as const,
       },
       {
         name: "Modal",
         color: "bg-[#00DC82]",
         textColor: "text-black",
-        icon: <span className="font-bold text-sm">M</span>,
+        icon: "modal" as const,
       },
     ],
     teaser: [
@@ -163,9 +152,12 @@ const upcomingReports = [
 export default function DirectoryPage() {
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme, setTheme } = useTheme();
+  const [reports, setReports] = useState<ReportMetadata[]>([]);
 
   useEffect(() => {
     setMounted(true);
+    // Get reports from registry
+    setReports(getAllReportMetadata());
   }, []);
 
   return (
@@ -299,7 +291,7 @@ export default function DirectoryPage() {
                             <div
                               className={`flex h-7 w-7 items-center justify-center rounded-lg ${platform.color} ${platform.textColor}`}
                             >
-                              {platform.icon}
+                              <PlatformIcon icon={platform.icon} />
                             </div>
                             {idx < report.platforms.length - 1 && (
                               <span className="mx-2 text-muted-foreground/50 text-sm">
@@ -410,7 +402,7 @@ export default function DirectoryPage() {
                         <div
                           className={`flex h-7 w-7 items-center justify-center rounded-lg ${platform.color} ${platform.textColor} opacity-70`}
                         >
-                          {platform.icon}
+                          <PlatformIcon icon={platform.icon} />
                         </div>
                         {idx < report.platforms.length - 1 && (
                           <span className="mx-2 text-muted-foreground/40 text-sm">

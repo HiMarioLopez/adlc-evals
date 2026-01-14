@@ -7,80 +7,13 @@ import {
   ExternalLink,
   GitFork,
 } from "lucide-react";
+import type { AdoptionData } from "@/data/report-schema";
 
-const repositories = [
-  {
-    name: "vercel/ai",
-    description: "Vercel AI SDK for TypeScript",
-    latestTag: "ai@6.0.23",
-    language: "TypeScript",
-    forks: "~3,600",
-    openIssues: "~884",
-    ecosystem: "Fullstack (React, Next.js, Svelte, Vue)",
-    recentOpen: 356,
-    recentClosed: 366,
-    ratio: "0.97",
-    ratioLabel: "Healthy",
-    latestCommit: "2026-01-08T17:15:16Z",
-    link: "https://github.com/vercel/ai",
-    color: "primary",
-  },
-  {
-    name: "strands-agents/sdk-python",
-    description: "Strands Agents SDK",
-    latestTag: "v1.21.0",
-    language: "Python",
-    forks: "~609",
-    openIssues: "~137",
-    ecosystem: "Backend/ML (Python, boto3)",
-    recentOpen: 137,
-    recentClosed: 73,
-    ratio: "1.88",
-    ratioLabel: "Growing backlog",
-    latestCommit: "2026-01-08T15:50:24Z",
-    link: "https://github.com/strands-agents/sdk-python",
-    color: "chart-2",
-  },
-  {
-    name: "aws/bedrock-agentcore-sdk-python",
-    description: "Bedrock AgentCore Infrastructure SDK",
-    latestTag: "v1.1.4",
-    language: "Python",
-    forks: "~43",
-    openIssues: "~13",
-    ecosystem: "Infrastructure (Python)",
-    recentOpen: 13,
-    recentClosed: 3,
-    ratio: "4.33",
-    ratioLabel: "New project",
-    latestCommit: "2026-01-08T18:28:12Z",
-    link: "https://github.com/aws/bedrock-agentcore-sdk-python",
-    color: "aws",
-  },
-];
+interface AdoptionSectionProps {
+  data: AdoptionData;
+}
 
-const activitySignals = [
-  {
-    platform: "Vercel AI SDK",
-    signals: [
-      "V6 milestone active",
-      "Issues for generateImage()",
-      "Provider fixes (OpenAI, Anthropic)",
-      "Per-step timeouts in 6.0.23",
-    ],
-  },
-  {
-    platform: "Bedrock AgentCore",
-    signals: [
-      "GA announced Oct 2025",
-      "Policy + Evaluations in preview",
-      "Browser Tool GA",
-      "TypeScript SDK preview Dec 2025",
-    ],
-  },
-];
-
-export function AdoptionSection() {
+export function AdoptionSection({ data }: AdoptionSectionProps) {
   return (
     <section className="px-6 py-24" id="adoption">
       <div className="mx-auto max-w-6xl">
@@ -88,19 +21,19 @@ export function AdoptionSection() {
         <div className="mb-16">
           <span className="mb-4 inline-flex items-center gap-2 font-mono text-primary text-xs uppercase tracking-widest">
             <BarChart3 className="h-4 w-4" />
-            Section 6
+            Section {data.sectionNumber}
           </span>
           <h2 className="mb-4 font-bold text-3xl tracking-tight sm:text-4xl md:text-5xl">
-            Adoption Metrics
+            {data.title}
           </h2>
           <p className="max-w-2xl text-lg text-muted-foreground">
-            GitHub repository statistics and development velocity indicators
+            {data.description}
           </p>
         </div>
 
         {/* Repository cards */}
         <div className="mb-12 grid gap-6">
-          {repositories.map((repo) => (
+          {data.repositories.map((repo) => (
             <div
               className={`overflow-hidden rounded-2xl border border-border bg-card hover:border-${repo.color}/30 transition-colors`}
               key={repo.name}
@@ -225,7 +158,7 @@ export function AdoptionSection() {
 
         {/* Activity signals */}
         <div className="grid gap-6 md:grid-cols-2">
-          {activitySignals.map((platform) => (
+          {data.activitySignals.map((platform) => (
             <div
               className="rounded-2xl border border-border bg-card p-6"
               key={platform.platform}
@@ -252,8 +185,7 @@ export function AdoptionSection() {
         {/* Data note */}
         <div className="mt-8 rounded-xl border border-border bg-muted/50 p-4">
           <p className="text-center text-muted-foreground text-xs">
-            Issue counts based on GitHub API data filtered by created_at ≥
-            2025-11-09. Ratio = Open/Closed issues created in period.
+            {data.dataNote}
           </p>
         </div>
       </div>
