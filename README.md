@@ -36,21 +36,23 @@ flowchart LR
 ```
 meta-research-prompts/     → Master prompts for report generation
 generated-reports/         → Raw markdown from AI models
-generated-report-sites/    → Interactive Next.js sites
+site/                      → Interactive Next.js report site
 ```
 
 ## Current Comparisons
 
 | Comparison | Status | Links |
 |------------|--------|-------|
-| Vercel vs AWS | ✅ Live | [Report](generated-reports/vercel-aws/2026/01/2026-01-08-Agent-Comparison-Report-Claude-Opus-4.5.md) · [Live Site](https://adlc-evals-vercel-aws.vercel.app/) · [Source](generated-report-sites/agent-stack-comparison-vercel-aws/) |
+| Vercel vs AWS | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-aws) · [Markdown](generated-reports/vercel-aws/2026/01/2026-01-08-Agent-Comparison-Report-Claude-Opus-4.5.md) |
 | Vercel vs Cloudflare | 🔜 Planned | — |
 | Vercel vs GCP | 🔜 Planned | — |
+
+**Browse all reports:** [adlc-evals.vercel.app](https://adlc-evals.vercel.app)
 
 ## Run Locally
 
 ```bash
-cd generated-report-sites/agent-stack-comparison-vercel-aws
+cd site
 bun install && bun dev
 ```
 

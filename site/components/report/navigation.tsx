@@ -1,6 +1,7 @@
 "use client";
 
-import { ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
+import { ChevronLeft, ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -75,8 +76,18 @@ export function Navigation() {
         )}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-          {/* Logo */}
+          {/* Logo + Back link */}
           <div className="flex items-center gap-3">
+            <Link
+              className="flex items-center gap-1 rounded-lg px-2 py-1.5 text-muted-foreground transition-colors hover:bg-muted/50 hover:text-foreground"
+              href="/"
+            >
+              <ChevronLeft className="h-4 w-4" />
+              <span className="hidden font-medium text-sm sm:inline">
+                All Reports
+              </span>
+            </Link>
+            <div className="hidden h-6 w-px bg-border sm:block" />
             <div className="relative">
               <div className="absolute inset-0 rounded-lg bg-primary/20 blur-md" />
               <div className="relative flex items-center gap-1.5 rounded-lg border border-border bg-card px-3 py-1.5">

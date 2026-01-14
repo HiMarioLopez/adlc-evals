@@ -1,41 +1,31 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GeistMono } from "geist/font/mono";
+import { GeistSans } from "geist/font/sans";
 import type { Metadata, Viewport } from "next";
-import { Fira_Code, Sora } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
-const sora = Sora({
-  subsets: ["latin"],
-  variable: "--font-sans",
-  display: "swap",
-});
-
-const firaCode = Fira_Code({
-  subsets: ["latin"],
-  variable: "--font-mono",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Agent Stack Comparison 2026 | Vercel vs AWS",
+  title: {
+    default: "ADLC Evals | Technical Reports",
+    template: "%s | ADLC Evals",
+  },
   description:
-    "Comprehensive technical evaluation of Vercel AI SDK and Bedrock AgentCore for building production-ready AI agents. Infrastructure, pricing, and architecture analysis.",
+    "In-depth technical evaluations of AI agent frameworks, cloud infrastructure, and development workflows. Built with reproducible methodology and transparent sourcing.",
   keywords: [
-    "Vercel",
-    "AWS",
-    "AI SDK",
-    "Bedrock AgentCore",
-    "Strands",
     "AI Agents",
+    "Technical Evaluation",
+    "Cloud Infrastructure",
+    "AI SDK",
     "LLM",
-    "Claude",
+    "Developer Tools",
   ],
-  authors: [{ name: "Technical Research Team" }],
+  authors: [{ name: "Mario Lopez Martinez" }],
   openGraph: {
-    title: "Agent Stack Comparison 2026 | Vercel vs AWS",
+    title: "ADLC Evals | Technical Reports",
     description:
-      "Comprehensive technical evaluation of Vercel AI SDK and Bedrock AgentCore",
+      "In-depth technical evaluations of AI agent frameworks and cloud infrastructure",
     type: "website",
   },
 };
@@ -61,7 +51,7 @@ export default function RootLayout({
         <link href="https://basemaps.cartocdn.com" rel="dns-prefetch" />
       </head>
       <body
-        className={`${sora.variable} ${firaCode.variable} overflow-x-hidden font-sans`}
+        className={`${GeistSans.variable} ${GeistMono.variable} overflow-x-hidden font-sans`}
       >
         <ThemeProvider
           attribute="class"

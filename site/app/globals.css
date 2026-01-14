@@ -190,7 +190,7 @@ pre {
 }
 
 code {
-  font-family: var(--font-mono);
+  font-family: var(--font-geist-mono);
 }
 
 /* Range slider styling */

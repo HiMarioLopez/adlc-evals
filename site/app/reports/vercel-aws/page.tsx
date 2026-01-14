@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { AdoptionSection } from "@/components/report/adoption-section";
 import { CostCalculator } from "@/components/report/cost-calculator";
@@ -11,6 +12,18 @@ import { InfrastructureSection } from "@/components/report/infrastructure-sectio
 import { Navigation } from "@/components/report/navigation";
 import { PricingSection } from "@/components/report/pricing-section";
 
+export const metadata: Metadata = {
+  title: "Vercel vs AWS Agent Stack Comparison | 2026 Report",
+  description:
+    "Comprehensive technical evaluation of Vercel AI SDK and AWS Bedrock AgentCore for building production-ready AI agents. Infrastructure, pricing, and architecture analysis.",
+  openGraph: {
+    title: "Vercel vs AWS Agent Stack Comparison | 2026 Report",
+    description:
+      "Comprehensive technical evaluation of Vercel AI SDK and Bedrock AgentCore",
+    type: "article",
+  },
+};
+
 // Loading skeleton for heavy sections
 function SectionSkeleton({ height = "600px" }: { height?: string }) {
   return (
@@ -23,8 +36,6 @@ function SectionSkeleton({ height = "600px" }: { height?: string }) {
 }
 
 // Dynamic imports for heavy components - defer loading until needed
-// Note: ssr: false must be used in Client Components, but these components
-// already have "use client" so they handle client-only rendering internally
 const CodeSection = dynamic(
   () =>
     import("@/components/report/code-section").then((m) => ({
@@ -57,7 +68,7 @@ const RegionalSection = dynamic(
   }
 );
 
-export default function Page() {
+export default function VercelAwsReportPage() {
   return (
     <main className="min-h-screen bg-background">
       <DataFreshnessBanner />
