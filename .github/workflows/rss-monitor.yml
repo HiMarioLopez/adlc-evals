@@ -1,0 +1,79 @@
+name: RSS Feed Monitor
+
+on:
+  schedule:
+    # Run every hour at minute 0
+    - cron: '0 * * * *'
+  
+  # Allow manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      report:
+        description: 'Report to monitor'
+        required: true
+        default: 'vercel-aws'
+        type: choice
+        options:
+          - vercel-aws
+          - vercel-gcp
+          - vercel-azure
+          - vercel-cloudflare
+          - vercel-modal
+          - all
+      dry_run:
+        description: 'Run without creating issues'
+        required: false
+        default: false
+        type: boolean
+      extended_feeds:
+        description: 'Include extended feeds'
+        required: false
+        default: false
+        type: boolean
+      threshold:
+        description: 'Relevance threshold (default: 3)'
+        required: false
+        default: '3'
+        type: string
+
+jobs:
+  check-feeds:
+    name: Check RSS Feeds
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        report: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.report != 'all' && fromJson(format('["{0}"]', github.event.inputs.report)) || fromJson('["vercel-aws", "vercel-gcp", "vercel-azure", "vercel-cloudflare", "vercel-modal"]') }}
+    
+    permissions:
+      issues: write
+      contents: read
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      
+      - name: Install dependencies
+        run: bun install
+        working-directory: scripts/rss-monitor
+      
+      - name: Run RSS Monitor for ${{ matrix.report }}
+        run: |
+          ARGS="--report=${{ matrix.report }}"
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then
+            ARGS="$ARGS --dry-run"
+          fi
+          if [ -n "${{ github.event.inputs.threshold }}" ] && [ "${{ github.event.inputs.threshold }}" != "3" ]; then
+            ARGS="$ARGS --threshold=${{ github.event.inputs.threshold }}"
+          fi
+          bun run src/index.ts $ARGS
+        working-directory: scripts/rss-monitor
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EXTENDED_FEEDS: ${{ github.event.inputs.extended_feeds || 'false' }}

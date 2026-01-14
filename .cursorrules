@@ -17,3 +17,8 @@
 - Turbopack is enabled for dev (`bun run dev` uses `--turbopack`)
 - Use TypeScript for all new code
 - Tailwind CSS for styling
+
+## Prompts Documentation
+- When creating new prompt files in any `prompts/` directory, always add an entry to the corresponding `prompts/README.md`
+- Include: prompt filename, purpose, and recommended frequency of use
+- Keep the README table format consistent with existing entries
