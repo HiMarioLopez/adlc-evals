@@ -23,6 +23,13 @@ import {
   getAvailableReportIds,
   getAllReportConfigs,
 } from './reports/index.js';
+import {
+  loadState,
+  saveState,
+  filterNewItems,
+  addProcessedItems,
+  pruneOldEntries,
+} from './state-manager.js';
 
 interface ParsedArgs {
   dryRun: boolean;
@@ -127,6 +134,9 @@ async function main(): Promise<void> {
   console.log(`  Extended feeds: ${process.env.EXTENDED_FEEDS === 'true'}`);
 
   try {
+    // Load state to track previously processed items
+    const state = await loadState(config.id);
+
     // Fetch and filter relevant items
     const relevantItems = await getRelevantUpdates(config, effectiveThreshold);
 
@@ -135,16 +145,33 @@ async function main(): Promise<void> {
       return;
     }
 
-    console.log(`\n📋 Found ${relevantItems.length} relevant items:`);
-    for (const item of relevantItems) {
+    // Filter out items we've already processed
+    const newItems = filterNewItems(relevantItems, state);
+
+    if (newItems.length === 0) {
+      console.log('\n✓ No new items since last run (all items were previously processed).');
+      return;
+    }
+
+    console.log(`\n📋 Found ${newItems.length} new items (${relevantItems.length - newItems.length} already processed):`);
+    for (const item of newItems) {
       console.log(`  - [${item.matchResult.score}] ${item.title}`);
       console.log(
         `    Keywords: ${item.matchResult.matchedKeywords.slice(0, 5).join(', ')}${item.matchResult.matchedKeywords.length > 5 ? '...' : ''}`
       );
     }
 
-    // Create issues
-    await createIssuesForItems(relevantItems, config, dryRun);
+    // Create issues for new items only
+    await createIssuesForItems(newItems, config, dryRun);
+
+    // Update state with newly processed items
+    addProcessedItems(newItems, state);
+
+    // Remove entries older than 7 days (matches GitHub cache TTL)
+    pruneOldEntries(state, 7);
+
+    // Save updated state
+    await saveState(state);
 
     console.log('\n✓ RSS Feed Monitor completed successfully.');
   } catch (error) {

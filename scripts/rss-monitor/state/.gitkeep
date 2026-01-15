@@ -1,0 +1,3 @@
+# This directory holds state files for RSS feed deduplication.
+# State files are managed by GitHub Actions cache and are ephemeral.
+# The .gitkeep ensures the directory exists in the repository.

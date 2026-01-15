@@ -63,6 +63,14 @@ jobs:
         run: bun install
         working-directory: scripts/rss-monitor
       
+      - name: Restore state cache
+        uses: actions/cache@v4
+        with:
+          path: scripts/rss-monitor/state
+          key: rss-state-${{ matrix.report }}-${{ github.run_id }}
+          restore-keys: |
+            rss-state-${{ matrix.report }}-
+      
       - name: Run RSS Monitor for ${{ matrix.report }}
         run: |
           ARGS="--report=${{ matrix.report }}"
