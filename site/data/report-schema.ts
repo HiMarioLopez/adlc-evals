@@ -11,7 +11,16 @@ export interface Platform {
   shortName: string;
   color: string;
   textColor?: string;
-  icon: "vercel" | "aws" | "gcp" | "azure" | "cloudflare" | "modal";
+  icon:
+    | "vercel"
+    | "aws"
+    | "gcp"
+    | "azure"
+    | "cloudflare"
+    | "modal"
+    | "openai"
+    | "databricks"
+    | "snowflake";
 }
 
 export interface Contributor {

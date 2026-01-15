@@ -41,6 +41,12 @@ function PlatformIcon({ icon }: { icon: string }) {
       return <span className="font-bold text-sm">CF</span>;
     case "modal":
       return <span className="font-bold text-sm">M</span>;
+    case "openai":
+      return <span className="font-bold text-sm">OA</span>;
+    case "databricks":
+      return <span className="font-bold text-sm">DB</span>;
+    case "snowflake":
+      return <span className="font-bold text-sm">SF</span>;
     default:
       return <span className="font-bold text-sm">?</span>;
   }
@@ -147,6 +153,76 @@ const upcomingReports = [
       "Custom container support",
     ],
   },
+  {
+    id: "vercel-openai",
+    title: "Vercel vs OpenAI",
+    subtitle: "Agent Stack Technical Evaluation",
+    description:
+      "Comparing Vercel AI SDK with OpenAI's Responses API and Agents SDK for building agentic applications.",
+    platforms: [
+      {
+        name: "Vercel",
+        color: "bg-foreground",
+        textColor: "text-background",
+        icon: "vercel" as const,
+      },
+      {
+        name: "OpenAI",
+        color: "bg-[#412991]",
+        textColor: "text-white",
+        icon: "openai" as const,
+      },
+    ],
+    teaser: [
+      "Responses API",
+      "Agents SDK",
+      "Built-in tools (web search, code interpreter)",
+    ],
+  },
+  {
+    id: "vercel-databricks",
+    title: "Vercel vs Databricks",
+    subtitle: "Agent Stack Technical Evaluation",
+    description:
+      "Evaluating Vercel AI SDK versus Databricks Mosaic AI Agent Framework for data-plane agents with Unity Catalog governance.",
+    platforms: [
+      {
+        name: "Vercel",
+        color: "bg-foreground",
+        textColor: "text-background",
+        icon: "vercel" as const,
+      },
+      {
+        name: "Databricks",
+        color: "bg-[#FF3621]",
+        textColor: "text-white",
+        icon: "databricks" as const,
+      },
+    ],
+    teaser: ["Mosaic AI Agent Framework", "Unity Catalog", "MLflow tracing"],
+  },
+  {
+    id: "vercel-snowflake",
+    title: "Vercel vs Snowflake",
+    subtitle: "Agent Stack Technical Evaluation",
+    description:
+      "Comparing Vercel AI SDK with Snowflake Cortex Agents for warehouse-native analytics agents.",
+    platforms: [
+      {
+        name: "Vercel",
+        color: "bg-foreground",
+        textColor: "text-background",
+        icon: "vercel" as const,
+      },
+      {
+        name: "Snowflake",
+        color: "bg-[#29B5E8]",
+        textColor: "text-white",
+        icon: "snowflake" as const,
+      },
+    ],
+    teaser: ["Cortex Agents", "Cortex Analyst", "Cortex Search"],
+  },
 ];
 
 export default function DirectoryPage() {
@@ -205,7 +281,7 @@ export default function DirectoryPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex items-center justify-center py-8 pt-28 md:min-h-[60vh] md:py-12">
+      <section className="relative flex items-center justify-center pt-28 pb-8 md:min-h-[60vh] md:pb-12">
         {/* Background layers */}
         <div className="grid-pattern absolute inset-0 opacity-50" />
 
@@ -400,7 +476,7 @@ export default function DirectoryPage() {
                     {report.platforms.map((platform, idx) => (
                       <div className="flex items-center" key={platform.name}>
                         <div
-                          className={`flex h-7 w-7 items-center justify-center rounded-lg ${platform.color} ${platform.textColor} opacity-70`}
+                          className={`flex h-9 w-9 items-center justify-center rounded-lg ${platform.color} ${platform.textColor} opacity-70`}
                         >
                           <PlatformIcon icon={platform.icon} />
                         </div>

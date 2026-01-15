@@ -13,6 +13,9 @@ import { vercelGcpConfig } from './vercel-gcp.js';
 import { vercelAzureConfig } from './vercel-azure.js';
 import { vercelCloudflareConfig } from './vercel-cloudflare.js';
 import { vercelModalConfig } from './vercel-modal.js';
+import { vercelOpenaiConfig } from './vercel-openai.js';
+import { vercelDatabricksConfig } from './vercel-databricks.js';
+import { vercelSnowflakeConfig } from './vercel-snowflake.js';
 
 /**
  * All available report configurations
@@ -23,6 +26,9 @@ export const reportConfigs: Record<string, ReportConfig> = {
   'vercel-azure': vercelAzureConfig,
   'vercel-cloudflare': vercelCloudflareConfig,
   'vercel-modal': vercelModalConfig,
+  'vercel-openai': vercelOpenaiConfig,
+  'vercel-databricks': vercelDatabricksConfig,
+  'vercel-snowflake': vercelSnowflakeConfig,
 };
 
 /**
