@@ -4,8 +4,8 @@ import { ChevronLeft, ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import type { ReportSection } from "@/data/report-schema";
-import { cn } from "@/lib/utils";
+import type { ReportSection } from "@/data/report-schema.ts";
+import { cn } from "@/lib/utils.ts";
 
 interface NavigationProps {
   sections: ReportSection[];

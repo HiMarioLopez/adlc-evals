@@ -15,14 +15,19 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+} from "@/components/ui/collapsible.tsx";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs.tsx";
 import type {
   AWSRegionData,
   RegionalData,
   VercelRegionData,
-} from "@/data/report-schema";
-import { cn } from "@/lib/utils";
+} from "@/data/report-schema.ts";
+import { cn } from "@/lib/utils.ts";
 
 type AgentCoreStatus = "full" | "partial" | "none";
 
@@ -73,7 +78,7 @@ function AWSMapLazy({
   >(null);
 
   useEffect(() => {
-    import("@/components/ui/map").then(setMapModule);
+    import("@/components/ui/map.tsx").then(setMapModule);
   }, []);
 
   if (!MapModule) {
@@ -189,7 +194,7 @@ function VercelMapLazy({ regions }: { regions: VercelRegionData[] }) {
   >(null);
 
   useEffect(() => {
-    import("@/components/ui/map").then(setMapModule);
+    import("@/components/ui/map.tsx").then(setMapModule);
   }, []);
 
   if (!MapModule) {

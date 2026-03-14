@@ -1,7 +1,7 @@
 "use client";
 
 import { AlertTriangle, DollarSign, Info, TrendingUp } from "lucide-react";
-import type { PricingData } from "@/data/report-schema";
+import type { PricingData } from "@/data/report-schema.ts";
 
 interface PricingSectionProps {
   data: PricingData;

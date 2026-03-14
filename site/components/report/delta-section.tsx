@@ -1,7 +1,7 @@
 "use client";
 
 import { ArrowRight, ExternalLink, GitBranch } from "lucide-react";
-import type { DeltaData } from "@/data/report-schema";
+import type { DeltaData } from "@/data/report-schema.ts";
 
 interface DeltaSectionProps {
   data: DeltaData;

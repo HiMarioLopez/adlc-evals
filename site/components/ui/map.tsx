@@ -18,11 +18,11 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 
 interface MapContextValue {
-  map: MapLibreGL.Map | null;
   isLoaded: boolean;
+  map: MapLibreGL.Map | null;
 }
 
 const MapContext = createContext<MapContextValue | null>(null);
@@ -168,8 +168,8 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
 });
 
 interface MarkerContextValue {
-  marker: MapLibreGL.Marker;
   map: MapLibreGL.Map | null;
+  marker: MapLibreGL.Marker;
 }
 
 const MarkerContext = createContext<MarkerContextValue | null>(null);
@@ -565,20 +565,20 @@ function MarkerLabel({
 }
 
 interface MapControlsProps {
-  /** Position of the controls on the map (default: "bottom-right") */
-  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
-  /** Show zoom in/out buttons (default: true) */
-  showZoom?: boolean;
-  /** Show compass button to reset bearing (default: false) */
-  showCompass?: boolean;
-  /** Show locate button to find user's location (default: false) */
-  showLocate?: boolean;
-  /** Show fullscreen toggle button (default: false) */
-  showFullscreen?: boolean;
   /** Additional CSS classes for the controls container */
   className?: string;
   /** Callback with user coordinates when located */
   onLocate?: (coords: { longitude: number; latitude: number }) => void;
+  /** Position of the controls on the map (default: "bottom-right") */
+  position?: "top-left" | "top-right" | "bottom-left" | "bottom-right";
+  /** Show compass button to reset bearing (default: false) */
+  showCompass?: boolean;
+  /** Show fullscreen toggle button (default: false) */
+  showFullscreen?: boolean;
+  /** Show locate button to find user's location (default: false) */
+  showLocate?: boolean;
+  /** Show zoom in/out buttons (default: true) */
+  showZoom?: boolean;
 }
 
 const positionClasses = {
@@ -907,26 +907,26 @@ function MapPopup({
 }
 
 interface MapRouteProps {
-  /** Optional unique identifier for the route layer */
-  id?: string;
-  /** Array of [longitude, latitude] coordinate pairs defining the route */
-  coordinates: [number, number][];
   /** Line color as CSS color value (default: "#4285F4") */
   color?: string;
-  /** Line width in pixels (default: 3) */
-  width?: number;
-  /** Line opacity from 0 to 1 (default: 0.8) */
-  opacity?: number;
+  /** Array of [longitude, latitude] coordinate pairs defining the route */
+  coordinates: [number, number][];
   /** Dash pattern [dash length, gap length] for dashed lines */
   dashArray?: [number, number];
+  /** Optional unique identifier for the route layer */
+  id?: string;
+  /** Whether the route is interactive - shows pointer cursor on hover (default: true) */
+  interactive?: boolean;
   /** Callback when the route line is clicked */
   onClick?: () => void;
   /** Callback when mouse enters the route line */
   onMouseEnter?: () => void;
   /** Callback when mouse leaves the route line */
   onMouseLeave?: () => void;
-  /** Whether the route is interactive - shows pointer cursor on hover (default: true) */
-  interactive?: boolean;
+  /** Line opacity from 0 to 1 (default: 0.8) */
+  opacity?: number;
+  /** Line width in pixels (default: 3) */
+  width?: number;
 }
 
 function MapRoute({
@@ -1007,7 +1007,7 @@ function MapRoute({
   }, [isLoaded, map, coordinates, sourceId]);
 
   useEffect(() => {
-    if (!(isLoaded && map && map.getLayer(layerId))) {
+    if (!(isLoaded && map?.getLayer(layerId))) {
       return;
     }
 
@@ -1062,29 +1062,29 @@ function MapRoute({
 interface MapClusterLayerProps<
   P extends GeoJSON.GeoJsonProperties = GeoJSON.GeoJsonProperties,
 > {
-  /** GeoJSON FeatureCollection data or URL to fetch GeoJSON from */
-  data: string | GeoJSON.FeatureCollection<GeoJSON.Point, P>;
+  /** Colors for cluster circles: [small, medium, large] based on point count (default: ["#51bbd6", "#f1f075", "#f28cb1"]) */
+  clusterColors?: [string, string, string];
   /** Maximum zoom level to cluster points on (default: 14) */
   clusterMaxZoom?: number;
   /** Radius of each cluster when clustering points in pixels (default: 50) */
   clusterRadius?: number;
-  /** Colors for cluster circles: [small, medium, large] based on point count (default: ["#51bbd6", "#f1f075", "#f28cb1"]) */
-  clusterColors?: [string, string, string];
   /** Point count thresholds for color/size steps: [medium, large] (default: [100, 750]) */
   clusterThresholds?: [number, number];
-  /** Color for unclustered individual points (default: "#3b82f6") */
-  pointColor?: string;
-  /** Callback when an unclustered point is clicked */
-  onPointClick?: (
-    feature: GeoJSON.Feature<GeoJSON.Point, P>,
-    coordinates: [number, number]
-  ) => void;
+  /** GeoJSON FeatureCollection data or URL to fetch GeoJSON from */
+  data: string | GeoJSON.FeatureCollection<GeoJSON.Point, P>;
   /** Callback when a cluster is clicked. If not provided, zooms into the cluster */
   onClusterClick?: (
     clusterId: number,
     coordinates: [number, number],
     pointCount: number
   ) => void;
+  /** Callback when an unclustered point is clicked */
+  onPointClick?: (
+    feature: GeoJSON.Feature<GeoJSON.Point, P>,
+    coordinates: [number, number]
+  ) => void;
+  /** Color for unclustered individual points (default: "#3b82f6") */
+  pointColor?: string;
 }
 
 function MapClusterLayer<
@@ -1387,18 +1387,17 @@ function MapClusterLayer<
   return null;
 }
 
+export type { MapRef };
 export {
   Map,
-  useMap,
+  MapClusterLayer,
+  MapControls,
   MapMarker,
+  MapPopup,
+  MapRoute,
   MarkerContent,
+  MarkerLabel,
   MarkerPopup,
   MarkerTooltip,
-  MarkerLabel,
-  MapPopup,
-  MapControls,
-  MapRoute,
-  MapClusterLayer,
+  useMap,
 };
-
-export type { MapRef };

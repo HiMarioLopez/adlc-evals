@@ -1,4 +1,4 @@
-import type { ReportSection } from "@/data/report-schema";
+import type { ReportSection } from "@/data/report-schema.ts";
 
 export const sections: ReportSection[] = [
   { id: "foreword", label: "Foreword" },

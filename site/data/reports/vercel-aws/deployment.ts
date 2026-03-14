@@ -1,4 +1,4 @@
-import type { DeploymentData } from "@/data/report-schema";
+import type { DeploymentData } from "@/data/report-schema.ts";
 
 export const deploymentData: DeploymentData = {
   sectionNumber: 4,

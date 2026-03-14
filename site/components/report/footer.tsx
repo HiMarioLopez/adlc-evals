@@ -2,7 +2,7 @@
 
 import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
-import type { FooterData } from "@/data/report-schema";
+import type { FooterData } from "@/data/report-schema.ts";
 
 interface FooterProps {
   data: FooterData;

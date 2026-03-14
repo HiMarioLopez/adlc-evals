@@ -7,7 +7,7 @@ import {
   ExternalLink,
   GitFork,
 } from "lucide-react";
-import type { AdoptionData } from "@/data/report-schema";
+import type { AdoptionData } from "@/data/report-schema.ts";
 
 interface AdoptionSectionProps {
   data: AdoptionData;

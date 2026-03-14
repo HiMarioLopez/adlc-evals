@@ -1,4 +1,4 @@
-import type { FooterData } from "@/data/report-schema";
+import type { FooterData } from "@/data/report-schema.ts";
 
 export const footerData: FooterData = {
   vercelLinks: [

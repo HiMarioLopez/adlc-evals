@@ -2,7 +2,7 @@ import type {
   AWSRegionData,
   RegionalData,
   VercelRegionData,
-} from "@/data/report-schema";
+} from "@/data/report-schema.ts";
 
 export const awsRegions: AWSRegionData[] = [
   // Americas

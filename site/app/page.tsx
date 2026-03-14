@@ -13,8 +13,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import type { ReportMetadata } from "@/data/report-schema";
-import { getAllReportMetadata } from "@/data/reports";
+import type { ReportMetadata } from "@/data/report-schema.ts";
+import { getAllReportMetadata } from "@/data/reports/index.ts";
 
 const siteContributors = [
   { name: "Mario Lopez Martinez", github: "HiMarioLopez" },

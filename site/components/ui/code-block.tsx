@@ -2,7 +2,7 @@
 
 import { Check, Copy } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils.ts";
 
 // Lightweight syntax highlighting using regex patterns
 // Much smaller than react-syntax-highlighter (~400KB -> ~5KB)
@@ -20,8 +20,8 @@ type TokenType =
   | "decorator";
 
 interface Token {
-  type: TokenType | null;
   content: string;
+  type: TokenType | null;
 }
 
 // Token patterns for common languages
@@ -89,10 +89,10 @@ function tokenize(code: string, language: string): Token[] {
 
   // Find all matches with their positions
   interface Match {
-    start: number;
-    end: number;
-    type: TokenType;
     content: string;
+    end: number;
+    start: number;
+    type: TokenType;
   }
 
   const matches: Match[] = [];
@@ -153,9 +153,9 @@ const tokenColors: Record<TokenType, string> = {
 };
 
 interface LightCodeBlockProps {
+  className?: string;
   code: string;
   language: string;
-  className?: string;
 }
 
 export function LightCodeBlock({

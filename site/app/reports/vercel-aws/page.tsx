@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { AdoptionSection } from "@/components/report/adoption-section";
-import { CostCalculator } from "@/components/report/cost-calculator";
-import { DataFreshnessBanner } from "@/components/report/data-freshness-banner";
-import { DeltaSection } from "@/components/report/delta-section";
-import { DeploymentSection } from "@/components/report/deployment-section";
-import { Footer } from "@/components/report/footer";
-import { ForewordSection } from "@/components/report/foreword-section";
-import { Hero } from "@/components/report/hero";
-import { InfrastructureSection } from "@/components/report/infrastructure-section";
-import { Navigation } from "@/components/report/navigation";
-import { PricingSection } from "@/components/report/pricing-section";
-import { vercelAwsReport } from "@/data/reports/vercel-aws";
+import { AdoptionSection } from "@/components/report/adoption-section.tsx";
+import { CostCalculator } from "@/components/report/cost-calculator.tsx";
+import { DataFreshnessBanner } from "@/components/report/data-freshness-banner.tsx";
+import { DeltaSection } from "@/components/report/delta-section.tsx";
+import { DeploymentSection } from "@/components/report/deployment-section.tsx";
+import { Footer } from "@/components/report/footer.tsx";
+import { ForewordSection } from "@/components/report/foreword-section.tsx";
+import { Hero } from "@/components/report/hero.tsx";
+import { InfrastructureSection } from "@/components/report/infrastructure-section.tsx";
+import { Navigation } from "@/components/report/navigation.tsx";
+import { PricingSection } from "@/components/report/pricing-section.tsx";
+import { vercelAwsReport } from "@/data/reports/vercel-aws/index.ts";
 
 export const metadata: Metadata = {
   title: "Vercel vs AWS Agent Stack Comparison | 2026 Report",
@@ -39,7 +39,7 @@ function SectionSkeleton({ height = "600px" }: { height?: string }) {
 // Dynamic imports for heavy components - defer loading until needed
 const CodeSection = dynamic(
   () =>
-    import("@/components/report/code-section").then((m) => ({
+    import("@/components/report/code-section.tsx").then((m) => ({
       default: m.CodeSection,
     })),
   {
@@ -55,7 +55,7 @@ const CodeSection = dynamic(
 
 const RegionalSection = dynamic(
   () =>
-    import("@/components/report/regional-section").then((m) => ({
+    import("@/components/report/regional-section.tsx").then((m) => ({
       default: m.RegionalSection,
     })),
   {

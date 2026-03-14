@@ -15,24 +15,8 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
-import type { InfrastructureData } from "@/data/report-schema";
-import { cn } from "@/lib/utils";
-
-// Icon mapping
-const iconMap: Record<string, React.ReactNode> = {
-  Bot: <Bot className="h-5 w-5" />,
-  Server: <Server className="h-5 w-5" />,
-  Shield: <Shield className="h-5 w-5" />,
-  Activity: <Activity className="h-5 w-5" />,
-  Network: <Network className="h-4 w-4" />,
-  Wrench: <Wrench className="h-4 w-4" />,
-  Code2: <Code2 className="h-4 w-4" />,
-  Workflow: <Workflow className="h-4 w-4" />,
-  Globe: <Globe className="h-4 w-4" />,
-  KeyRound: <KeyRound className="h-4 w-4" />,
-  Fingerprint: <Fingerprint className="h-4 w-4" />,
-  Database: <Database className="h-4 w-4" />,
-};
+import type { InfrastructureData } from "@/data/report-schema.ts";
+import { cn } from "@/lib/utils.ts";
 
 const getIcon = (name: string, size: "sm" | "md" = "md") => {
   const sizeClass = size === "sm" ? "h-4 w-4" : "h-5 w-5";

@@ -1,5 +1,5 @@
-import type { Report, ReportMetadata } from "@/data/report-schema";
-import { vercelAwsReport } from "./vercel-aws";
+import type { Report, ReportMetadata } from "@/data/report-schema.ts";
+import { vercelAwsReport } from "./vercel-aws/index.ts";
 
 // Report registry - all available reports
 export const reports = {

@@ -1,4 +1,4 @@
-import type { CodeData } from "@/data/report-schema";
+import type { CodeData } from "@/data/report-schema.ts";
 
 export const codeData: CodeData = {
   sectionNumber: 3,

@@ -1,4 +1,4 @@
-import type { AdoptionData } from "@/data/report-schema";
+import type { AdoptionData } from "@/data/report-schema.ts";
 
 export const adoptionData: AdoptionData = {
   sectionNumber: 6,

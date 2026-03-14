@@ -6,11 +6,7 @@
 // =============================================================================
 
 export interface Platform {
-  id: string;
-  name: string;
-  shortName: string;
   color: string;
-  textColor?: string;
   icon:
     | "vercel"
     | "aws"
@@ -21,11 +17,15 @@ export interface Platform {
     | "openai"
     | "databricks"
     | "snowflake";
+  id: string;
+  name: string;
+  shortName: string;
+  textColor?: string;
 }
 
 export interface Contributor {
-  name: string;
   github: string;
+  name: string;
 }
 
 export interface ReportSection {
@@ -51,14 +51,14 @@ export interface KeyFinding {
 }
 
 export interface HeroData {
+  description: string;
+  keyFindings: KeyFinding[];
   lastUpdated: string;
+  subtitle: string;
   title: {
     primary: string;
     secondary: string;
   };
-  subtitle: string;
-  description: string;
-  keyFindings: KeyFinding[];
 }
 
 // =============================================================================
@@ -66,37 +66,37 @@ export interface HeroData {
 // =============================================================================
 
 export interface PlatformValue {
-  text: string;
   detail?: string;
   link?: string;
+  text: string;
 }
 
 export interface ComparisonRow {
+  aws: PlatformValue;
   capability: string;
   description: string;
   iconName: string;
   vercel: PlatformValue;
-  aws: PlatformValue;
 }
 
 export interface CategoryGroup {
-  name: string;
-  iconName: string;
-  description: string;
   colorClass: string;
+  description: string;
+  iconName: string;
+  name: string;
   rows: ComparisonRow[];
 }
 
 export interface InfrastructureData {
-  sectionNumber: number;
-  title: string;
-  description: string;
   categoryGroups: CategoryGroup[];
+  description: string;
   keyInsight: {
     title: string;
     description: string;
     codeHighlight?: string;
   };
+  sectionNumber: number;
+  title: string;
 }
 
 // =============================================================================
@@ -104,61 +104,61 @@ export interface InfrastructureData {
 // =============================================================================
 
 export interface ModelPricing {
-  model: string;
   input: string;
+  model: string;
   output: string;
   tier: "flagship" | "balanced" | "fast";
 }
 
 export interface CostBreakdownItem {
-  component: string;
   calc: string;
+  component: string;
   cost: string;
 }
 
 export interface CostBreakdown {
-  vercel: CostBreakdownItem[];
   aws: CostBreakdownItem[];
-  vercelTotal: string;
-  awsTotal: string;
   awsRegionalNote?: string;
+  awsTotal: string;
+  vercel: CostBreakdownItem[];
+  vercelTotal: string;
 }
 
 export interface EffortLevel {
+  color: string;
+  impact: string;
   level: string;
   multiplier: string;
-  impact: string;
-  color: string;
 }
 
 export interface PricingTier {
-  tier: string;
   description: string;
   discount: string;
+  tier: string;
   tooltip?: string | null;
 }
 
 export interface PricingData {
-  sectionNumber: number;
-  title: string;
-  description: string;
-  workloadAssumptions: {
-    turns: number;
-    inputTokensPerTurn: number;
-    outputTokensPerTurn: number;
-    activeCpuPerTurn: string;
-  };
-  modelPricing: ModelPricing[];
+  bedrockPricingNote: string;
+  bedrockTiers: PricingTier[];
   costBreakdown: CostBreakdown;
+  description: string;
+  effortLevels: EffortLevel[];
   keyInsight: {
     title: string;
     description: string;
     modelPercent: number;
     infraPercent: number;
   };
-  effortLevels: EffortLevel[];
-  bedrockTiers: PricingTier[];
-  bedrockPricingNote: string;
+  modelPricing: ModelPricing[];
+  sectionNumber: number;
+  title: string;
+  workloadAssumptions: {
+    turns: number;
+    inputTokensPerTurn: number;
+    outputTokensPerTurn: number;
+    activeCpuPerTurn: string;
+  };
 }
 
 // =============================================================================
@@ -166,33 +166,33 @@ export interface PricingData {
 // =============================================================================
 
 export interface CodeExample {
+  code: string;
   key: string;
   label: string;
-  code: string;
   language: string;
 }
 
 export interface CodePatternComparison {
+  aws: { label: string; code?: string };
   title: string;
   vercel: { label: string; code?: string };
-  aws: { label: string; code?: string };
 }
 
 export interface CodeData {
-  sectionNumber: number;
-  title: string;
-  description: string;
-  vercel: {
-    label: string;
-    language: string;
-    examples: CodeExample[];
-  };
   aws: {
     label: string;
     language: string;
     examples: CodeExample[];
   };
+  description: string;
   patternComparisons: CodePatternComparison[];
+  sectionNumber: number;
+  title: string;
+  vercel: {
+    label: string;
+    language: string;
+    examples: CodeExample[];
+  };
 }
 
 // =============================================================================
@@ -200,28 +200,16 @@ export interface CodeData {
 // =============================================================================
 
 export interface DeploymentStep {
-  stepNumber: number;
-  title: string;
+  codeBlock?: string;
+  command?: string;
   description: string;
   iconName: string;
-  command?: string;
-  codeBlock?: string;
   notes?: string[];
+  stepNumber: number;
+  title: string;
 }
 
 export interface DeploymentData {
-  sectionNumber: number;
-  title: string;
-  description: string;
-  vercel: {
-    title: string;
-    duration: string;
-    steps: DeploymentStep[];
-    summary: {
-      title: string;
-      description: string;
-    };
-  };
   aws: {
     title: string;
     duration: string;
@@ -236,6 +224,18 @@ export interface DeploymentData {
     vercel: { value: string; unit?: string };
     aws: { value: string; unit?: string };
   }[];
+  description: string;
+  sectionNumber: number;
+  title: string;
+  vercel: {
+    title: string;
+    duration: string;
+    steps: DeploymentStep[];
+    summary: {
+      title: string;
+      description: string;
+    };
+  };
 }
 
 // =============================================================================
@@ -243,40 +243,40 @@ export interface DeploymentData {
 // =============================================================================
 
 export interface AWSAgentCoreFeatures {
-  runtime: boolean;
-  memory: boolean;
+  evaluations: boolean;
   gateway: boolean;
   identity: boolean;
-  tools: boolean;
+  memory: boolean;
   observability: boolean;
   policy: boolean;
-  evaluations: boolean;
+  runtime: boolean;
+  tools: boolean;
 }
 
 export interface AWSRegionData {
-  region: string;
-  name: string;
-  coordinates: [number, number];
   agentcore: AWSAgentCoreFeatures;
+  coordinates: [number, number];
+  name: string;
+  region: string;
 }
 
 export interface VercelRegionData {
-  code: string;
   awsRegion: string;
-  name: string;
+  code: string;
   coordinates: [number, number];
   hasSandbox: boolean;
+  name: string;
 }
 
 export interface RegionalData {
+  agentcoreFeatures: { key: string; label: string; required: boolean }[];
+  awsRegions: AWSRegionData[];
+  description: string;
   sectionNumber: number;
   title: string;
-  description: string;
-  awsRegions: AWSRegionData[];
-  vercelRegions: VercelRegionData[];
-  agentcoreFeatures: { key: string; label: string; required: boolean }[];
-  vercelFeatures: { key: string; label: string; note: string }[];
   vercelEdgePops: number;
+  vercelFeatures: { key: string; label: string; note: string }[];
+  vercelRegions: VercelRegionData[];
 }
 
 // =============================================================================
@@ -284,20 +284,20 @@ export interface RegionalData {
 // =============================================================================
 
 export interface Repository {
-  name: string;
+  color: string;
   description: string;
-  latestTag: string;
-  language: string;
-  forks: string;
-  openIssues: string;
   ecosystem: string;
-  recentOpen: number;
-  recentClosed: number;
+  forks: string;
+  language: string;
+  latestCommit: string;
+  latestTag: string;
+  link: string;
+  name: string;
+  openIssues: string;
   ratio: string;
   ratioLabel: string;
-  latestCommit: string;
-  link: string;
-  color: string;
+  recentClosed: number;
+  recentOpen: number;
 }
 
 export interface ActivitySignal {
@@ -306,12 +306,12 @@ export interface ActivitySignal {
 }
 
 export interface AdoptionData {
-  sectionNumber: number;
-  title: string;
-  description: string;
-  repositories: Repository[];
   activitySignals: ActivitySignal[];
   dataNote: string;
+  description: string;
+  repositories: Repository[];
+  sectionNumber: number;
+  title: string;
 }
 
 // =============================================================================
@@ -319,19 +319,19 @@ export interface AdoptionData {
 // =============================================================================
 
 export interface PlatformDelta {
+  changes: string[];
+  color: string;
+  current: string;
+  link: string;
   platform: string;
   previous: string;
-  current: string;
-  changes: string[];
   version: string;
-  link: string;
-  color: string;
 }
 
 export interface DeltaData {
-  title: string;
-  description: string;
   deltas: PlatformDelta[];
+  description: string;
+  title: string;
 }
 
 // =============================================================================
@@ -339,16 +339,16 @@ export interface DeltaData {
 // =============================================================================
 
 export interface FooterData {
-  vercelLinks: ExternalLink[];
-  awsLinks: ExternalLink[];
-  contributors: Contributor[];
-  reportVersion: string;
-  generatedDate: string;
   analyzedVersions: {
     aiSdk: string;
     strands: string;
     agentcore: string;
   };
+  awsLinks: ExternalLink[];
+  contributors: Contributor[];
+  generatedDate: string;
+  reportVersion: string;
+  vercelLinks: ExternalLink[];
 }
 
 // =============================================================================
@@ -356,16 +356,16 @@ export interface FooterData {
 // =============================================================================
 
 export interface ReportMetadata {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  href: string;
-  date: string;
-  version: string;
-  platforms: Platform[];
-  highlights: string[];
   contributors: Contributor[];
+  date: string;
+  description: string;
+  highlights: string[];
+  href: string;
+  id: string;
+  platforms: Platform[];
+  subtitle: string;
+  title: string;
+  version: string;
 }
 
 // =============================================================================
@@ -373,15 +373,15 @@ export interface ReportMetadata {
 // =============================================================================
 
 export interface Report {
-  metadata: ReportMetadata;
-  sections: ReportSection[];
+  adoption: AdoptionData;
+  code: CodeData;
+  delta: DeltaData;
+  deployment: DeploymentData;
+  footer: FooterData;
   hero: HeroData;
   infrastructure: InfrastructureData;
+  metadata: ReportMetadata;
   pricing: PricingData;
-  code: CodeData;
-  deployment: DeploymentData;
   regions: RegionalData;
-  adoption: AdoptionData;
-  delta: DeltaData;
-  footer: FooterData;
+  sections: ReportSection[];
 }

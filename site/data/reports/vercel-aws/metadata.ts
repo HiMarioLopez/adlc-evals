@@ -2,7 +2,7 @@ import type {
   Contributor,
   Platform,
   ReportMetadata,
-} from "@/data/report-schema";
+} from "@/data/report-schema.ts";
 
 export const platforms: Platform[] = [
   {

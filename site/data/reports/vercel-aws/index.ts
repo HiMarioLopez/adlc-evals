@@ -1,19 +1,19 @@
-import type { Report } from "@/data/report-schema";
-import { adoptionData } from "./adoption";
-import { codeData } from "./code";
-import { deltaData } from "./delta";
-import { deploymentData } from "./deployment";
-import { footerData } from "./footer";
-import { heroData } from "./hero";
-import { infrastructureData } from "./infrastructure";
-import { metadata, platforms } from "./metadata";
-import { pricingData } from "./pricing";
-import { regionsData } from "./regions";
-import { sections } from "./sections";
+import type { Report } from "@/data/report-schema.ts";
+import { adoptionData } from "./adoption.ts";
+import { codeData } from "./code.ts";
+import { deltaData } from "./delta.ts";
+import { deploymentData } from "./deployment.ts";
+import { footerData } from "./footer.ts";
+import { heroData } from "./hero.ts";
+import { infrastructureData } from "./infrastructure.ts";
+import { metadata as reportMetadata } from "./metadata.ts";
+import { pricingData } from "./pricing.ts";
+import { regionsData } from "./regions.ts";
+import { sections as reportSections } from "./sections.ts";
 
 export const vercelAwsReport: Report = {
-  metadata,
-  sections,
+  metadata: reportMetadata,
+  sections: reportSections,
   hero: heroData,
   infrastructure: infrastructureData,
   pricing: pricingData,
@@ -25,4 +25,5 @@ export const vercelAwsReport: Report = {
   footer: footerData,
 };
 
-export { metadata, platforms, sections };
+export { metadata, platforms } from "./metadata.ts";
+export { sections } from "./sections.ts";

@@ -2,22 +2,19 @@
 
 import { ArrowUpDown, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { HeroData, Platform } from "@/data/report-schema";
+import type { HeroData, Platform } from "@/data/report-schema.ts";
 
 interface HeroProps {
   data: HeroData;
   platforms: Platform[];
 }
 
-export function Hero({ data, platforms }: HeroProps) {
+export function Hero({ data, platforms: _platforms }: HeroProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const primary = platforms[0];
-  const secondary = platforms[1];
 
   return (
     <section className="relative flex items-center justify-center py-8 md:min-h-[calc(100vh-7rem)] md:py-12">

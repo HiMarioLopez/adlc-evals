@@ -1,4 +1,7 @@
-import type { CategoryGroup, InfrastructureData } from "@/data/report-schema";
+import type {
+  CategoryGroup,
+  InfrastructureData,
+} from "@/data/report-schema.ts";
 
 export const categoryGroups: CategoryGroup[] = [
   {

@@ -1,4 +1,4 @@
-import type { HeroData } from "@/data/report-schema";
+import type { HeroData } from "@/data/report-schema.ts";
 
 export const heroData: HeroData = {
   lastUpdated: "January 8, 2026",

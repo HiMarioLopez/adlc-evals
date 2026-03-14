@@ -13,7 +13,7 @@ import {
   Shield,
   Terminal,
 } from "lucide-react";
-import type { DeploymentData } from "@/data/report-schema";
+import type { DeploymentData } from "@/data/report-schema.ts";
 
 const iconMap: Record<string, React.ReactNode> = {
   Terminal: <Terminal className="h-4 w-4" />,

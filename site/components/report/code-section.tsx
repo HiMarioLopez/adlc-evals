@@ -2,9 +2,9 @@
 
 import { Code2 } from "lucide-react";
 import { useState } from "react";
-import { LightCodeBlock } from "@/components/ui/code-block";
-import type { CodeData } from "@/data/report-schema";
-import { cn } from "@/lib/utils";
+import { LightCodeBlock } from "@/components/ui/code-block.tsx";
+import type { CodeData } from "@/data/report-schema.ts";
+import { cn } from "@/lib/utils.ts";
 
 interface CodeSectionProps {
   data: CodeData;

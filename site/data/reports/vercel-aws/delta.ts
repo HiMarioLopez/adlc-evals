@@ -1,4 +1,4 @@
-import type { DeltaData } from "@/data/report-schema";
+import type { DeltaData } from "@/data/report-schema.ts";
 
 export const deltaData: DeltaData = {
   title: "Recent Platform Updates",
