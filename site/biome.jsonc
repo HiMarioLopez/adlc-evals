@@ -21,7 +21,9 @@
         // Namespace imports are the standard pattern for Radix UI
         "noNamespaceImport": "off",
         // External images (like GitHub avatars) can use <img>
-        "noImgElement": "off"
+        "noImgElement": "off",
+        // Index files intentionally re-export from sub-modules
+        "noBarrelFile": "off"
       },
       "a11y": {
         // Decorative SVGs don't always need titles
@@ -33,7 +35,9 @@
       },
       "correctness": {
         // External images may not need explicit dimensions with CSS sizing
-        "useImageSize": "off"
+        "useImageSize": "off",
+        // Biome cannot resolve exports from react, geist, maplibre-gl, shiki, tailwindcss etc.
+        "noUnresolvedImports": "off"
       }
     }
   }
