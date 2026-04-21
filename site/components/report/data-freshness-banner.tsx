@@ -19,7 +19,7 @@ export function DataFreshnessBanner({
   }
 
   return (
-    <div className="fixed inset-x-0 top-16 z-40 w-full">
+    <div className="fixed inset-x-0 top-14 z-40 w-full">
       <div className="relative overflow-hidden bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-amber-500/90 dark:from-amber-600/95 dark:via-orange-500/95 dark:to-amber-600/95">
         {/* Animated shimmer effect */}
         <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />

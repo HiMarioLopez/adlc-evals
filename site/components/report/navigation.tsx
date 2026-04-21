@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ExternalLink, Menu, Moon, Sun, X } from "lucide-react";
+import { ChevronLeft, Menu, Moon, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -69,7 +69,7 @@ export function Navigation({ sections }: NavigationProps) {
             : "bg-transparent"
         )}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
           {/* Logo + Back link */}
           <div className="flex items-center gap-3">
             <Link
@@ -106,34 +106,7 @@ export function Navigation({ sections }: NavigationProps) {
             </div>
           </div>
 
-          {/* Desktop nav */}
-          <div className="hidden items-center gap-0.5 xl:flex">
-            {sections.map((section) => (
-              <button
-                className={cn(
-                  "rounded-lg px-3 py-1.5 text-sm transition-all duration-200",
-                  activeSection === section.id
-                    ? "bg-primary/10 font-medium text-primary"
-                    : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
-                )}
-                key={section.id}
-                onClick={() => scrollTo(section.id)}
-              >
-                {section.label}
-              </button>
-            ))}
-          </div>
-
-          {/* Actions */}
           <div className="flex items-center gap-2">
-            <button
-              className="hidden items-center gap-1.5 rounded-lg px-3 py-1.5 font-medium text-muted-foreground text-xs transition-colors hover:bg-muted/50 hover:text-foreground sm:flex"
-              onClick={() => scrollTo("sources")}
-            >
-              View Sources
-              <ExternalLink className="h-3 w-3" />
-            </button>
-
             <button
               aria-label="Toggle theme"
               className="rounded-lg bg-secondary/50 p-2 transition-colors hover:bg-secondary"
@@ -151,7 +124,7 @@ export function Navigation({ sections }: NavigationProps) {
 
             <button
               aria-label="Toggle menu"
-              className="rounded-lg p-2 transition-colors hover:bg-muted/50 xl:hidden"
+              className="rounded-lg p-2 transition-colors hover:bg-muted/50 lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
               {mobileOpen ? (
@@ -166,7 +139,7 @@ export function Navigation({ sections }: NavigationProps) {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-[55] bg-background/98 pt-20 backdrop-blur-xl xl:hidden">
+        <div className="fixed inset-0 z-[55] bg-background/98 pt-20 backdrop-blur-xl lg:hidden">
           <div className="flex flex-col gap-1 p-6">
             {sections.map((section, idx) => (
               <button

@@ -11,6 +11,7 @@ import { Hero } from "@/components/report/hero.tsx";
 import { InfrastructureSection } from "@/components/report/infrastructure-section.tsx";
 import { Navigation } from "@/components/report/navigation.tsx";
 import { PricingSection } from "@/components/report/pricing-section.tsx";
+import { SidebarToc } from "@/components/report/sidebar-toc.tsx";
 import { vercelAwsReport } from "@/data/reports/vercel-aws/index.ts";
 
 export const metadata: Metadata = {
@@ -79,19 +80,25 @@ export default function VercelAwsReportPage() {
         capturedDateIso={report.metadata.dateIso}
       />
       <Navigation sections={report.sections} />
-      {/* Spacer for fixed nav (h-16 = 64px) + banner (~44px) */}
-      <div aria-hidden="true" className="h-28" />
-      <Hero data={report.hero} platforms={report.metadata.platforms} />
-      <ForewordSection />
-      <InfrastructureSection data={report.infrastructure} />
-      <PricingSection data={report.pricing} />
-      <CostCalculator />
-      <CodeSection data={report.code} />
-      <DeploymentSection data={report.deployment} />
-      <RegionalSection data={report.regions} />
-      <AdoptionSection data={report.adoption} />
-      <DeltaSection data={report.delta} />
-      <Footer data={report.footer} />
+      <SidebarToc sections={report.sections} />
+      {/* Spacer for fixed nav (h-14 = 56px) + banner (~40px) */}
+      <div aria-hidden="true" className="h-[6rem]" />
+
+      {/* Left padding reserves space for the fixed sidebar on lg+ screens,
+          letting section backgrounds remain full-bleed */}
+      <div className="lg:pl-60 xl:pl-64">
+        <Hero data={report.hero} platforms={report.metadata.platforms} />
+        <ForewordSection />
+        <InfrastructureSection data={report.infrastructure} />
+        <PricingSection data={report.pricing} />
+        <CostCalculator />
+        <CodeSection data={report.code} />
+        <DeploymentSection data={report.deployment} />
+        <RegionalSection data={report.regions} />
+        <AdoptionSection data={report.adoption} />
+        <DeltaSection data={report.delta} />
+        <Footer data={report.footer} />
+      </div>
     </main>
   );
 }
