@@ -156,10 +156,7 @@ function AWSMapLazy({
                   <div className="flex flex-wrap gap-1">
                     {enabledFeatures.map((f) => (
                       <span
-                        className={cn(
-                          "rounded px-1.5 py-0.5 text-[10px]",
-                          f.required ? "bg-aws/30 text-aws" : "bg-background/20"
-                        )}
+                        className="rounded bg-aws/30 px-1.5 py-0.5 text-[10px] text-aws"
                         key={f.key}
                       >
                         {f.label}
