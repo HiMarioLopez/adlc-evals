@@ -46,12 +46,12 @@ export function SidebarToc({ sections }: SidebarTocProps) {
       aria-label="Report navigation"
       className="pointer-events-none fixed top-[calc(3.5rem+2.5rem)] bottom-0 left-0 z-30 hidden w-60 px-6 py-10 lg:block xl:w-64 xl:px-8"
     >
-      <div className="pointer-events-auto max-h-[calc(100vh-8rem)] overflow-y-auto">
+      <div className="pointer-events-auto flex h-full max-h-[calc(100vh-8rem)] flex-col">
         <p className="mb-5 font-mono text-[10px] text-muted-foreground uppercase tracking-[0.18em]">
           Contents
         </p>
 
-        <nav aria-label="Table of contents">
+        <nav aria-label="Table of contents" className="flex-1 overflow-y-auto">
           <div className="relative border-border/50 border-l">
             {sections.map((section, idx) => {
               const isActive = activeSection === section.id;
@@ -94,7 +94,7 @@ export function SidebarToc({ sections }: SidebarTocProps) {
           </div>
         </nav>
 
-        <div className="mt-6 border-border/50 border-t pt-4">
+        <div className="mt-4 shrink-0 border-border/50 border-t pt-4">
           <button
             className="flex items-center gap-1.5 text-muted-foreground/70 text-xs transition-colors duration-200 hover:text-muted-foreground"
             onClick={() => scrollTo("sources")}
