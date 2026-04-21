@@ -1,18 +1,11 @@
 "use client";
 
-import {
-  ArrowRight,
-  BookOpen,
-  FileText,
-  Github,
-  Info,
-  Moon,
-  Sun,
-} from "lucide-react";
+import { ArrowRight, BookOpen, FileText, Info, Moon, Sun } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { GithubIcon } from "@/components/ui/github-icon.tsx";
 import type { ReportMetadata } from "@/data/report-schema.ts";
 import { getAllReportMetadata } from "@/data/reports/index.ts";
 
@@ -258,7 +251,7 @@ export default function DirectoryPage() {
               rel="noopener noreferrer"
               target="_blank"
             >
-              <Github className="h-4 w-4" />
+              <GithubIcon className="h-4 w-4" />
               View Source
             </a>
 
@@ -523,7 +516,7 @@ export default function DirectoryPage() {
           {/* Contributors */}
           <div className="mb-8 border-border/50 border-b pb-8">
             <div className="mb-4 flex items-center gap-2">
-              <Github className="h-4 w-4 text-muted-foreground" />
+              <GithubIcon className="h-4 w-4 text-muted-foreground" />
               <span className="font-medium text-muted-foreground text-sm">
                 Contributors
               </span>

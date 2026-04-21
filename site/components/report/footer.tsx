@@ -1,7 +1,8 @@
 "use client";
 
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
+import { GithubIcon } from "@/components/ui/github-icon.tsx";
 import type { FooterData } from "@/data/report-schema.ts";
 
 interface FooterProps {
@@ -77,7 +78,7 @@ export function Footer({ data }: FooterProps) {
         {/* Contributors */}
         <div className="mb-12 border-border/50 border-t pt-8">
           <div className="mb-4 flex items-center gap-3">
-            <Github className="h-5 w-5 text-muted-foreground" />
+            <GithubIcon className="h-5 w-5 text-muted-foreground" />
             <h3 className="font-medium text-muted-foreground text-sm">
               Contributors
             </h3>

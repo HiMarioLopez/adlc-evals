@@ -97,9 +97,8 @@ export function CostCalculator() {
     return `$${cost.toFixed(2)}`;
   };
 
-  const infraPercent = (infra: number, total: number) => {
-    return ((infra / total) * 100).toFixed(1);
-  };
+  const infraPercent = (infra: number, total: number) =>
+    ((infra / total) * 100).toFixed(1);
 
   return (
     <section className="bg-muted/30 px-6 py-24" id="calculator">
