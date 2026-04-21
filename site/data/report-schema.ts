@@ -358,6 +358,7 @@ export interface FooterData {
 export interface ReportMetadata {
   contributors: Contributor[];
   date: string;
+  dateIso: string;
   description: string;
   highlights: string[];
   href: string;

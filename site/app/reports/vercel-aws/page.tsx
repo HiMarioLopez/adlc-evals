@@ -74,7 +74,10 @@ export default function VercelAwsReportPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <DataFreshnessBanner />
+      <DataFreshnessBanner
+        capturedDate={report.metadata.date}
+        capturedDateIso={report.metadata.dateIso}
+      />
       <Navigation sections={report.sections} />
       {/* Spacer for fixed nav (h-16 = 64px) + banner (~44px) */}
       <div aria-hidden="true" className="h-28" />

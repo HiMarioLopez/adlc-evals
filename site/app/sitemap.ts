@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/reports/vercel-aws`,
-      lastModified: new Date("2026-01-08"),
+      lastModified: new Date("2026-04-21"),
       changeFrequency: "monthly",
       priority: 0.9,
     },

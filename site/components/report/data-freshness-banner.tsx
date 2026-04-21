@@ -3,7 +3,15 @@
 import { AlertCircle, X } from "lucide-react";
 import { useState } from "react";
 
-export function DataFreshnessBanner() {
+interface DataFreshnessBannerProps {
+  capturedDate: string;
+  capturedDateIso: string;
+}
+
+export function DataFreshnessBanner({
+  capturedDate,
+  capturedDateIso,
+}: DataFreshnessBannerProps) {
   const [dismissed, setDismissed] = useState(false);
 
   if (dismissed) {
@@ -39,9 +47,9 @@ export function DataFreshnessBanner() {
                 <span className="sm:hidden">Data captured </span>
                 <time
                   className="font-bold underline decoration-white/40 underline-offset-2"
-                  dateTime="2026-01-08"
+                  dateTime={capturedDateIso}
                 >
-                  January 8, 2026
+                  {capturedDate}
                 </time>
                 <span className="mx-1.5 opacity-60">·</span>
                 <span className="opacity-90">

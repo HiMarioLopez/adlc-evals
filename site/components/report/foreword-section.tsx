@@ -69,9 +69,9 @@ export function ForewordSection() {
 
           <div className="prose prose-lg prose-invert max-w-none">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              As of January 2026, neither Vercel nor AWS offers a single,
-              unified "agent framework + infrastructure" package that just works
-              out of the box. What we see instead—on both sides—is a{" "}
+              As of April 2026, neither Vercel nor AWS offers a single, unified
+              "agent framework + infrastructure" package that just works out of
+              the box. What we see instead—on both sides—is a{" "}
               <span className="font-medium text-foreground">
                 composition-based approach
               </span>
