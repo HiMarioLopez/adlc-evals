@@ -51,19 +51,16 @@ export function CostCalculator() {
     };
   }, []);
 
-  // Model pricing (Anthropic direct / Vercel AI Gateway passthrough pricing per MTok)
   const pricing = {
-    sonnet: { input: 3, output: 15, name: "Claude Sonnet 4.5" },
-    opus: { input: 5, output: 25, name: "Claude Opus 4.5" },
+    sonnet: { input: 3, output: 15, name: "Claude Sonnet 4.6" },
+    opus: { input: 5, output: 25, name: "Claude Opus 4.7" },
     haiku: { input: 1, output: 5, name: "Claude Haiku 4.5" },
   };
 
-  // Bedrock regional endpoint premium (10% markup for Claude 4.5+ models)
   const bedrockRegionalPremium = 1.1;
 
   const selectedModel = pricing[model];
 
-  // AWS calculation (with optional regional endpoint 10% premium)
   const awsPremium = useBedrockRegional ? bedrockRegionalPremium : 1.0;
   const awsModelInput =
     ((turns * 1000) / 1_000_000) * selectedModel.input * awsPremium;
@@ -78,14 +75,14 @@ export function CostCalculator() {
   const awsModelTotal = awsModelInput + awsModelOutput;
   const awsTotal = awsModelTotal + awsInfraTotal;
 
-  // Vercel calculation (no Bedrock regional premium - uses Anthropic direct / AI Gateway passthrough pricing)
   const vercelModelInput = ((turns * 1000) / 1_000_000) * selectedModel.input;
   const vercelModelOutput = ((turns * 500) / 1_000_000) * selectedModel.output;
   const vercelModelTotal = vercelModelInput + vercelModelOutput;
+  const SANDBOX_MEMORY_GB_HR_APR_2026 = 0.0212;
   const vercelCPU = turns * (1 / 3600) * 0.128;
-  const vercelMemory = turns * (4 / 3600) * 2 * 0.0106;
+  const vercelMemory = turns * (4 / 3600) * 2 * SANDBOX_MEMORY_GB_HR_APR_2026;
   const vercelCreations = (turns / 1_000_000) * 0.6;
-  const vercelNetwork = 0.15; // Assuming 1GB
+  const vercelNetwork = 0.15;
   const vercelInfraTotal =
     vercelCPU + vercelMemory + vercelCreations + vercelNetwork;
   const vercelTotal = vercelModelTotal + vercelInfraTotal;

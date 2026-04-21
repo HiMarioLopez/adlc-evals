@@ -12,16 +12,27 @@ export const codeData: CodeData = {
         key: "agent",
         label: "ToolLoopAgent",
         language: "typescript",
-        code: `import { ToolLoopAgent, stepCountIs } from 'ai';
-import { weatherTool } from '@/tools/weather';
+        code: `import { ToolLoopAgent, tool, isStepCount } from 'ai';
+import { z } from 'zod';
 
+// Define a tool with v6 API (inputSchema, not parameters)
+const weatherTool = tool({
+  description: 'Get the weather in a location',
+  inputSchema: z.object({
+    location: z.string().describe('City name'),
+  }),
+  execute: async ({ location }) => ({
+    location,
+    temperature: 72,
+  }),
+});
+
+// AI Gateway string shorthand — 0% markup
 export const weatherAgent = new ToolLoopAgent({
-  model: 'anthropic/claude-sonnet-4.5',
+  model: 'anthropic/claude-sonnet-4.6',
   instructions: 'You are a helpful weather assistant.',
-  tools: {
-    weather: weatherTool,
-  },
-  stopWhen: stepCountIs(20), // Max 20 steps
+  tools: { weather: weatherTool },
+  stopWhen: isStepCount(20),
 });
 
 const result = await weatherAgent.generate({
@@ -30,17 +41,19 @@ const result = await weatherAgent.generate({
       },
       {
         key: "sandbox",
-        label: "Sandbox",
+        label: "Sandbox (GA)",
         language: "typescript",
         code: `import { Sandbox } from '@vercel/sandbox';
 
-const sandbox = await Sandbox.create({ 
-  runtime: 'node22' 
+// Sandbox GA as of Jan 30, 2026.
+// Enterprise: up to 32 vCPUs / 64 GB RAM.
+const sandbox = await Sandbox.create({
+  runtime: 'node22',
 });
 
 const result = await sandbox.runCommand('node', [
-  '-e', 
-  'console.log("hello")'
+  '-e',
+  'console.log("hello")',
 ]);
 
 console.log(result.stdout);
@@ -48,15 +61,18 @@ await sandbox.close();`,
       },
       {
         key: "workflow",
-        label: "Workflow",
+        label: "Workflow (GA)",
         language: "typescript",
-        code: `export async function processOrder(orderId: string) {
-  "use workflow";  // Magic directive
+        code: `// Workflow GA as of Apr 16, 2026.
+// E2E encrypted by default (AES-256-GCM, per-run HKDF keys).
+// 2x faster than beta. Event-sourced architecture.
+export async function processOrder(orderId: string) {
+  "use workflow";
 
   const order = await validateOrder(orderId);
   const payment = await processPayment(order);
   const fulfillment = await shipOrder(order);
-  
+
   return fulfillment;
 }`,
       },
@@ -64,17 +80,22 @@ await sandbox.close();`,
         key: "bashTool",
         label: "bash-tool",
         language: "typescript",
-        code: `import { createBashTool } from "bash-tool";
+        code: `import { createBashTool, experimental_createSkillTool } from "bash-tool";
 import { Sandbox } from "@vercel/sandbox";
 
-// In-memory filesystem (no VM overhead)
+// In-memory filesystem (zero VM overhead)
 const { tools } = await createBashTool({
   files: { "src/index.ts": "export const hello = 'world';" },
 });
 
-// Or with Sandbox for full VM isolation
+// With Vercel Sandbox for full VM isolation
 const sandbox = await Sandbox.create();
-const { tools: vmTools } = await createBashTool({ sandbox });`,
+const { tools: vmTools } = await createBashTool({ sandbox });
+
+// Skills support (Jan 21, 2026)
+const { tools: skillsTools } = await experimental_createSkillTool({
+  skillsDirectory: "./skills",
+});`,
       },
     ],
   },
@@ -86,39 +107,58 @@ const { tools: vmTools } = await createBashTool({ sandbox });`,
         key: "agent",
         label: "Strands Agent",
         language: "python",
-        code: `from strands import Agent
-from strands_tools import calculator
+        code: `from strands import Agent, tool
+from strands.models import BedrockModel
 
-# Create an agent with tools
-agent = Agent(tools=[calculator])
+@tool
+def get_weather(city: str) -> str:
+    """Get weather for a city."""
+    return f"Weather in {city}: 72F, Sunny"
 
-# Invoke the agent
-result = agent("What is the square root of 1764?")
+# BedrockModel with service tier (Strands v1.35.0, Apr 2026)
+agent = Agent(
+    model=BedrockModel(
+        model_id="us.anthropic.claude-sonnet-4-6",
+        service_tier="standard",  # priority | standard | flex
+        streaming=True,
+    ),
+    tools=[get_weather],
+    system_prompt="You are a helpful weather assistant.",
+)
+
+result = agent("What's the weather in Seattle?")
 print(result.message)`,
       },
       {
         key: "infrastructure",
         label: "Bedrock AgentCoreApp",
         language: "python",
-        code: `from bedrock_agentcore import BedrockAgentCoreApp
+        code: `from bedrock_agentcore.runtime import BedrockAgentCoreApp
 from strands import Agent
+from strands.models import BedrockModel
 
 app = BedrockAgentCoreApp()  # Infrastructure layer
-agent = Agent()               # Agent framework
+agent = Agent(model=BedrockModel(model_id="us.anthropic.claude-sonnet-4-6"))
 
 @app.entrypoint
 def invoke(payload):
     result = agent(payload.get("prompt"))
-    return {"result": result.message}
+    return {"result": str(result.message)}
+
+# New protocol adapters (v1.4.7+):
+# from bedrock_agentcore.runtime import serve_a2a, serve_ag_ui
 
 if __name__ == "__main__":
     app.run()`,
       },
       {
         key: "policy",
-        label: "Cedar Policy",
+        label: "Cedar Policy (GA)",
         language: "hcl",
-        code: `permit(
+        code: `// Policy in AgentCore GA as of Mar 3, 2026 (13 regions).
+// Included in Runtime/Gateway pricing at GA.
+
+permit(
   principal is AgentCore::OAuthUser,
   action == AgentCore::Action::"RefundTool__process_refund",
   resource == AgentCore::Gateway::"arn:aws:bedrock-agentcore:..."
@@ -133,17 +173,44 @@ when {
         key: "memory",
         label: "Memory",
         language: "python",
-        code: `# Bedrock AgentCore Memory - Built-in strategies
+        code: `# Bedrock AgentCore Memory - Built-in strategies (15 regions)
+# New since Jan 8: Kinesis streaming notifications + read_only flag (v1.6.1)
 
-# Short-term: within-session context
-create_event(session_id, event_data)
-get_event(session_id, event_id)
-list_events(session_id)
+from bedrock_agentcore.memory.integrations.strands import (
+    AgentCoreMemorySessionManager,
+)
 
-# Long-term: cross-session learning
-# Built-in: $0.75/1K records/month
+session_mgr = AgentCoreMemorySessionManager(
+    memory_id="mem-abc123",
+    actor_id="user-xyz",
+    region_name="us-east-1",
+    read_only=False,  # NEW v1.6.1
+)
+
+# Long-term strategies:
+# Built-in:          $0.75/1K records/month
 # Built-in Override: $0.25/1K records/month
-# Self-Managed: $0.25/1K + inference`,
+# Self-Managed:      $0.25/1K + inference`,
+      },
+      {
+        key: "evaluations",
+        label: "Evaluations (GA)",
+        language: "python",
+        code: `# AgentCore Evaluations GA as of Mar 31, 2026 (9 regions).
+# 13 built-in evaluators + custom Lambda evaluators.
+
+from bedrock_agentcore.evaluation import EvaluationClient
+
+client = EvaluationClient(region_name="us-west-2")
+
+results = client.run(
+    evaluator_ids=["accuracy", "toxicity"],
+    session_id="sess-123",
+    agent_id="my-agent",
+)
+
+for r in results:
+    print(f"{r['evaluatorId']}: {r.get('value')}")`,
       },
     ],
   },
@@ -156,15 +223,23 @@ list_events(session_id)
     {
       title: "Loop Control",
       vercel: {
-        label: "stopWhen: stepCountIs(N)",
-        code: "stopWhen: stepCountIs(N)",
+        label: "stopWhen: isStepCount(N)",
+        code: "stopWhen: isStepCount(N)",
       },
-      aws: { label: "Policy-driven via Cedar" },
+      aws: { label: "Policy-driven via Cedar (GA)" },
     },
     {
       title: "Infrastructure Wrapper",
       vercel: { label: "Platform handles deployment" },
       aws: { label: "@app.entrypoint", code: "@app.entrypoint" },
+    },
+    {
+      title: "Model Cost Tier",
+      vercel: { label: "AI Gateway 0% markup" },
+      aws: {
+        label: "service_tier: priority / standard / flex",
+        code: "service_tier='flex'",
+      },
     },
   ],
 };

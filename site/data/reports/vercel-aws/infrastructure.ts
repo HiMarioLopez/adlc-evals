@@ -17,13 +17,15 @@ export const categoryGroups: CategoryGroup[] = [
           "Core SDK for building agentic AI applications with tool loops and multi-step reasoning",
         iconName: "Bot",
         vercel: {
-          text: "Vercel AI SDK",
-          detail: "ToolLoopAgent, streamText, tools, stopWhen conditions",
+          text: "Vercel AI SDK 6.x",
+          detail:
+            "ToolLoopAgent, tools, stopWhen, prepareStep, dynamicTool; v7 beta adds WorkflowAgent",
           link: "https://sdk.vercel.ai",
         },
         aws: {
           text: "Strands Agents SDK",
-          detail: "Agent class, tools, model providers, multi-agent support",
+          detail:
+            "Agent, Swarm, Graph, AgentAsTool, Plugins; Python v1.36, TS RC v1.0.0-rc.4",
           link: "https://strandsagents.com/latest/",
         },
       },
@@ -35,12 +37,13 @@ export const categoryGroups: CategoryGroup[] = [
         vercel: {
           text: "AI Gateway",
           detail:
-            "Provider auto-failover, model fallbacks, 0% markup, 20+ providers, 100+ global PoPs, BYOK",
+            "0% markup, 20+ providers, 100+ models, team-wide ZDR, Custom Reporting API",
           link: "https://vercel.com/ai-gateway",
         },
         aws: {
           text: "Amazon Bedrock",
-          detail: "Foundation models, 10+ providers, cross-region inference",
+          detail:
+            "Foundation models, Priority/Standard/Flex service tiers, cross-region inference",
           link: "https://aws.amazon.com/bedrock/",
         },
       },
@@ -50,14 +53,48 @@ export const categoryGroups: CategoryGroup[] = [
           "Connect external APIs, databases, and services as callable tools for agents",
         iconName: "Wrench",
         vercel: {
-          text: "Native tool calling",
-          detail: "MCP client (experimental), provider integrations",
+          text: "AI SDK + @ai-sdk/mcp",
+          detail:
+            "Native tools; stable HTTP/SSE MCP client (stdio experimental)",
           link: "https://ai-sdk.dev/docs/foundations/tools",
         },
         aws: {
           text: "Bedrock AgentCore Gateway",
-          detail: "Connects to MCP servers, tool indexing, priced operations",
+          detail:
+            "MCP Server, Lambda-as-tool, server-side tool execution via Bedrock Responses API",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/gateway.html",
+        },
+      },
+      {
+        capability: "Protocol Support",
+        description:
+          "Open agent interoperability protocols supported natively by the platform",
+        iconName: "Network",
+        vercel: {
+          text: "MCP",
+          detail: "Model Context Protocol client (stable HTTP/SSE transports)",
+        },
+        aws: {
+          text: "MCP + A2A + AG-UI",
+          detail:
+            "All three open protocols supported in Runtime (AG-UI added Mar 13, 2026)",
+          link: "https://aws.amazon.com/about-aws/whats-new/2026/03/amazon-bedrock-agentcore-runtime-ag-ui-protocol/",
+        },
+      },
+      {
+        capability: "Agent Discovery",
+        description:
+          "Centralized catalog for discovering, sharing, and governing agents and tools",
+        iconName: "Search",
+        vercel: {
+          text: "N/A",
+          detail: "Bring your own (registry, marketplace, docs)",
+        },
+        aws: {
+          text: "AWS Agent Registry (Preview)",
+          detail:
+            "New 8th AgentCore service; semantic + keyword search; MCP endpoint; 5 regions",
+          link: "https://aws.amazon.com/blogs/machine-learning/the-future-of-managing-agents-at-scale-aws-agent-registry-now-in-preview/",
         },
       },
     ],
@@ -75,12 +112,14 @@ export const categoryGroups: CategoryGroup[] = [
         iconName: "Server",
         vercel: {
           text: "Vercel Platform",
-          detail: "Edge/Serverless/Fluid Compute, 800s max duration",
+          detail:
+            "Edge/Serverless/Fluid Compute, Active CPU billing (I/O free), 21 regions, 800s max",
           link: "https://vercel.com/docs",
         },
         aws: {
           text: "Bedrock AgentCore Runtime",
-          detail: "microVM-per-session, up to 8h maxLifetime",
+          detail:
+            "microVM-per-session, 14 regions, 8h maxLifetime, InvokeAgentRuntimeCommand API",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-lifecycle-settings.html",
         },
       },
@@ -90,13 +129,14 @@ export const categoryGroups: CategoryGroup[] = [
           "Sandboxed environment for running untrusted or AI-generated code safely",
         iconName: "Code2",
         vercel: {
-          text: "Sandbox SDK",
-          detail: "Firecracker microVMs, Node.js + Python, 8 vCPUs max",
+          text: "Sandbox SDK (GA)",
+          detail:
+            "Firecracker microVMs, 8 vCPU Pro / 32 vCPU Enterprise, persistent beta, iad1 only",
           link: "https://vercel.com/docs/vercel-sandbox",
         },
         aws: {
           text: "Bedrock AgentCore Code Interpreter",
-          detail: "Containerized, Python/JS/TS, 5GB files, 8h max",
+          detail: "Containerized, Python/JS/TS, 5GB files, 8h max, 14 regions",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/code-interpreter-tool.html",
         },
       },
@@ -106,13 +146,15 @@ export const categoryGroups: CategoryGroup[] = [
           "Long-running, resumable workflows that survive failures and deployments",
         iconName: "Workflow",
         vercel: {
-          text: "Workflow SDK",
-          detail: '"use workflow" directive, survives deployments',
+          text: "Workflow SDK (GA)",
+          detail:
+            '"use workflow" directive, E2E encrypted, 2× faster, event-sourced, TS + Python beta',
           link: "https://useworkflow.dev/",
         },
         aws: {
           text: "Bedrock AgentCore Runtime Sessions",
-          detail: "Up to 8 hours, configurable idle timeout",
+          detail:
+            "Up to 8 hours, configurable idle timeout, Step Functions integration",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-lifecycle-settings.html",
         },
       },
@@ -124,12 +166,13 @@ export const categoryGroups: CategoryGroup[] = [
         vercel: {
           text: "Kernel (Marketplace) + Computer Use",
           detail:
-            "Cloud-native browser instances via API/SDK, Puppeteer/Playwright support; native integration coming soon",
+            "Cloud browser via API/SDK; webSearch_20250305 native Anthropic tool added",
           link: "https://vercel.com/marketplace/kernel",
         },
         aws: {
           text: "Bedrock AgentCore Browser Tool",
-          detail: "Cloud-based, CAPTCHA reduction via Web Bot Auth",
+          detail:
+            "Cloud-based, custom Chrome extensions, CAPTCHA reduction, S3 profile billing (Apr 15)",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/browser-tool.html",
         },
       },
@@ -147,13 +190,16 @@ export const categoryGroups: CategoryGroup[] = [
           "Policy-based access control determining what actions users and agents can perform",
         iconName: "KeyRound",
         vercel: {
-          text: "App-layer",
-          detail: "Middleware + env vars, custom implementation",
+          text: "App-layer + AI Gateway ZDR",
+          detail:
+            "Middleware + env vars; AI Gateway team-wide ZDR enforcement (Apr 8, 2026)",
+          link: "https://vercel.com/blog/zdr-on-ai-gateway",
         },
         aws: {
-          text: "Bedrock AgentCore Policy",
-          detail: "Cedar-based authorization + IAM integration",
-          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
+          text: "Bedrock AgentCore Policy (GA)",
+          detail:
+            "Cedar-based, 13 regions, ResourcePolicyClient, ENFORCE/MONITOR modes",
+          link: "https://aws.amazon.com/about-aws/whats-new/2026/03/policy-amazon-bedrock-agentcore-generally-available/",
         },
       },
       {
@@ -167,7 +213,7 @@ export const categoryGroups: CategoryGroup[] = [
         },
         aws: {
           text: "Bedrock AgentCore Identity",
-          detail: "OAuth, API keys, $0.010/1K requests",
+          detail: "OAuth, API keys, M2M + USER_FEDERATION, $0.010/1K requests",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html",
         },
       },
@@ -176,7 +222,7 @@ export const categoryGroups: CategoryGroup[] = [
   {
     name: "Operations",
     iconName: "Activity",
-    description: "State management, memory, and monitoring",
+    description: "State management, memory, monitoring, and evaluation",
     colorClass: "from-amber-500/20 to-orange-500/20",
     rows: [
       {
@@ -185,12 +231,14 @@ export const categoryGroups: CategoryGroup[] = [
           "Store conversation history and agent state across sessions for continuity",
         iconName: "Database",
         vercel: {
-          text: "BYO (Redis/DB)",
-          detail: "External databases, vector stores, custom implementation",
+          text: "BYO (Redis/DB) + WorkflowAgent",
+          detail:
+            "External databases, vector stores; v7 WorkflowAgent for durable in-agent state",
         },
         aws: {
           text: "Bedrock AgentCore Memory",
-          detail: "Built-in short-term + long-term with strategies",
+          detail:
+            "Built-in STM + LTM strategies (semantic/summary/preference/episodic); Kinesis streaming; 15 regions",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/memory.html",
         },
       },
@@ -200,13 +248,30 @@ export const categoryGroups: CategoryGroup[] = [
           "Tracing, logging, and metrics to debug and monitor agent behavior",
         iconName: "Activity",
         vercel: {
-          text: "AI SDK telemetry",
-          detail: "OTEL-compatible spans, onStepFinish callbacks",
+          text: "AI SDK telemetry + Workflow in Observability",
+          detail:
+            "OTEL via @ai-sdk/otel (v7 stable); Workflow queryable in Vercel Observability (Apr 7)",
         },
         aws: {
           text: "Bedrock AgentCore Observability",
           detail: "CloudWatch-backed, step visualization, metadata tagging",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html",
+        },
+      },
+      {
+        capability: "Evaluations",
+        description:
+          "Built-in quality measurement for agent responses, safety, task completion, and tool usage",
+        iconName: "CheckCircle2",
+        vercel: {
+          text: "External (BYO)",
+          detail: "Bring your own evaluation framework / LLM judges",
+        },
+        aws: {
+          text: "Bedrock AgentCore Evaluations (GA)",
+          detail:
+            "13 built-in evaluators, 9 regions, Ground Truth + custom Lambda evaluators",
+          link: "https://aws.amazon.com/about-aws/whats-new/2026/03/agentcore-evaluations-generally-available/",
         },
       },
     ],

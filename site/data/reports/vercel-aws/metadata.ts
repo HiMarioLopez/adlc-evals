@@ -34,13 +34,13 @@ export const metadata: ReportMetadata = {
   description:
     "Comprehensive comparison of Vercel + AI SDK versus AWS Bedrock AgentCore + Strands SDK for building production-ready AI agents.",
   href: "/reports/vercel-aws",
-  date: "January 8, 2026",
-  version: "1.0.0",
+  date: "April 21, 2026",
+  version: "2.0.0",
   platforms,
   highlights: [
-    "Infrastructure ≈ 3% of TCO",
-    "Time-to-first-agent: 3 min vs 60+ min",
-    "Detailed pricing analysis",
+    "Sandbox + Workflow now GA",
+    "AgentCore Runtime: 14 regions",
+    "Claude Opus 4.7 · Sonnet 4.6",
   ],
   contributors,
 };

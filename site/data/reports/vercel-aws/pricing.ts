@@ -3,7 +3,8 @@ import type { PricingData } from "@/data/report-schema.ts";
 export const pricingData: PricingData = {
   sectionNumber: 2,
   title: "2026 Unit Economics",
-  description: "Cost analysis for 1,000 agent turns with Claude Sonnet 4.5",
+  description:
+    "Cost analysis for 1,000 agent turns with Claude Sonnet 4.6 (the current recommended default, same $3/$15 per MTok as 4.5)",
   workloadAssumptions: {
     turns: 1000,
     inputTokensPerTurn: 2000,
@@ -12,13 +13,13 @@ export const pricingData: PricingData = {
   },
   modelPricing: [
     {
-      model: "Claude Opus 4.5",
+      model: "Claude Opus 4.7",
       input: "$5.00",
       output: "$25.00",
       tier: "flagship",
     },
     {
-      model: "Claude Sonnet 4.5",
+      model: "Claude Sonnet 4.6",
       input: "$3.00",
       output: "$15.00",
       tier: "balanced",
@@ -33,19 +34,19 @@ export const pricingData: PricingData = {
   costBreakdown: {
     vercel: [
       {
-        component: "Model (Claude Sonnet 4.5)",
+        component: "Model (Claude Sonnet 4.6 via AI Gateway, 0% markup)",
         calc: "2M input × $3 + 0.5M output × $15",
         cost: "$13.50",
       },
       {
-        component: "Sandbox SDK (CPU)",
+        component: "Sandbox SDK (Active CPU, I/O free)",
         calc: "1,000 turns × 5s × $0.128/hr",
         cost: "$0.18",
       },
       {
-        component: "Sandbox Memory",
-        calc: "4 GB × 1.39 hrs × $0.0106/GB-hr",
-        cost: "$0.06",
+        component: "Sandbox Provisioned Memory",
+        calc: "4 GB × 1.39 hrs × $0.0212/GB-hr",
+        cost: "$0.12",
       },
       {
         component: "Sandbox Creations",
@@ -60,7 +61,7 @@ export const pricingData: PricingData = {
     ],
     aws: [
       {
-        component: "Model (Claude Sonnet 4.5)",
+        component: "Model (Claude Sonnet 4.6)",
         calc: "2M input × $3 + 0.5M output × $15",
         cost: "$13.50",
       },
@@ -80,71 +81,79 @@ export const pricingData: PricingData = {
         cost: "$0.01",
       },
       {
-        component: "Memory (short-term)",
+        component: "Memory (short-term events)",
         calc: "1,000 × $0.25/1K",
         cost: "$0.25",
       },
     ],
-    vercelTotal: "$13.89",
+    vercelTotal: "$13.95",
     awsTotal: "$13.93",
-    awsRegionalNote: "+$1.35 with regional endpoints",
+    awsRegionalNote:
+      "Service tiers: Priority +75% ($24.42) · Flex −50% ($7.18) — new via Strands v1.35.0",
   },
   keyInsight: {
     title: "Key Insight",
     description:
-      "Infrastructure costs are negligible compared to model costs. The primary cost driver is LLM inference.",
+      "Infrastructure costs remain a small fraction of total TCO (< 5%). Bedrock's new service tiers (Priority/Standard/Flex, GA via Strands v1.35.0) give AWS a cost lever for batch workloads (−50%) and a latency lever for user-facing workloads (+75%). Vercel AI Gateway's 0% markup means no gateway fee is added on top of provider pricing.",
     modelPercent: 97,
     infraPercent: 3,
   },
   effortLevels: [
     {
       level: "Low",
-      multiplier: "~1x baseline",
-      impact: "Minimal cost impact",
+      multiplier: "~30-50% of high",
+      impact: "Lowest cost",
       color: "primary",
     },
     {
       level: "Medium",
-      multiplier: "~2-3x output",
-      impact: "Moderate increase",
+      multiplier: "~60-70% of high",
+      impact: "Moderate",
       color: "chart-3",
     },
     {
       level: "High",
-      multiplier: "~5-10x output",
-      impact: "2-3x total cost",
+      multiplier: "Baseline (default)",
+      impact: "Baseline",
       color: "aws",
+    },
+    {
+      level: "xHigh (Opus 4.7)",
+      multiplier: "~1.5-2x high",
+      impact: "Extended reasoning",
+      color: "chart-2",
     },
   ],
   bedrockTiers: [
     {
-      tier: "On-Demand",
-      description: "Pay per token",
+      tier: "Priority",
+      description: "Latency-sensitive",
+      discount: "+75% premium",
+      tooltip:
+        "New in 2026. Highest priority inference for latency-sensitive user-facing agents. Available via Strands v1.35.0 BedrockModel(service_tier='priority').",
+    },
+    {
+      tier: "Standard",
+      description: "Default tier",
       discount: "Baseline",
-      tooltip: null,
+      tooltip:
+        "Default on-demand pricing. Pay per token with no commitment. Balanced latency and cost.",
     },
     {
-      tier: "Provisioned",
-      description: "Reserved capacity",
-      discount: "Commitment discount",
+      tier: "Flex",
+      description: "Batch agent work",
+      discount: "−50% discount",
       tooltip:
-        "Purchase Model Units (MUs) with 1-month or 6-month commitments for guaranteed throughput. Longer commitments = lower hourly rates.",
-    },
-    {
-      tier: "Batch Mode",
-      description: "Async processing",
-      discount: "50% discount",
-      tooltip:
-        "Process multiple prompts asynchronously via S3. Results retrieved from bucket when complete. Not supported for provisioned models.",
+        "New in 2026. Half-price tier explicitly recommended for agentic batch workflows and background tasks. Available via Strands v1.35.0 BedrockModel(service_tier='flex').",
     },
     {
       tier: "Prompt Caching",
       description: "Cache prompts",
       discount: "Up to 90% off",
       tooltip:
-        "Cache frequently-used prompt components to skip recomputation. 5-minute TTL. Cached tokens charged at reduced rate.",
+        "Cache frequently-used prompt components to skip recomputation. 5-minute or 1-hour TTL (1h added on Opus 4.6+/Sonnet 4.6). Cached tokens charged at reduced rate.",
     },
   ],
   bedrockPricingNote:
-    "Bedrock global endpoints match Anthropic direct pricing (shown above). Regional endpoints add a 10% premium for data residency guarantees. This applies to Claude 4.5+ models.",
+    "Bedrock global endpoints match Anthropic direct pricing with 0% AI Gateway markup. Claude Opus 4.7 (Apr 16, 2026) uses an updated tokenizer producing 1.0–1.35× more tokens for the same input vs. Opus 4.6 — per-token rate is unchanged but effective cost may be 0-35% higher for equivalent prompts. Browser profile S3 storage began billing April 15, 2026.",
 };

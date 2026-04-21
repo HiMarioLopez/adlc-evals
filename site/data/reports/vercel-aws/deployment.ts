@@ -102,12 +102,13 @@ export class AgentStack extends cdk.Stack {
       agentRuntimeArtifact: artifact,
     });
 
-    // Grant model access
+    // Grant model access (Sonnet 4.6 — current default)
     runtime.grantInvokeModel(
-      BedrockFoundationModel.ANTHROPIC_CLAUDE_SONNET_4
+      BedrockFoundationModel.ANTHROPIC_CLAUDE_SONNET_4_6
     );
 
-    // Add memory, gateway, code interpreter...
+    // Add memory, gateway, code interpreter,
+    // policy (GA), evaluations (GA), registry (preview)...
   }
 }`,
         notes: ["+ Dockerfile, buildspec.yml, cdk.json, tsconfig.json..."],

@@ -1,7 +1,7 @@
 import type { HeroData } from "@/data/report-schema.ts";
 
 export const heroData: HeroData = {
-  lastUpdated: "January 8, 2026",
+  lastUpdated: "April 21, 2026",
   title: {
     primary: "Vercel",
     secondary: "AWS",
@@ -13,7 +13,7 @@ export const heroData: HeroData = {
     {
       label: "Infra",
       values: {
-        primary: { value: "3%", label: "of TCO" },
+        primary: { value: "<5%", label: "of TCO" },
       },
     },
     {
