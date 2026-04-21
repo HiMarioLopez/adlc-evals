@@ -94,9 +94,6 @@ function AWSMapLazy({
         <MapControls position="bottom-right" showZoom={true} />
         {regions.map((region) => {
           const status = getAgentCoreStatus(region);
-          const enabledFeatures = features.filter(
-            (f) => region.agentcore[f.key as keyof typeof region.agentcore]
-          );
 
           return (
             <MapMarker
@@ -154,24 +151,35 @@ function AWSMapLazy({
                   </p>
                 ) : (
                   <div className="flex flex-wrap gap-1">
-                    {enabledFeatures.map((f) => (
-                      <span
-                        className="rounded bg-aws/30 px-1.5 py-0.5 text-[10px] text-aws"
-                        key={f.key}
-                      >
-                        {f.label}
-                      </span>
-                    ))}
+                    {features.map((f) => {
+                      const enabled =
+                        region.agentcore[
+                          f.key as keyof typeof region.agentcore
+                        ];
+                      return (
+                        <span
+                          className={cn(
+                            "rounded px-1.5 py-0.5 text-[10px]",
+                            enabled
+                              ? "bg-aws/25 text-amber-900 dark:text-amber-200"
+                              : "bg-muted-foreground/10 text-muted-foreground/60 line-through decoration-muted-foreground/30"
+                          )}
+                          key={f.key}
+                        >
+                          {f.label}
+                        </span>
+                      );
+                    })}
                   </div>
                 )}
 
                 {status === "full" && (
-                  <p className="mt-1.5 text-[10px] text-aws">
+                  <p className="mt-1.5 font-medium text-[10px] text-amber-700 dark:text-amber-300">
                     Full AgentCore stack available
                   </p>
                 )}
                 {status === "partial" && (
-                  <p className="mt-1.5 text-[10px] text-chart-3">
+                  <p className="mt-1.5 font-medium text-[10px] text-amber-700 dark:text-amber-300">
                     Partial AgentCore support
                   </p>
                 )}
