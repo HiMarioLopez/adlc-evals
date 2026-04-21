@@ -127,7 +127,7 @@ function AWSMapLazy({
                   />
                 </div>
               </MarkerContent>
-              <MarkerTooltip className="min-w-[200px] px-3 py-2.5">
+              <MarkerTooltip className="min-w-[200px] rounded-lg border border-border bg-popover px-3 py-2.5 text-popover-foreground shadow-lg">
                 <div className="mb-1.5 flex items-center gap-2">
                   <span
                     className={cn(
@@ -141,12 +141,12 @@ function AWSMapLazy({
                   />
                   <span className="font-semibold text-sm">{region.name}</span>
                 </div>
-                <p className="mb-2 font-mono text-[11px] opacity-70">
+                <p className="mb-2 font-mono text-[11px] text-muted-foreground">
                   {region.region}
                 </p>
 
                 {status === "none" ? (
-                  <p className="text-[10px] opacity-50">
+                  <p className="text-[10px] text-muted-foreground">
                     No AgentCore services available
                   </p>
                 ) : (
@@ -161,8 +161,8 @@ function AWSMapLazy({
                           className={cn(
                             "rounded px-1.5 py-0.5 text-[10px]",
                             enabled
-                              ? "bg-aws/25 text-amber-900 dark:text-amber-200"
-                              : "bg-muted-foreground/10 text-muted-foreground/60 line-through decoration-muted-foreground/30"
+                              ? "bg-aws/15 font-medium text-aws"
+                              : "bg-muted text-muted-foreground/60 line-through decoration-muted-foreground/40"
                           )}
                           key={f.key}
                         >
@@ -174,12 +174,12 @@ function AWSMapLazy({
                 )}
 
                 {status === "full" && (
-                  <p className="mt-1.5 font-medium text-[10px] text-amber-700 dark:text-amber-300">
+                  <p className="mt-2 font-medium text-[10px] text-aws">
                     Full AgentCore stack available
                   </p>
                 )}
                 {status === "partial" && (
-                  <p className="mt-1.5 font-medium text-[10px] text-amber-700 dark:text-amber-300">
+                  <p className="mt-2 font-medium text-[10px] text-chart-3">
                     Partial AgentCore support
                   </p>
                 )}
@@ -252,7 +252,7 @@ function VercelMapLazy({ regions }: { regions: VercelRegionData[] }) {
                 </div>
               </div>
             </MarkerContent>
-            <MarkerTooltip className="min-w-[180px] px-3 py-2.5">
+            <MarkerTooltip className="min-w-[180px] rounded-lg border border-border bg-popover px-3 py-2.5 text-popover-foreground shadow-lg">
               <div className="mb-1 flex items-center gap-2">
                 <svg
                   className="h-3 w-3"
@@ -263,24 +263,24 @@ function VercelMapLazy({ regions }: { regions: VercelRegionData[] }) {
                 </svg>
                 <span className="font-semibold text-sm">{region.name}</span>
               </div>
-              <p className="mb-2 font-mono text-[11px] opacity-70">
+              <p className="mb-2 font-mono text-[11px] text-muted-foreground">
                 {region.code} ({region.awsRegion})
               </p>
               <div className="flex flex-wrap gap-1">
-                <span className="rounded bg-background/20 px-1.5 py-0.5 text-[10px]">
+                <span className="rounded bg-muted px-1.5 py-0.5 text-[10px]">
                   Functions
                 </span>
-                <span className="rounded bg-background/20 px-1.5 py-0.5 text-[10px]">
+                <span className="rounded bg-muted px-1.5 py-0.5 text-[10px]">
                   Fluid Compute
                 </span>
                 {region.hasSandbox && (
-                  <span className="rounded bg-primary/30 px-1.5 py-0.5 text-[10px] text-primary">
+                  <span className="rounded bg-primary/15 px-1.5 py-0.5 font-medium text-[10px] text-primary">
                     Sandbox
                   </span>
                 )}
               </div>
               {region.hasSandbox && (
-                <p className="mt-1.5 text-[10px] opacity-50">
+                <p className="mt-2 text-[10px] text-muted-foreground">
                   Only region with Sandbox (Beta)
                 </p>
               )}
