@@ -152,24 +152,30 @@ export function CostCalculator() {
                 Model Selection
               </label>
               <div className="grid grid-cols-3 gap-2">
-                {(["haiku", "sonnet", "opus"] as const).map((key) => (
-                  <button
-                    className={`rounded-xl border p-3 transition-all ${
-                      model === key
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-border bg-muted/50 text-muted-foreground hover:border-primary/50"
-                    }`}
-                    key={key}
-                    onClick={() => setModel(key)}
-                  >
-                    <p className="font-medium text-xs">
-                      {pricing[key].name.split(" ")[1]}
-                    </p>
-                    <p className="mt-1 font-mono text-[10px]">
-                      ${pricing[key].input}/M in
-                    </p>
-                  </button>
-                ))}
+                {(["haiku", "sonnet", "opus"] as const).map((key) => {
+                  const parts = pricing[key].name.split(" ");
+                  const tierName = parts[1];
+                  const version = parts[2];
+                  return (
+                    <button
+                      className={`rounded-xl border p-3 transition-all ${
+                        model === key
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border bg-muted/50 text-muted-foreground hover:border-primary/50"
+                      }`}
+                      key={key}
+                      onClick={() => setModel(key)}
+                    >
+                      <p className="font-medium text-xs">
+                        {tierName}{" "}
+                        <span className="font-mono opacity-70">{version}</span>
+                      </p>
+                      <p className="mt-1 font-mono text-[10px]">
+                        ${pricing[key].input}/M in
+                      </p>
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
