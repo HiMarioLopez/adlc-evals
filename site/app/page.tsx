@@ -73,32 +73,6 @@ const upcomingReports = [
     ],
   },
   {
-    id: "vercel-azure",
-    title: "Vercel vs Azure",
-    subtitle: "Agent Stack Technical Evaluation",
-    description:
-      "Evaluating Vercel + AI SDK versus Azure AI Agent Service and Semantic Kernel for building scalable AI agent solutions.",
-    platforms: [
-      {
-        name: "Vercel",
-        color: "bg-foreground",
-        textColor: "text-background",
-        icon: "vercel" as const,
-      },
-      {
-        name: "Azure",
-        color: "bg-[#0078D4]",
-        textColor: "text-white",
-        icon: "azure" as const,
-      },
-    ],
-    teaser: [
-      "Azure AI Agent Service",
-      "Semantic Kernel",
-      "Azure Functions integration",
-    ],
-  },
-  {
     id: "vercel-cloudflare",
     title: "Vercel vs Cloudflare",
     subtitle: "Agent Stack Technical Evaluation",

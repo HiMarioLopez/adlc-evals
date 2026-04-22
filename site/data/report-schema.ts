@@ -239,7 +239,7 @@ export interface DeploymentData {
 }
 
 // =============================================================================
-// Regional Section
+// Regional Section — AWS
 // =============================================================================
 
 export interface AWSAgentCoreFeatures {
@@ -277,6 +277,55 @@ export interface RegionalData {
   vercelEdgePops: number;
   vercelFeatures: { key: string; label: string; note: string }[];
   vercelRegions: VercelRegionData[];
+}
+
+// =============================================================================
+// Regional Section — Azure (parallel to AWS, additive schema extension)
+// =============================================================================
+
+/**
+ * Foundry Agent Service per-region feature flags (April 2026).
+ * Source: learn.microsoft.com/en-us/azure/foundry/agents/concepts/limits-quotas-regions
+ */
+export interface AzureFoundryFeatures {
+  agentService: boolean; // Prompt agents (GA)
+  codeInterpreter: boolean; // Built-in code interpreter tool
+  computerUse: boolean; // Computer Use tool (preview, 2 regions)
+  fileSearch: boolean; // File Search (RAG) tool
+  hostedAgents: boolean; // Containerized MAF/LangGraph (preview)
+  webSearch: boolean; // Bing Grounding (24 regions)
+}
+
+export interface AzureRegionData {
+  coordinates: [number, number];
+  foundry: AzureFoundryFeatures;
+  geo: string; // "Americas" | "Europe" | "Asia Pacific" | "Middle East" | "Africa"
+  name: string; // e.g. "East US 2"
+  region: string; // ARM code: "eastus2"
+}
+
+/**
+ * Vercel region data when compared against Azure.
+ * Structurally identical to VercelRegionData except `azureRegion`
+ * replaces `awsRegion` for the colocated-region hint.
+ */
+export interface VercelAzureRegionData {
+  azureRegion: string;
+  code: string;
+  coordinates: [number, number];
+  hasSandbox: boolean;
+  name: string;
+}
+
+export interface AzureRegionalData {
+  azureRegions: AzureRegionData[];
+  description: string;
+  foundryFeatures: { key: string; label: string; required: boolean }[];
+  sectionNumber: number;
+  title: string;
+  vercelEdgePops: number;
+  vercelFeatures: { key: string; label: string; note: string }[];
+  vercelRegions: VercelAzureRegionData[];
 }
 
 // =============================================================================
@@ -386,3 +435,19 @@ export interface Report {
   regions: RegionalData;
   sections: ReportSection[];
 }
+
+export interface AzureReport {
+  adoption: AdoptionData;
+  code: CodeData;
+  delta: DeltaData;
+  deployment: DeploymentData;
+  footer: FooterData;
+  hero: HeroData;
+  infrastructure: InfrastructureData;
+  metadata: ReportMetadata;
+  pricing: PricingData;
+  regions: AzureRegionalData;
+  sections: ReportSection[];
+}
+
+export type AnyReport = Report | AzureReport;

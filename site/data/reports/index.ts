@@ -1,20 +1,15 @@
-import type { Report, ReportMetadata } from "@/data/report-schema.ts";
+import type { AnyReport, ReportMetadata } from "@/data/report-schema.ts";
 import { vercelAwsReport } from "./vercel-aws/index.ts";
+import { vercelAzureReport } from "./vercel-azure/index.ts";
 
-// Report registry - all available reports
 export const reports = {
   "vercel-aws": vercelAwsReport,
-  // Future reports:
-  // 'vercel-gcp': vercelGcpReport,
-  // 'vercel-azure': vercelAzureReport,
-  // 'vercel-cloudflare': vercelCloudflareReport,
-  // 'vercel-modal': vercelModalReport,
+  "vercel-azure": vercelAzureReport,
 } as const;
 
 export type ReportId = keyof typeof reports;
 
-// Helper functions
-export function getReport(id: ReportId): Report {
+export function getReport(id: ReportId): AnyReport {
   return reports[id];
 }
 

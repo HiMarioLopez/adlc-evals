@@ -43,7 +43,8 @@ site/                      → Interactive Next.js report site
 
 | Comparison | Status | Links |
 |------------|--------|-------|
-| Vercel vs AWS | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-aws) · [Markdown](generated-reports/vercel-aws/2026/01/2026-01-08-Agent-Comparison-Report-Claude-Opus-4.5.md) |
+| Vercel vs AWS | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-aws) · [Markdown](generated-reports/vercel-aws/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md) |
+| Vercel vs Azure | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-azure) · [Markdown](generated-reports/vercel-azure/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md) |
 | Vercel vs Cloudflare | 🔜 Planned | — |
 | Vercel vs GCP | 🔜 Planned | — |
 
