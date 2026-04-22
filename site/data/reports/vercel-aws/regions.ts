@@ -681,8 +681,8 @@ export const regionsData: RegionalData = {
     { key: "identity", label: "Identity", required: false },
     { key: "tools", label: "Tools", required: true },
     { key: "observability", label: "Observability", required: false },
-    { key: "policy", label: "Policy (GA)", required: false },
-    { key: "evaluations", label: "Evaluations (GA)", required: false },
+    { key: "policy", label: "Policy", required: false },
+    { key: "evaluations", label: "Evaluations", required: false },
   ],
   vercelFeatures: [
     { key: "functions", label: "Functions", note: "Serverless" },
