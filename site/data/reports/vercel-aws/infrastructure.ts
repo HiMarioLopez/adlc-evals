@@ -19,8 +19,8 @@ export const categoryGroups: CategoryGroup[] = [
         vercel: {
           text: "Vercel AI SDK 6.x",
           detail:
-            "ToolLoopAgent, tools, stopWhen, prepareStep, dynamicTool; v7 beta adds WorkflowAgent",
-          link: "https://sdk.vercel.ai",
+            "ToolLoopAgent, Agent interface, stopWhen, prepareStep, dynamicTool (stable Dec 2025); v7 beta ESM-only",
+          link: "https://ai-sdk.dev/docs/agents/overview",
         },
         aws: {
           text: "Strands Agents SDK",
@@ -37,8 +37,8 @@ export const categoryGroups: CategoryGroup[] = [
         vercel: {
           text: "AI Gateway",
           detail:
-            "0% markup, 20+ providers, 100+ models, team-wide ZDR, Custom Reporting API",
-          link: "https://vercel.com/ai-gateway",
+            "0% markup · BYOK across Anthropic/OpenAI/Azure/Vertex/Bedrock · 100+ models · built-in observability",
+          link: "https://vercel.com/docs/ai-gateway",
         },
         aws: {
           text: "Amazon Bedrock",
@@ -53,10 +53,10 @@ export const categoryGroups: CategoryGroup[] = [
           "Connect external APIs, databases, and services as callable tools for agents",
         iconName: "Wrench",
         vercel: {
-          text: "AI SDK + @ai-sdk/mcp",
+          text: "mcp-handler + AI SDK tools + Sandbox",
           detail:
-            "Native tools; stable HTTP/SSE MCP client (stdio experimental)",
-          link: "https://ai-sdk.dev/docs/foundations/tools",
+            "mcp-handler 1.1 (first-party MCP server, Streamable HTTP + OAuth); @ai-sdk/mcp client; tool() + dynamicTool; @vercel/sandbox 1.10 for code exec",
+          link: "https://github.com/vercel/mcp-handler",
         },
         aws: {
           text: "Bedrock AgentCore Gateway",
@@ -71,8 +71,10 @@ export const categoryGroups: CategoryGroup[] = [
           "Open agent interoperability protocols supported natively by the platform",
         iconName: "Network",
         vercel: {
-          text: "MCP",
-          detail: "Model Context Protocol client (stable HTTP/SSE transports)",
+          text: "MCP (client + server)",
+          detail:
+            "@ai-sdk/mcp client: Streamable HTTP + SSE stable, stdio local-only · mcp-handler server · A2A + AG-UI not first-party",
+          link: "https://ai-sdk.dev/docs/ai-sdk-core/mcp-tools",
         },
         aws: {
           text: "MCP + A2A + AG-UI",
@@ -87,8 +89,10 @@ export const categoryGroups: CategoryGroup[] = [
           "Centralized catalog for discovering, sharing, and governing agents and tools",
         iconName: "Search",
         vercel: {
-          text: "N/A",
-          detail: "Bring your own (registry, marketplace, docs)",
+          text: "Marketplace + mcp.vercel.com",
+          detail:
+            "Marketplace: AI Agents & Services category + agent-optimized CLI (vercel integration discover/guide); mcp.vercel.com first-party MCP endpoint; no dedicated agent registry",
+          link: "https://vercel.com/marketplace/category/agents",
         },
         aws: {
           text: "AWS Agent Registry (Preview)",
