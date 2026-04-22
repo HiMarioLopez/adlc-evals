@@ -42,7 +42,7 @@ export const footerData: FooterData = {
     },
   ],
   contributors: [{ name: "Mario Lopez Martinez", github: "HiMarioLopez" }],
-  reportVersion: "1.0.0",
+  reportVersion: "1.1.0",
   generatedDate: "2026-04-21",
   analyzedVersions: {
     aiSdk: "ai@6.0.168",
