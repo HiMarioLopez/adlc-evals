@@ -4,9 +4,9 @@
 
 | Field | Value |
 |-------|-------|
-| **Last Updated (ISO 8601)** | 2026-04-21 |
+| **Last Updated (ISO 8601)** | 2026-04-22 |
 | **Generating Model** | Claude Opus 4.7 |
-| **Report Version** | 1.0.0 (Vercel vs Azure baseline) |
+| **Report Version** | 1.1.0 (post-Apr 22 Foundry drop) |
 | **Meta-Prompt** | [`Vercel-Azure-Base-Research-Prompt.md`](../../../meta-research-prompts/Vercel-Azure-Base-Research-Prompt.md) v1.0.0 |
 | **Output Path** | `generated-reports/vercel-azure/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md` |
 | **Sister Report** | [Vercel vs AWS (Apr 21, 2026) v2.0.0](../../../vercel-aws/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md) |
@@ -27,7 +27,7 @@ Every managed agent stack in 2026 has two layers. Compare them like-for-like or 
 | Layer | Vercel | Azure (April 2026) |
 |-------|--------|--------------------|
 | **Agent Framework** (SDK for agent logic) | **AI SDK 6.x** — `ToolLoopAgent`, tools, `prepareStep`, streaming (stable); `WorkflowAgent` in v7 beta | **Microsoft Agent Framework 1.0** — `Agent`, `AIAgent`, `ChatClientAgent`, `SequentialBuilder`, `ConcurrentBuilder`, `HandoffOrchestration`, `GraphFlow`, `Magentic-One` (GA Apr 3, 2026) — unified successor to Semantic Kernel + AutoGen |
-| **Infrastructure** (runtime, memory, deployment) | **Vercel Platform** — Fluid Compute (20 regions) + Sandbox SDK (GA) + Workflow SDK (GA) + Vercel Queues (GA) + AI Gateway + Chat SDK | **Microsoft Foundry Agent Service** — Responses API-based runtime (next-gen GA Mar 16, 2026), Hosted Agents preview (ACA-backed, 25 regions), Conversations API, Foundry Evaluations GA, Foundry Tracing GA, Foundry MCP Server preview |
+| **Infrastructure** (runtime, memory, deployment) | **Vercel Platform** — Fluid Compute (20 regions) + Sandbox SDK (GA) + Workflow SDK (GA) + Vercel Queues (GA) + AI Gateway + Chat SDK | **Microsoft Foundry Agent Service** — Responses API-based runtime (next-gen GA Mar 16, 2026); **Hosted Agents refresh (Public Preview · Apr 22, 2026)** — new backend (not ACA), per-session hypervisor sandbox, `$HOME`/files persistence, <100ms cold start, `$0.0994/vCPU-hr + $0.0118/GiB-hr`, 4 preview regions; Conversations API; Foundry Evaluations GA; Foundry Tracing GA (fully GA + hosted-agent tracing Preview); Foundry Toolbox Preview; Foundry Memory refresh Preview; AI Red Teaming Agent GA; Foundry MCP Server preview |
 | **Model Layer** | AI Gateway (0% markup, 20+ providers, 100+ models, team-wide ZDR GA) | **Azure OpenAI** (Global / Data Zone / Regional / Priority / Batch / PTU — **9 deployment tiers total**) + **Foundry Models** catalog (DeepSeek, Llama, Mistral, Phi, MAI-*, 11,000+ total models) |
 
 > ⚠️ **The single most important Azure fact of April 2026:** Microsoft shipped **Agent Framework 1.0 on April 3, 2026**. This SDK *explicitly unifies* Semantic Kernel and AutoGen. From the [GA announcement](https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/):
@@ -95,6 +95,7 @@ Both platforms moved hard this window. Azure's story centers on **the Foundry re
 
 | Date | Product | Headline |
 |------|---------|----------|
+| **Apr 22, 2026** | **Foundry "Complete Developer Journey" drop** | [Hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/) — coordinated 7-step release: **Hosted Agents refresh** (new backend, `$0.0994/vCPU-hr + $0.0118/GiB-hr`, 4 preview regions, `$HOME` persistence, <100ms cold start); **Foundry Toolbox** Public Preview (unified MCP endpoint); **Foundry Memory refresh** with native MAF + LangGraph integration; **Agent Harness** Preview (3 patterns); **Foundry Toolkit for VS Code GA**; **AI Red Teaming Agent GA**; **MAF v1.0** multi-model (Azure OpenAI + Anthropic + Gemini + Bedrock + Ollama); **M365/Teams one-click publish** Preview (Shared + Organization scopes). Launch customer: Sitecore. |
 | **Apr 21, 2026** | Microsoft Agent 365 | [Frontier Suite](https://blogs.microsoft.com/blog/2026/04/21/accelerating-frontier-transformation-with-microsoft-partners/) announced; GA May 1 — unified agent control plane across Copilot Studio, Foundry, Fabric |
 | **Apr 16, 2026** | Azure OpenAI | [o3 + o4-mini GA](https://azure.microsoft.com/en-us/blog/o3-and-o4-mini-unlock-enterprise-agent-workflows-with-next-level-reasoning-ai-with-azure-ai-foundry-and-github/) — reasoning + vision + Responses API; + `gpt-4o-transcribe`, `-mini-transcribe`, `-mini-tts` |
 | **Apr 14, 2026** | Azure OpenAI | [GPT-4.1 series GA](https://azure.microsoft.com/en-us/blog/announcing-the-gpt-4-1-model-series-for-azure-ai-foundry-and-github-developers/) — 1M-token context, 26% cheaper than GPT-4o, SFT enabled; 15 PTU minimum for global |
@@ -146,6 +147,26 @@ Both platforms moved hard this window. Azure's story centers on **the Foundry re
 
 **Azure went all-in on "Foundry-everything":** a rebrand, a GA-quality Responses-API runtime, a unified agent framework that explicitly kills SK+AutoGen as primary entry points, OTel-native observability, per-agent guardrails, cloud-hosted MCP, Durable Task Scheduler Consumption SKU for workflow orchestration, and a first-class identity model for agents. **Vercel doubled down on "use any workload, we'll run it durably":** Sandbox GA gave you microVMs for arbitrary code, Workflow GA gave you `"use workflow"` durability, Vercel Queues went GA under it, Chat SDK gave you multi-platform chat out of the box. Different philosophies: Azure sells you a managed agent runtime, Vercel sells you the compute + durability primitives under your own agent code.
 
+**And on Apr 22** — one day after this report's prior refresh — Microsoft shipped the **"Complete Developer Journey"** drop: a new Hosted Agents backend with per-session hypervisor sandboxes and filesystem persistence (directly competing with Vercel Sandbox), Foundry Toolbox for unified tool management, Foundry Memory with MAF+LangGraph native integration, Agent Harness for long-running autonomous agents, AI Red Teaming Agent GA, and Foundry Toolkit for VS Code GA. See §2.5 for the 7-step mapping and §3.1 for the head-to-head against Vercel Sandbox.
+
+### 2.5 The April 22, 2026 Foundry Drop — 7-Step Developer Journey
+
+Microsoft packaged the Apr 22 release as a seven-step narrative. Mapped to Vercel equivalents and our matrix rows:
+
+| # | Microsoft Step | Ships | Status | Vercel Equivalent | Our §/Row |
+|---|----------------|-------|--------|-------------------|-----------|
+| 1 | **Build locally** | MAF v1.0 + Foundry Toolkit for VS Code | **GA** + **GA** | AI SDK 6.x + Vercel CLI + Vercel Plugin for Coding Agents | §1 · §3 Agent Framework |
+| 2 | **Agent Harness & Multi-Agent** | Local Shell / Hosted Shell / Context Compaction + GitHub Copilot SDK integration | Public Preview | `@vercel/sandbox` + bash-tool + AI SDK v7 `toolNeedsApproval` + DurableAgent | §3 Agent Harness (new row) |
+| 3 | **Stateful agents** | Foundry Memory w/ native MAF + LangGraph integration | Preview (billing Jun 1) | DurableAgent state + Marketplace storage (Neon/Upstash/Supabase) | §3 Persistent Memory |
+| 4 | **Tool management** | Foundry Toolbox (unified MCP endpoint) | Public Preview | `@ai-sdk/mcp` + mcp-handler + bash-tool | §3 Tool Management |
+| 5 | **Host at scale** | Hosted Agents refresh | Public Preview (billing started Apr 22) | Vercel Sandbox (GA) + Fluid Compute + Workflow (GA) | §3 Infrastructure Wrapper · §3.1 head-to-head |
+| 6 | **Observability** | Foundry Control Plane tracing + evals + **AI Red Teaming Agent** | Fully GA (hosted-agent tracing Preview · custom evals Preview) | AI SDK telemetry + Vercel Observability Plus + Braintrust (Marketplace) | §7 |
+| 7 | **Distribute to users** | Publish to Teams + M365 Copilot (Shared + Organization scopes) | Public Preview | Vercel Chat SDK (Slack/Discord/Teams/WhatsApp/Telegram) | §3 Chat Integration |
+
+**Launch customer:** Sitecore — SitecoreAI / Agentic Studio runs on MAF with Foundry IQ for brand-knowledge grounding.
+
+> 📝 **What Microsoft did NOT ship:** There is no Azure equivalent to Vercel AI Gateway in this drop. MAF v1.0's multi-model support (Azure OpenAI, Anthropic, Gemini, Bedrock, Ollama) is at the **SDK layer** — it gives you code-level provider switching, not a runtime routing/fallback/BYOK gateway with 0% markup. The closest existing capability is Azure API Management with AI policies, which was not part of this announcement.
+
 ---
 
 ## 3. Infrastructure Footprint (Hard Facts)
@@ -170,7 +191,7 @@ Compute, execution environments, and workflow orchestration.
 
 | Capability | Vercel Stack | Azure Stack |
 |------------|--------------|-------------|
-| **Infrastructure Wrapper** | **Fluid Compute** — Edge + Serverless hybrid across **20 regions**; in-function concurrency; 800s max (Pro/Enterprise); Active CPU billing — I/O time is free. [Docs](https://vercel.com/docs/fluid-compute) | **Foundry Agent Service** — next-gen GA Mar 16, 2026 · Responses API runtime (wire-compatible w/ OpenAI Agents SDK) · prompt agents GA · **Hosted Agents preview** (ACA-backed, **25 regions**) · `from_agent_framework()` + `agent.yaml` + Dockerfile deployment pattern. [Overview](https://learn.microsoft.com/en-us/azure/foundry/agents/overview) |
+| **Infrastructure Wrapper** | **Fluid Compute** — Edge + Serverless hybrid across **20 regions**; in-function concurrency; 800s max (Pro/Enterprise); Active CPU billing — I/O time is free. [Docs](https://vercel.com/docs/fluid-compute) | **Foundry Agent Service** — next-gen GA Mar 16, 2026 · Responses API runtime (wire-compatible w/ OpenAI Agents SDK) · prompt agents GA · **Hosted Agents refresh (Public Preview · Apr 22, 2026)** — new backend (not ACA), per-session hypervisor sandbox, `$HOME`/files persistence across scale-to-zero, <100ms cold start, `$0.0994/vCPU-hr + $0.0118/GiB-hr` (active only), 0.25–2 vCPU / 0.5–4 GiB, **4 preview regions** (AU East, CA Central, NC US, SE Central), `azd deploy` one-command (ext v0.1.26-preview+), 4 protocols coexist (Responses + Invocations + Activity + A2A). [Concepts](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) |
 | **Secure Code Execution** | **Vercel Sandbox** — Firecracker microVMs, node24 / python3.13; up to **32 vCPU / 64 GB / 32 GB NVMe** (Enterprise); 5-hr max; 2,000 concurrent; `iad1` only; snapshots GA (Jan 22), persistent beta (Mar 26). [Docs](https://vercel.com/docs/vercel-sandbox) | **ACA Dynamic Sessions + Foundry Code Interpreter** — **Hyper-V isolated** sessions across **38 regions**; built-in Python / Node.js / Shell + custom container pools; 1-hr active / 30-min idle timeout; managed Code Interpreter tool wraps the same runtime. [ACA Sessions](https://learn.microsoft.com/en-us/azure/container-apps/sessions) |
 | **Durable Workflows** | **Workflow SDK (GA Apr 16, 2026)** — `"use workflow"` directive; event-sourced; unlimited run + sleep duration; **10K steps/run**; **100K concurrent**; DurableAgent for AI SDK; TS GA, Python beta. [Docs](https://vercel.com/docs/workflows) | **Multi-agent Workflows (Preview)** — preview since Nov 25, 2025 (Ignite); **still preview Apr 2026** · drag-drop visual designer + YAML in Foundry portal & VS Code · graph-based MAF orchestration deployed via Hosted Agents. [Announcement](https://devblogs.microsoft.com/foundry/introducing-multi-agent-workflows-in-foundry-agent-service/) |
 | **Message Queue** 🆕 | **Vercel Queues (GA)** — `@vercel/queue`: durable append-only topic log; fan-out consumer groups; automatic retries + deduplication; powers the Workflow SDK under the hood. [Docs](https://vercel.com/docs/queues) | **Azure Durable Task Scheduler** — **Consumption SKU GA Mar 31, 2026** (pay-per-action, no upfront, up to **30-day** history); **Dedicated SKU GA Nov 20, 2025** (1 CU = **2,000 actions/sec + 50 GB**, up to **90-day** history); managed backend for Durable Functions + Durable Task SDKs. [Docs](https://learn.microsoft.com/en-us/azure/durable-task/scheduler/develop-with-durable-task-scheduler) |
@@ -219,6 +240,62 @@ State management, memory, monitoring, and evaluation.
 
 ---
 
+## 3.1 Azure Hosted Agents vs. Vercel Sandbox — Head-to-Head
+
+The Apr 22 Hosted Agents refresh is explicitly positioned against Vercel Sandbox (from the [launch blog](https://devblogs.microsoft.com/foundry/introducing-the-new-hosted-agents-in-foundry-agent-service-secure-scalable-compute-built-for-agents/): *"Not process isolation. Not a code execution-only sandbox. Production-proven hypervisor isolation, at cloud scale."*). Direct comparison:
+
+| Dimension | Azure Hosted Agents (Apr 22 refresh) | Vercel Sandbox SDK |
+|-----------|--------------------------------------|---------------------|
+| **Status** | Public Preview (billing started Apr 22, 2026) | **GA** (Jan 30, 2026) |
+| **Isolation** | Per-session hypervisor-based sandbox (VMM not disclosed; predecessor used Hyper-V via ACA) | Firecracker microVM (dedicated kernel per sandbox) |
+| **Cold start** | **<100ms** (first-party number, [hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/)) | "Sub-second" (customer-confirmed); ~125ms Firecracker spec |
+| **Max vCPU (single unit)** | **2.0 vCPU** (ceiling during preview) | **32 vCPU** (Enterprise) — **16× larger** |
+| **Max memory (single unit)** | **4 GiB** | **64 GB** (Enterprise) — **16× larger** |
+| **Max concurrent sessions** | **50/sub/region** (preview, adjustable by Support ticket) | **2,000** (Pro/Enterprise) — **40× more** |
+| **Max session lifetime** | **30 days** | 5 hours (Pro/Enterprise) |
+| **Idle timeout → state save** | 15 min → deprovision → state-preserving resume | Configurable; Persistent Sandboxes (beta) |
+| **Filesystem persistence** | ✅ `$HOME` + `/files` survive scale-to-zero (preview GA) | ✅ Persistent Sandboxes (**beta**) — auto-snapshot on stop |
+| **Scale to zero** | ✅ Yes (zero cost during idle) | ✅ Ephemeral by default |
+| **Regions** | **4 preview** (AU East, CA Central, NC US, SE Central) | **`iad1` only** — Azure wins breadth for agent compute |
+| **Languages** | Python, C# | Any (node24, python3.13, arbitrary containers) |
+| **Framework agnostic** | ✅ BYO (MAF, LangGraph, SK, Claude Agent SDK, OpenAI Agents SDK, Copilot SDK, custom) | ✅ BYO (any framework, any code) |
+| **Identity** | **Per-agent Entra Agent ID + OBO user delegation** | Vercel project OIDC tokens |
+| **Private networking** | ✅ BYO VNet supported | ✅ Secure Compute ($6.5K/yr + $0.15/GB, Enterprise) |
+| **M365 / Teams / Copilot integration** | ✅ Native one-click publish (Shared + Organization scopes) | ❌ |
+| **A2A protocol** | ✅ Native | ❌ |
+| **AG-UI support** | ✅ Via Invocations protocol | ❌ |
+| **Durable orchestration** | Responses API conversation state (server-managed) | **Vercel Workflow** (`"use workflow"`, E2E encrypted, unlimited duration) |
+| **E2E encryption default** | Not stated | ✅ Workflow AES-256-GCM + per-run HKDF-SHA256 |
+| **Pricing** | `$0.0994/vCPU-hr + $0.0118/GiB-hr` (active only); XS $0.031/hr → L $0.246/hr | `$0.128/CPU-hr + $0.0212/GB-hr + $0.60/1M creations + $0.15/GB network + $0.08/GB-mo storage` |
+| **I/O-free Active CPU billing** | Not stated | ✅ Pauses during AI model calls and network I/O |
+| **Pricing transparency** | Published Apr 22 via hub blog | Fully published per-dimension |
+| **Deploy command** | `azd deploy` (remote ACR Tasks build — no local Docker) | `vercel deploy` (no container required — serverless functions) |
+
+### Where Azure Genuinely Wins
+1. **Enterprise identity** — Per-agent Entra Agent ID with OBO user delegation is a first-class enterprise security primitive. Vercel's project-scoped OIDC is functional but not per-agent.
+2. **M365/Teams/Copilot distribution** — One-click publish with Shared + Organization scopes, admin approval workflow, agent-store placement. No Vercel equivalent.
+3. **A2A + AG-UI protocols** — Native support for agent-to-agent delegation and agent-UI streaming. No Vercel equivalent in-platform.
+4. **Regional breadth for agent compute specifically** — 4 preview regions (AU, CA, US, EU) vs. Vercel Sandbox's single `iad1` region. For EU/APAC agent compute, Azure wins *today* (with the important caveat that Foundry Agent Service prompt-based agents cover 24 regions, while Hosted Agents itself is a narrow subset).
+5. **Filesystem persistence maturity** — `$HOME` persistence is preview-GA in Azure; Vercel's Persistent Sandboxes are still in beta.
+
+### Where Vercel Genuinely Wins
+1. **Isolation quality** — Firecracker gives each sandbox a dedicated kernel. Azure's per-session sandbox isolation detail (VMM name) is not disclosed; the predecessor backend used Hyper-V. For running untrusted or user-generated code, Firecracker's documented isolation boundary is stronger.
+2. **Compute ceiling** — 32 vCPU / 64 GB per sandbox (Enterprise) vs. Azure's 2 vCPU / 4 GiB ceiling. **16× advantage** for compute-intensive agent tasks (code compilation, ML inference, large builds).
+3. **Concurrency ceiling** — 2,000 concurrent sandboxes vs. Azure's 50/region preview limit. **40× more** out of the box. Azure's limit is adjustable on request; Vercel's is standard plan capacity.
+4. **I/O-free Active CPU billing** — Vercel pauses CPU billing during AI model calls and network I/O. For AI agent workloads where 80–95% of wall-clock is model-wait, this is a substantial TCO advantage. Azure's billing model is "active sessions" without published I/O-free semantics.
+5. **Durable execution** — Vercel Workflow provides step-level retries, sleep, hooks, durable streams, and E2E encryption as a first-class primitive alongside Sandbox. Azure Hosted Agents have no built-in workflow durability — you'd compose Durable Task Scheduler separately.
+6. **Language flexibility** — Vercel Sandbox runs any container / any language. Azure Hosted Agents: Python or C# only.
+7. **GA maturity** — Vercel Sandbox GA since Jan 30 with 2,000 concurrent sandboxes. Azure Hosted Agents is in preview with a 50-session preview cap.
+
+### Architect's Net Read
+**Pick based on workload shape, not rack rate.**
+- **Microsoft-centric enterprise, governance-first, M365 distribution, EU/APAC agent compute, per-user OBO identity** → Azure Hosted Agents
+- **Compute-intensive (>2 vCPU or >4 GiB per session), high concurrency (>50/region), untrusted code execution, global edge performance, durable multi-step workflows, I/O-heavy AI workloads** → Vercel Sandbox + Fluid Compute + Workflow
+
+For the same Claude / OpenAI model accessed on both platforms, **the model layer still dominates TCO** — agent-infrastructure choice sits at 3–11% of total. Regional fit and DX should drive the decision, not compute unit pricing.
+
+---
+
 ## 4. Regional Availability Matrix
 
 > ⚠️ **Production Consideration:** Azure has broader agent-region coverage than AWS (24 vs 14 Agent Service regions), but narrower than you'd expect — six regions (North Europe, West Europe, Central India, East Asia, Qatar Central, West US 2) have Foundry projects but NO Agent Service. Tool support is also heterogeneous within the 24.
@@ -230,7 +307,8 @@ State management, memory, monitoring, and evaluation.
 | Feature | Regions | Notes |
 |---------|---------|-------|
 | **Agent Service (Prompt agents)** | **24 GA regions** | australiaeast, brazilsouth, canadacentral, canadaeast, eastus, eastus2, francecentral, germanywestcentral, italynorth, japaneast, koreacentral, northcentralus, norwayeast, polandcentral, southafricanorth, southcentralus, southeastasia, southindia, spaincentral, swedencentral, switzerlandnorth, uaenorth, uksouth, westus, westus3 |
-| **Hosted Agents** | **Preview across 25 regions** (ACA-backed) | `from_agent_framework()` + `agent.yaml` + Dockerfile |
+| **Hosted Agents (new backend, Apr 22 refresh)** | **4 preview regions** | Australia East · Canada Central · North Central US · Sweden Central · requires `azd ext install azure.ai.agents` v0.1.26-preview+ · per-session hypervisor sandbox · `$HOME`/files persistence |
+| **Hosted Agents (legacy ACA backend)** | Broader preview footprint | Requires `azd ext` v0.1.25-preview; **being sunset** — migrate to new backend |
 | **Workflow Agents** (multi-agent visual/YAML) | Preview subset | Announced Nov 25, 2025 — still preview Apr 2026 |
 | **Code Interpreter tool** | **20 of 24** | NOT in Japan East, South Central US, Southeast Asia, Spain Central |
 | **File Search tool** | **22 of 24** | NOT in Italy North, Brazil South |
@@ -302,10 +380,11 @@ State management, memory, monitoring, and evaluation.
 1. **West US 2** — ACA Dynamic Sessions + AI Search available, but **no Agent Service, no Foundry project**
 2. **North Europe / West Europe** — Foundry projects + AI Search, but **no Agent Service**. Major gap for EU customers who want to avoid Sweden Central
 3. **Central India / East Asia / Qatar Central** — Foundry projects available, **no Agent Service**
+4. **Hosted Agents new-backend preview** — Limited to **4 regions** (AU East, CA Central, NC US, SE Central). EU outside Sweden, APAC outside Australia, and all of LATAM have **no Hosted Agents access** during preview. Fortune 500 customers with hard regional residency requirements in these zones cannot use the Apr 22 Hosted Agents refresh today.
 
 🟡 **Partial Coverage:**
-4. **Japan East / South Central US / Southeast Asia / Spain Central** — Agent Service GA, but **Code Interpreter tool not available**
-5. **Brazil South / Italy North / Spain Central / South India** — Agent Service available but **o3 / o4-mini / o1 are Global Standard only** (no regional data residency for reasoning models)
+5. **Japan East / South Central US / Southeast Asia / Spain Central** — Agent Service GA, but **Code Interpreter tool not available**
+6. **Brazil South / Italy North / Spain Central / South India** — Agent Service available but **o3 / o4-mini / o1 are Global Standard only** (no regional data residency for reasoning models)
 
 🟢 **Fully-Stacked Regions** (Agent Service + full model catalog + Code Interpreter + AI Search full + ACA Sessions):
 **East US 2** (only region with Computer Use + Sweden Central + South India), **Sweden Central** (best EU option), **Australia East** (best APAC), **UK South**, **France Central**, **Germany West Central**, **Switzerland North**, **Canada East**, **Korea Central**, **UAE North**, **South Africa North**
@@ -451,7 +530,10 @@ Context window: **1M tokens**. Knowledge cutoff: June 2024.
 |-----------|-------|-------|
 | **Agent orchestration** | **$0** | Foundry-native agents incur no orchestration charge |
 | **Thread / conversation storage** | **$0 direct** | Stored in customer's Cosmos DB + Azure Storage (customer pays directly) |
-| **Hosted Agents compute** | **DOCUMENTATION GAP** | vCPU / GiB-hour rates render as `$-`; verify via Pricing Calculator |
+| **Hosted Agents compute** | **$0.0994/vCPU-hour + $0.0118/GiB-hour** | Active sessions only (scale-to-zero); billing started **Apr 22, 2026**; see §5.8.1 cost matrix for sandbox-size rollup |
+| **Foundry Memory (short-term)** | $0.25 / 1K events | Billing begins **Jun 1, 2026** (free during preview) |
+| **Foundry Memory (long-term)** | $0.25 / 1K memories / month | Billing begins Jun 1, 2026 |
+| **Foundry Memory retrieval** | $0.50 / 1K retrievals | Billing begins Jun 1, 2026 |
 | **Code Interpreter tool** | $0.03 / session-hour | (same as Azure OpenAI built-in) |
 | **File Search Storage** | $0.10 / GB / day (1 GB free) | Vector storage |
 | **Web Search (Bing Grounding)** | DOCUMENTATION GAP | Separate Bing billing |
@@ -469,6 +551,30 @@ Context window: **1M tokens**. Knowledge cutoff: June 2024.
 | **Azure Monitor — Basic Logs** | $0.50 / GB | 30 days |
 | **Azure Monitor — Auxiliary Logs** | $0.05 / GB | 30 days |
 
+### 5.8.1 Hosted Agents Cost Matrix (Apr 22, 2026)
+
+Dimensional rates published Apr 22, 2026 via the [Foundry "Complete Developer Journey" hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/):
+
+- **Compute**: `$0.0994 per vCPU-hour`
+- **Memory**: `$0.0118 per GiB-hour`
+- **Active sessions only** — zero cost during 15-min idle window and scale-to-zero periods. Model inference, Foundry Memory, and Toolbox tools billed separately.
+
+Rollup per sandbox size (derived):
+
+| Size | vCPU | Memory | CPU $/hr | Mem $/hr | **Total $/hr** |
+|------|-----:|-------:|---------:|---------:|----:|
+| **XS** (default) | 0.25 | 0.5 GiB | $0.02485 | $0.00590 | **~$0.031** |
+| **S** | 0.5 | 1.0 GiB | $0.04970 | $0.01180 | **~$0.062** |
+| **M** | 1.0 | 2.0 GiB | $0.09940 | $0.02360 | **~$0.123** |
+| **L** (max) | 2.0 | 4.0 GiB | $0.19880 | $0.04720 | **~$0.246** |
+
+**Agent Commit Units (ACUs)** — volume discount pre-purchase:
+- 20,000 ACUs → $19,000 (**5% off**)
+- 100,000 ACUs → $90,000 (**10% off**)
+- 500,000 ACUs → $425,000 (**15% off**)
+
+> 📝 **Sandbox ceiling comparison.** Hosted Agents caps at **2 vCPU / 4 GiB**. Vercel Sandbox Enterprise caps at **32 vCPU / 64 GB** — a **16× per-unit ceiling difference**. For compute-intensive agent tasks (compilation, ML inference, large builds), this is a hard architectural constraint in Azure's preview. Compare with §3.1 head-to-head.
+
 ### 5.9 Worked Example — 1,000 Agent Turns
 
 **Assumptions:** 1 turn = 2,000 input tokens + 500 output tokens + 5s Active CPU + 1% Code Interpreter hit rate + 0.5 AI Search queries amortized.
@@ -476,6 +582,7 @@ Context window: **1M tokens**. Knowledge cutoff: June 2024.
 | Stack Configuration | Model Cost | Code Interp | AI Search (S1 amortized) | **Total / 1K turns** |
 |---|---|---|---|---|
 | **GPT-5.4 mini Global** (Azure, site default) | $0.75×2 + $4.50×0.5 = $3.75 | $0.30 | $0.20 (+ $0.002 Cosmos) | **~$4.25** |
+| **GPT-5.4 mini + Hosted Agents M (1 vCPU / 2 GiB, avg 10s active per turn)** | $3.75 | Hosted Agents: 1K × 10/3600 × $0.123 = **~$0.34** | $0.20 | **~$4.29** |
 | **GPT-4.1-mini Global** (Azure) | $0.40×2 + $1.60×0.5 = $1.60 | $0.03 | ~$0.01 | **~$1.64** |
 | **GPT-5-mini Global** (Azure) | $0.25×2 + $2.00×0.5 = $1.50 | $0.03 | ~$0.01 | **~$1.54** |
 | **GPT-4.1 Global** (Azure) | $2.00×2 + $8.00×0.5 = $8.00 | $0.03 | ~$0.01 | **~$8.04** |
@@ -616,7 +723,7 @@ with project_client:
 
 **Run lifecycle states:** `queued` → `in_progress` → `requires_action` (tool call) → `in_progress` → `completed` (or `failed`, `cancelled`, `expired`). Tool dispatch: `SubmitToolOutputsAction` + `ToolOutput`; approval flow via `SubmitToolApprovalAction` + `ToolApproval` for MCP tools. Streaming: `runs.stream()` with `MessageDeltaChunk` events.
 
-**Hosted Agents (preview, ACA-backed, 25 regions).** Deploy containerized MAF or LangGraph agents to Foundry infra. Canonical pattern:
+**Hosted Agents (Public Preview refresh · Apr 22, 2026 · new backend).** Deploy containerized MAF, LangGraph, Semantic Kernel, Claude Agent SDK, OpenAI Agents SDK, GitHub Copilot SDK, or custom-code agents to purpose-built Foundry infra. Per-session hypervisor sandbox, `$HOME` + `/files` persistence across scale-to-zero, `<100ms` cold start, `$0.0994/vCPU-hr + $0.0118/GiB-hr` (active only), 4 preview regions (AU East, CA Central, NC US, SE Central). Requires `azd ext install azure.ai.agents` v0.1.26-preview+ (0.1.25-preview deploys to **legacy ACA backend** — being sunset). Canonical pattern:
 
 ```python
 # main.py
@@ -648,24 +755,75 @@ asyncio.run(main())
 ```
 
 ```yaml
-# agent.yaml — declarative Foundry deployment manifest
+# agent.yaml — Foundry Hosted Agents ContainerAgent v1.0 schema (Apr 22, 2026 refresh)
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/AgentSchema/refs/heads/main/schemas/v1.0/ContainerAgent.yaml
+
+kind: hosted
 name: seattle-hotel-agent
-description: A travel assistant that finds hotels in Seattle.
-template:
-  name: seattle-hotel-agent
-  kind: hosted
-  protocols:
-    - protocol: responses
-  environment_variables:
-    - name: PROJECT_ENDPOINT
-      value: ${AZURE_AI_PROJECT_ENDPOINT}
-    - name: MODEL_DEPLOYMENT_NAME
-      value: "{{chat}}"
+
+protocols:
+  - protocol: responses
+    version: 1.0.0
+
 resources:
-  - kind: model
-    id: gpt-4.1-mini
-    name: chat
+  cpu: '1.0'
+  memory: '2Gi'
 ```
+
+> 📝 **What changed in the Apr 22 refresh:**
+> - **New backend** (not ACA Dynamic Sessions) — the predecessor Ignite 2025 preview is being sunset
+> - **Per-session isolation** (was: shared container pool)
+> - **Filesystem persistence** — `$HOME` + `/files` survive scale-to-zero (new)
+> - **4 protocols coexist** — Responses + Invocations + Activity (Teams) + A2A (was: Responses only); AG-UI via Invocations
+> - **Per-agent Entra Agent ID + OBO** (was: shared service account)
+> - **Docker NOT required locally** — remote ACR Tasks build
+> - **Pricing published** — `$0.0994/vCPU-hr + $0.0118/GiB-hr`, billing started Apr 22, 2026
+
+**Foundry Toolbox (Public Preview · Apr 22, 2026).** Unified MCP endpoint bundling Web Search, File Search, Code Interpreter, Azure AI Search, MCP servers, OpenAPI, and A2A tools. Framework-agnostic — consumable from MAF, LangGraph, GitHub Copilot SDK, Claude Code, or any MCP client. Versioned bundles with promotion to default — update tools without redeploying agents. Built-in OAuth identity passthrough + Entra Agent Identity. Endpoint pattern:
+
+```
+https://{project}.services.ai.azure.com/api/projects/{proj}/toolboxes/{name}/mcp?api-version=v1
+# Required header: Foundry-Features: Toolboxes=V1Preview
+```
+
+Distinct from **Foundry MCP Server** at `mcp.ai.azure.com` — which exposes Foundry *management* operations (create agents, run evals, manage deployments) as MCP tools for developer IDEs, not agent runtime tools.
+
+**Foundry Memory refresh (Public Preview · Apr 22, 2026).** Managed long-term memory with MAF + LangGraph native integration. No external database to provision. Pricing begins **Jun 1, 2026**: `$0.25/1K events` (short-term) + `$0.25/1K memories/month` (long-term) + `$0.50/1K retrievals`. Free during preview before Jun 1.
+
+```python
+from agent_framework import InMemoryHistoryProvider
+from agent_framework.azure import AzureOpenAIResponsesClient, FoundryMemoryProvider
+from azure.ai.projects import AIProjectClient
+from azure.identity import AzureCliCredential
+
+agent = AzureOpenAIResponsesClient(credential=AzureCliCredential()).as_agent(
+    name="CustomerSuccessAgent",
+    instructions="You are a proactive customer success agent.",
+    context_providers=[
+        InMemoryHistoryProvider(),          # short-term (per session)
+        FoundryMemoryProvider(              # long-term (cross-session, persistent)
+            project_client=AIProjectClient(
+                endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
+                credential=AzureCliCredential(),
+            ),
+            memory_store_name=memory_store.name,
+            scope="user_123",  # or "{{$userId}}" for auto-resolution
+        ),
+    ],
+)
+```
+
+New in the Apr 22 refresh: memory item CRUD API (inspect/edit/delete specific facts), custom `x-memory-user-id` header to decouple scope from Entra identity, 10,000 memories/scope × 100 scopes/store.
+
+**Agent Harness (Public Preview · Apr 22, 2026).** Three MAF patterns for long-running autonomous agents:
+
+1. **Local Shell Harness with approval flows** — `@tool(approval_mode="always_require")` gates every shell command behind human-in-the-loop approval
+2. **Hosted Shell Harness** — one-line change (`client.get_shell_tool()`) runs execution in the same provider-managed sandbox that powers Hosted Agents
+3. **Context Compaction** — `CompactionProvider(before_strategy=SlidingWindowStrategy(keep_last_groups=3))` keeps long-running sessions within token budget without losing critical context
+
+Plus **GitHub Copilot SDK integration** (Public Preview) — MAF as orchestration backbone, Copilot SDK as agent harness layer (MCP, skills, shell execution, file ops). Any agent in an MAF workflow can delegate to a Copilot-SDK-powered sub-agent.
+
+**MAF v1.0 multi-model** — Azure OpenAI, Anthropic, Google Gemini, Amazon Bedrock, Ollama (SDK-layer provider switching). *Note: not equivalent to Vercel AI Gateway — MAF gives you code-level provider selection, not a runtime routing/fallback/BYOK gateway with 0% markup.*
 
 ```dockerfile
 # Dockerfile
@@ -1471,18 +1629,21 @@ sequenceDiagram
 
 ## 12. Documentation Gaps
 
-### 12.1 Identified (unresolved as of April 21, 2026)
+### 12.1 Identified (unresolved as of April 22, 2026)
 
 | Feature | Status | Workaround |
 |---------|--------|-----------|
 | GPT-5.1 / GPT-5.2 sub-series per-token rates (beyond base GPT-5.2) | `$-` in static HTML for some cached-input rates | Azure Pricing Calculator |
-| Foundry Agent Service Hosted Agents compute rates | vCPU / GiB-hour `$-` in static HTML | Azure Pricing Calculator |
 | Foundry Agent Service — Web Search / Custom Search / Deep Research rates | `$-` in static HTML | Azure Pricing Calculator |
 | Foundry Agent Service max run lifetime / idle session timeout | Not as prominently documented as AWS's lifecycle settings | Check Foundry SDK reference |
 | Llama 4 / Phi-4 on Foundry Models per-token rates | `$-` in static HTML | Azure Pricing Calculator |
 | Mistral text model rates on Foundry Models | `$-` in static HTML | Azure Pricing Calculator |
 | Azure AI Search Agentic Retrieval beyond 50M free tokens/month | `$-` in static HTML | Azure Pricing Calculator |
 | GPT-5.x tokenizer inflation ratio | Not publicly documented (unlike Anthropic's Opus 4.7 tokenizer disclosure of 1.0–1.35×) | — |
+| **Hosted Agents isolation VMM name** | Blog says "hypervisor isolation" / "isolated execution sandbox" without naming the hypervisor; predecessor backend used Hyper-V via ACA Dynamic Sessions | Await Microsoft architecture deep-dive |
+| **Hosted Agents regional-expansion roadmap** | 4 preview regions only; no public timeline for additional regions | Docs state "list will be updated" |
+| **Foundry Memory storage backend** | Not disclosed — managed abstraction (embedding model + chat model for extraction, but VS not named) | Treat as opaque |
+| **Foundry Toolbox pricing model** | Not published Apr 22, 2026; underlying tools billed at existing rates when invoked | Await GA pricing |
 
 **Root cause:** Azure's pricing pages are JavaScript-rendered SPAs. Static HTML fetches return `$-` placeholders. The figures cited in §5 were sourced from search-engine-cached renders and cross-validated against OpenAI direct pricing + third-party mirrors (pricepertoken.com, cloudzero.com). For production use, always verify via the Azure Pricing Calculator or the [Azure Retail Prices API](https://learn.microsoft.com/en-us/rest/api/cost-management/retail-prices/azure-retail-prices).
 
@@ -1505,10 +1666,39 @@ sequenceDiagram
 | GPT-4.1 context window | 1M tokens across all three variants (full, mini, nano) | [GPT-4.1 GA Blog](https://azure.microsoft.com/en-us/blog/announcing-the-gpt-4-1-model-series-for-azure-ai-foundry-and-github-developers/) |
 | Foundry MCP Server | Cloud-hosted preview at `mcp.ai.azure.com` since Mar 20, 2026 (announced Dec 3, 2025) | [Foundry MCP Docs](https://learn.microsoft.com/en-us/azure/foundry/mcp/get-started) |
 | AutoGen status | `microsoft/autogen` in maintenance mode as of April 2026; community fork is `ag2ai/ag2` | [Agent Framework 1.0 GA Blog](https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/) |
+| **Hosted Agents compute rates** | **`$0.0994/vCPU-hour + $0.0118/GiB-hour`** (active sessions only, scale-to-zero); billing started **Apr 22, 2026** | [Foundry "Complete Developer Journey" hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/) |
+| **Hosted Agents cold start** | **<100ms** (first-party number from hub blog) | [Hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/) |
+| **Hosted Agents sandbox sizes** | 0.25 vCPU / 0.5 GiB → **2 vCPU / 4 GiB** ceiling (preview) | [Hosted Agents concepts](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) |
+| **Hosted Agents concurrent session limit** | **50 per subscription per region** during preview (adjustable via Support) | [Hosted Agents concepts](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) |
+| **Hosted Agents session lifecycle** | 15-min idle timeout → scale-to-zero with state persistence; 30-day max session lifetime | [Hosted Agents concepts](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) |
+| **Hosted Agents new-backend regions** | **4 preview regions** — Australia East, Canada Central, North Central US, Sweden Central; requires `azd ext install azure.ai.agents` v0.1.26-preview+ | [Hosted Agents concepts](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents) |
+| **Foundry Memory pricing** | `$0.25/1K events` (short-term) + `$0.25/1K memories/month` (long-term) + `$0.50/1K retrievals`; **billing begins Jun 1, 2026** (free during preview) | [Hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/) |
+| **Foundry Toolbox** | Public Preview Apr 22, 2026 — unified MCP endpoint bundling Web Search, File Search, Code Interp, AI Search, MCP, OpenAPI, A2A; endpoint at `{project}/toolboxes/{name}/mcp` with `Foundry-Features: Toolboxes=V1Preview` header | [Toolbox how-to](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/toolbox) |
+| **AI Red Teaming Agent status** | **GA** as of Apr 22, 2026 (was Preview) | [AI Red Teaming Agent concept](https://learn.microsoft.com/en-us/azure/foundry/concepts/ai-red-teaming-agent) |
+| **Foundry Toolkit for VS Code status** | **GA** as of Apr 22, 2026 (renamed from AI Toolkit for VS Code) | [Hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/) |
+| **MAF v1.0 multi-model support** | Azure OpenAI, Anthropic, Google Gemini, Amazon Bedrock, Ollama (SDK-layer provider switching) | [Hub blog](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/) |
 
 ---
 
 ## 13. Cross-Reference Links
+
+### 13.0 April 22, 2026 "Complete Developer Journey" Foundry Drop (primary sources)
+
+- [**Hub blog**: From Local to Production — The Complete Developer Journey (Apr 22, 2026)](https://devblogs.microsoft.com/foundry/from-local-to-production-the-complete-developer-journey-for-building-composing-and-deploying-ai-agents/)
+- [**Hosted Agents** refresh announcement (Apr 22, 2026)](https://devblogs.microsoft.com/foundry/introducing-the-new-hosted-agents-in-foundry-agent-service-secure-scalable-compute-built-for-agents/)
+- [Hosted Agents concepts doc](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents)
+- [Hosted Agents azd quickstart](https://learn.microsoft.com/en-us/azure/foundry/agents/quickstarts/quickstart-hosted-agent?pivots=azd)
+- [**Foundry Toolbox** how-to](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/toolbox)
+- [**Foundry Memory** concepts](https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory)
+- [Foundry Memory how-to](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/memory-usage)
+- [**Agent Harness** blog](https://devblogs.microsoft.com/agent-framework/agent-harness-in-agent-framework/)
+- [GitHub Copilot SDK + MAF integration blog](https://devblogs.microsoft.com/agent-framework/build-ai-agents-with-github-copilot-sdk-and-microsoft-agent-framework/)
+- [**AI Red Teaming Agent** concept (GA)](https://learn.microsoft.com/en-us/azure/foundry/concepts/ai-red-teaming-agent)
+- [**Foundry Toolkit for VS Code GA** blog](https://techcommunity.microsoft.com/blog/azuredevcommunityblog/microsoft-foundry-toolkit-for-vs-code-is-now-generally-available/4511831)
+- [Publish agents to Teams + M365 Copilot how-to](https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/publish-copilot)
+- [Microsoft Agent 365 overview](https://learn.microsoft.com/en-us/microsoft-agent-365/overview)
+- [foundry-samples: Hosted Agents samples (Python)](https://github.com/microsoft-foundry/foundry-samples/tree/main/samples/python/hosted-agents)
+- [Microsoft Mechanics 12-min walkthrough (YouTube)](https://www.youtube.com/watch?v=iR7_57lJOz8)
 
 ### 13.1 Azure / Microsoft Documentation
 
@@ -1643,6 +1833,7 @@ sequenceDiagram
 
 | Version | Date | Changes |
 |---------|------|---------|
+| **1.1.0** | **2026-04-22** | **Post-Apr 22 Foundry "Complete Developer Journey" drop.** Captures Microsoft's coordinated 7-product release: (1) **Hosted Agents refresh** — new backend (not ACA), per-session hypervisor sandbox, `$HOME`/files persistence across scale-to-zero, `<100ms` cold start, **`$0.0994/vCPU-hr + $0.0118/GiB-hr`** pricing (billing started Apr 22 — resolves the prior DOCUMENTATION GAP), `0.25–2 vCPU / 0.5–4 GiB` sandbox sizes, `50 concurrent/sub/region` (adjustable), `30-day session lifetime`, `15-min idle` timeout; **4 preview regions only** (Australia East, Canada Central, North Central US, Sweden Central) — narrow subset of the 24 Agent Service regions; requires `azd ext install azure.ai.agents` v0.1.26-preview+ (v0.1.25 deploys to sunset ACA backend); 4 protocols coexist (Responses + Invocations + Activity + A2A); AG-UI via Invocations; per-agent Entra Agent ID + OBO. (2) **Foundry Toolbox** Public Preview — unified MCP endpoint bundling Web Search / File Search / Code Interp / AI Search / MCP / OpenAPI / A2A; framework-agnostic; versioned bundles; `{project}/toolboxes/{name}/mcp` endpoint with `Foundry-Features: Toolboxes=V1Preview` header. (3) **Foundry Memory refresh** — native MAF `FoundryMemoryProvider` + LangGraph integration; memory item CRUD API; custom `x-memory-user-id` scope header; pricing starts Jun 1, 2026 at `$0.25/1K events + $0.25/1K memories/mo + $0.50/1K retrievals`. (4) **Agent Harness** Public Preview — 3 patterns (Local Shell w/ approval, Hosted Shell, Context Compaction w/ SlidingWindowStrategy). (5) **GitHub Copilot SDK integration** Public Preview with MAF. (6) **AI Red Teaming Agent GA** (from Preview); **Foundry Toolkit for VS Code GA** (renamed from AI Toolkit); Observability fully GA (hosted-agent tracing still Preview, custom evals still Preview). (7) **M365/Teams one-click publish** Public Preview (Shared + Organization scopes). MAF v1.0 multi-model confirmed: Azure OpenAI + Anthropic + Gemini + Bedrock + Ollama. Launch customer: Sitecore. **New sections**: §2.5 (7-step journey summary), §3.1 (Hosted Agents vs Vercel Sandbox head-to-head), §5.8.1 (Hosted Agents cost matrix), new §6b Toolbox + Memory + Agent Harness subsections. **Corrections to v1.0.0 realignment**: Hosted Agents is no longer "ACA-backed, 25 regions" — corrected across 6 locations in markdown + `infrastructure.ts:126` + `regions.ts` (28 `hostedAgents` flags flipped: only 4 regions `true`) + `delta.ts` foundry-agent-service entry. New hard blocker added to §4.5 (Hosted Agents preview limited to 4 regions — no EU outside Sweden, no APAC outside Australia, no LATAM). New documentation gaps: Hosted Agents VMM not disclosed, Toolbox pricing not published, Memory storage backend not disclosed, Hosted Agents regional expansion roadmap not published. |
 | **1.0.0** | **2026-04-21** | **Initial Vercel vs Azure baseline.** Content sourced from the live site ([adlc-evals.vercel.app/reports/vercel-azure](https://adlc-evals.vercel.app/reports/vercel-azure)) — site is source of truth. Key Azure framing: (1) Two-layer architecture with **Microsoft Agent Framework 1.0** (GA Apr 3, 2026) as blessed agent framework — unified successor to Semantic Kernel + AutoGen; (2) **Microsoft Foundry Agent Service** (next-gen GA Mar 16, 2026 on Responses API) as blessed infrastructure; (3) 24 Agent Service regions with sub-feature variance (Code Interpreter: 20, File Search: 22, **Computer Use: 3** — East US 2, Sweden Central, South India); **ACA Dynamic Sessions across 38 regions** with Hyper-V isolation; (4) **Azure OpenAI 9 deployment tiers** (Global / Data Zone / Regional + PTU / Batch / Priority) with **model-specific Priority multipliers** — ×1.75 for GPT-4.1, ×2 for GPT-5 / 5.2 / 5.4; (5) Foundry Models catalog (**1,900+ → 11,000+** models via MaaS/PAYG); (6) Dual Python/C# language primacy (vs Vercel TypeScript-first); (7) Microsoft Foundry rebrand from "Azure AI Foundry" at Ignite 2025 (Nov 18, 2025); (8) Assistants API sunset Aug 26, 2026 — migrate to Responses API; (9) **Foundry Evaluations (30+ built-in + 9 agent-specific) / Monitoring / Tracing GA Mar 16, 2026** (OTel-based); (10) Microsoft Entra Agent ID preview (originally May 19, 2025 Build; expansion Apr 8, 2026); (11) Foundry MCP Server preview at `mcp.ai.azure.com` (Mar 20, 2026); (12) **Foundry Guardrails** — 10 risk categories at 4 intervention points (user input, tool call, tool response, agent output); (13) **Defender AI-SPM + Microsoft Purview for AI** both GA for AI security posture; (14) **Azure Durable Task Scheduler** — Dedicated SKU GA Nov 20, 2025 (1 CU = 2K actions/sec + 50 GB, 90-day retention); Consumption SKU GA Mar 31, 2026 (30-day retention); (15) **GPT-5.4 GA Mar 5, 2026** ($2.50 / $15), GPT-5.4-mini/nano Mar 17, GPT-5.3-Codex Feb 5; (16) Legacy SK (`python-1.41.2` / `dotnet-1.74.0`) and AutoGen (`python-v0.7.5`) documented as superseded with migration paths. **Vercel side:** corrected region count to **20 compute regions** (per [vercel.com/docs/regions](https://vercel.com/docs/regions) canonical count); added Vercel Queues GA; `mcp-handler` 1.1 first-party MCP server; Observability Plus anomaly alerts GA Apr 13; deployment setup updated to ~30–45 min blessed-path `azd ai agent` flow; pricing worked example switched to GPT-5.4 mini as default (site's choice). Structural overhaul of Infrastructure matrix into 4 groups (Agent Foundations / Infrastructure / Security & Identity / Operations) with new rows for Message Queue, RBAC & Access Control, Identity/OAuth, Content Safety/Guardrails, Compliance & Audit, Knowledge Base/Grounding. Documentation gaps flagged for JavaScript-rendered Azure pricing pages. Generated by Claude Opus 4.7. |
 
 ---
@@ -1650,9 +1841,9 @@ sequenceDiagram
 ## Report Summary
 
 **File:** `generated-reports/vercel-azure/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md`
-**Baseline version:** 1.0.0
-**Coverage window:** April 2026 (Nov 2025 – Apr 21, 2026 delta)
-**Generated:** 2026-04-21 by Claude Opus 4.7
+**Baseline version:** 1.1.0 (post-Apr 22 Foundry drop)
+**Coverage window:** April 2026 (Nov 2025 – Apr 22, 2026 delta)
+**Generated:** 2026-04-22 by Claude Opus 4.7
 
 **Contributors:** Mario Lopez Martinez ([`HiMarioLopez`](https://github.com/HiMarioLopez))
 

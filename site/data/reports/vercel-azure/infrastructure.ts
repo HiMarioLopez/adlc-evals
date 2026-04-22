@@ -59,10 +59,10 @@ export const categoryGroups: CategoryGroup[] = [
           link: "https://github.com/vercel/mcp-handler",
         },
         aws: {
-          text: "FunctionTool + McpTool + Foundry MCP Server",
+          text: "Foundry Toolbox + McpTool + Foundry MCP Server",
           detail:
-            "FunctionTool, McpTool (OAuth passthrough), A2ATool · Foundry MCP Server preview at mcp.ai.azure.com (live since Dec 3, 2025) · azure-ai-projects 2.0 GA Mar 2026",
-          link: "https://learn.microsoft.com/en-us/azure/foundry/mcp/get-started",
+            "**Toolbox (Public Preview · Apr 22, 2026)** — unified MCP endpoint bundling Web Search / AI Search / Code Interp / File Search / MCP / OpenAPI / A2A; versioned, OAuth passthrough; `{project}/toolboxes/{name}/mcp` · McpTool (OAuth passthrough), A2ATool · Foundry MCP Server preview at mcp.ai.azure.com (live since Dec 3, 2025)",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/toolbox",
         },
       },
       {
@@ -123,8 +123,8 @@ export const categoryGroups: CategoryGroup[] = [
         aws: {
           text: "Foundry Agent Service",
           detail:
-            "Next-gen GA Mar 16, 2026 · Responses API runtime (wire-compatible w/ OpenAI Agents SDK) · prompt agents GA · hosted agents preview (ACA-backed, 25 regions) · from_agent_framework() + agent.yaml + Dockerfile",
-          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+            "Next-gen GA Mar 16, 2026 · Responses API runtime (wire-compatible w/ OpenAI Agents SDK) · prompt agents GA · **Hosted Agents refresh (Public Preview · Apr 22, 2026)** — new backend (not ACA), per-session hypervisor sandbox, $HOME + /files persistence across scale-to-zero, <100ms cold start, $0.0994/vCPU-hr + $0.0118/GiB-hr, 0.25–2 vCPU / 0.5–4 GiB, 4 preview regions (AU East, CA Central, NC US, SE Central) · `azd ai agent init/deploy` (ext v0.1.26-preview+) · Responses + Invocations + Activity + A2A protocols coexist",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/hosted-agents",
         },
       },
       {
@@ -179,6 +179,24 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "Consumption SKU GA Mar 31, 2026 (pay-per-action, no upfront); Dedicated SKU GA Nov 2025 (1 CU = 2K actions/sec, 50 GB); managed backend for Durable Functions + Durable Task SDKs; 30-day history",
           link: "https://learn.microsoft.com/en-us/azure/durable-task/scheduler/develop-with-durable-task-scheduler",
+        },
+      },
+      {
+        capability: "Agent Harness",
+        description:
+          "Primitives for long-running autonomous agents: shell execution with approval gates and context compaction for extended sessions",
+        iconName: "Terminal",
+        vercel: {
+          text: "@vercel/sandbox + bash-tool + AI SDK toolNeedsApproval",
+          detail:
+            "@vercel/sandbox 1.10 (Firecracker microVM, node24/python3.13, 32 vCPU/64 GB Enterprise); bash-tool (just-bash TS interpreter, lightweight context retrieval); AI SDK v7 `toolNeedsApproval` for human-in-the-loop; DurableAgent for long-running sessions via Workflow",
+          link: "https://vercel.com/docs/vercel-sandbox",
+        },
+        aws: {
+          text: "MAF Agent Harness (Preview · Apr 22, 2026)",
+          detail:
+            'Three patterns: (1) Local Shell Harness with `@tool(approval_mode="always_require")` approval flows, (2) Hosted Shell Harness (one-line change — runs in same provider-managed sandbox as Hosted Agents), (3) Context Compaction via `CompactionProvider` + `SlidingWindowStrategy`; Python + .NET; GitHub Copilot SDK integration (Preview) for multi-agent composition',
+          link: "https://devblogs.microsoft.com/agent-framework/agent-harness-in-agent-framework/",
         },
       },
       {
@@ -317,10 +335,10 @@ export const categoryGroups: CategoryGroup[] = [
           link: "https://workflow-sdk.dev/docs/api-reference/workflow-ai/durable-agent",
         },
         aws: {
-          text: "Responses API Conversations + Foundry Memory",
+          text: "Responses API Conversations + Foundry Memory (refreshed)",
           detail:
-            "Responses API Conversations (GA Mar 16, 2026) — indefinite retention, 100K items/convo; Foundry Memory (Preview, Jan 2026): user-profile + chat-summary types, 10K/scope; Assistants API sunsets Aug 26, 2026",
-          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/memory-usage",
+            "Responses API Conversations (GA Mar 16, 2026) — indefinite retention, 100K items/convo · **Foundry Memory refresh (Apr 22, 2026)**: native MAF `FoundryMemoryProvider` + LangGraph integration, memory item CRUD API, custom `x-memory-user-id` scope header; **pricing starts Jun 1, 2026**: $0.25/1K events + $0.25/1K memories/mo + $0.50/1K retrievals; 10K memories/scope, 100 scopes/store · Assistants API sunsets Aug 26, 2026",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/what-is-memory",
         },
       },
       {
@@ -353,9 +371,9 @@ export const categoryGroups: CategoryGroup[] = [
           link: "https://vercel.com/docs/observability/observability-plus",
         },
         aws: {
-          text: "Foundry Monitoring & Tracing (GA)",
+          text: "Foundry Monitoring & Tracing (Fully GA)",
           detail:
-            "GA Mar 16, 2026 · OpenTelemetry-native · configure_azure_monitor() (Python + .NET + Node + Java) · eval results linked to traces · Azure Monitor: $2.30/GB Analytics, $0.50/GB Basic, $0.05/GB Auxiliary (East US PAYG, 5 GB/mo free)",
+            "Fully GA as of Apr 22, 2026 (GA Mar 16 · hosted agent tracing rolling out in Preview) · OpenTelemetry-native · configure_azure_monitor() (Python + .NET + Node + Java) · **evaluation-to-trace linkage** — click from a low-quality score directly to the exact trace that produced it · Azure Monitor: $2.30/GB Analytics, $0.50/GB Basic, $0.05/GB Auxiliary (East US PAYG, 5 GB/mo free)",
           link: "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760",
         },
       },
@@ -371,10 +389,10 @@ export const categoryGroups: CategoryGroup[] = [
           link: "https://vercel.com/changelog/braintrust-joins-the-vercel-marketplace",
         },
         aws: {
-          text: "Foundry Evaluations (GA)",
+          text: "Foundry Evaluations + AI Red Teaming Agent (GA)",
           detail:
-            "GA Mar 16, 2026 · 30+ built-in evaluators + 9 agent-specific (Tool Call Accuracy, Task Adherence, Intent Resolution) · custom evaluators: LLM-as-judge + code-based (Preview) · continuous monitoring → Azure Monitor alerts · Prompt Optimizer Preview",
-          link: "https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators",
+            "Evaluations GA Mar 16, 2026 · 30+ built-in evaluators + 9 agent-specific (Tool Call Accuracy, Task Adherence, Intent Resolution) · custom evaluators: LLM-as-judge + code-based (Public Preview) · **AI Red Teaming Agent GA (Apr 22, 2026)** — automated adversarial scanning of models + hosted agents, covers content safety / prohibited actions / data leakage / task adherence / XPIA; built on open-source PyRIT; no-code UI + CI/CD via SDK · Prompt Optimizer Preview",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/concepts/ai-red-teaming-agent",
         },
       },
     ],
@@ -390,7 +408,7 @@ export const infrastructureData: InfrastructureData = {
   keyInsight: {
     title: "Key Architecture Insight",
     description:
-      " (open-source, MIT, Apr 3, 2026) owns orchestration logic and is framework-portable; Foundry Agent Service (GA Mar 16, 2026) owns the managed runtime — private networking, Entra RBAC, continuous evaluation, guardrails. The Responses API binds both layers, keeping agents portable between Foundry and OpenAI. Vercel's AI SDK sits at the MAF layer; Foundry's managed runtime has no direct Vercel equivalent — you compose it from Marketplace integrations.",
+      "Microsoft Agent Framework 1.0 (open-source, MIT, GA Apr 3, 2026) owns orchestration logic and is framework-portable across Azure OpenAI, Anthropic, Gemini, Bedrock, and Ollama; Foundry Agent Service (GA Mar 16, 2026) owns the managed runtime — now refreshed Apr 22 with per-session hypervisor sandboxes, $HOME persistence, Toolbox, and Memory. The Responses API binds both layers, keeping agents portable between Foundry and OpenAI. Vercel's AI SDK sits at the MAF layer; Foundry's managed runtime maps to Vercel Sandbox + Fluid Compute + Workflow — see §3.1 head-to-head.",
     codeHighlight: "Microsoft Agent Framework 1.0",
   },
 };

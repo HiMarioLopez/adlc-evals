@@ -44,9 +44,10 @@ export const deploymentData: DeploymentData = {
       {
         stepNumber: 1,
         title: "Install Azure Developer CLI",
-        description: "The azd CLI has a preview extension for Foundry agents",
+        description:
+          "The azd CLI has a preview extension for Foundry agents. The Apr 22, 2026 Hosted Agents refresh requires extension version 0.1.26-preview or later (0.1.25-preview deploys to the legacy ACA backend, being sunset).",
         iconName: "Terminal",
-        command: "brew install azd && azd extension install microsoft.ai.agent",
+        command: "brew install azd && azd ext install azure.ai.agents",
       },
       {
         stepNumber: 2,
@@ -119,9 +120,9 @@ asyncio.run(main())
         stepNumber: 6,
         title: "Build & Publish",
         description:
-          "azd extension builds the container and publishes to Foundry",
+          "azd extension builds the container remotely via ACR Tasks and publishes to Foundry — no local Docker required (new in Apr 22 refresh)",
         iconName: "Layers",
-        command: "azd ai agent publish",
+        command: "azd deploy",
       },
       {
         stepNumber: 7,

@@ -160,25 +160,134 @@ with project_client:
       },
       {
         key: "hostedAgents",
-        label: "Hosted Agents + agent.yaml",
+        label: "Hosted Agents + agent.yaml (Apr 22 refresh)",
         language: "yaml",
-        code: `# agent.yaml — Foundry Hosted Agents manifest (Preview)
+        code: `# agent.yaml — Foundry Hosted Agents v1.0 ContainerAgent schema (Apr 22, 2026 refresh)
+# Requires: azd ext install azure.ai.agents (0.1.26-preview+)
+# yaml-language-server: $schema=https://raw.githubusercontent.com/microsoft/AgentSchema/refs/heads/main/schemas/v1.0/ContainerAgent.yaml
+
+kind: hosted
 name: seattle-hotel-agent
-description: A travel assistant that finds hotels in Seattle.
-template:
-  name: seattle-hotel-agent
-  kind: hosted
-  protocols:
-    - protocol: responses
-  environment_variables:
-    - name: PROJECT_ENDPOINT
-      value: \${AZURE_AI_PROJECT_ENDPOINT}
-    - name: MODEL_DEPLOYMENT_NAME
-      value: "{{chat}}"
+
+protocols:
+  - protocol: responses
+    version: 1.0.0
+
 resources:
-  - kind: model
-    id: gpt-4.1-mini
-    name: chat`,
+  cpu: '1.0'
+  memory: '2Gi'
+
+# Deploy: azd deploy
+# Billing: $0.0994/vCPU-hr + $0.0118/GiB-hr (active only, scale-to-zero)
+# Cold start: <100ms. $HOME + /files persist across 15-min idle window.
+# Preview regions: Australia East, Canada Central, North Central US, Sweden Central`,
+      },
+      {
+        key: "foundryToolbox",
+        label: "Foundry Toolbox (Apr 22 Preview)",
+        language: "python",
+        code: `# Foundry Toolbox — unified MCP endpoint for agent tools (Public Preview Apr 22, 2026)
+# Bundles: Web Search, File Search, Code Interpreter, AI Search, MCP, OpenAPI, A2A
+# Framework-agnostic: consumable from MAF, LangGraph, Copilot SDK, any MCP client
+
+import os
+from mcp import ClientSession
+from mcp.client.streamable_http import streamablehttp_client
+
+PROJECT_ENDPOINT = os.environ["AZURE_AI_PROJECT_ENDPOINT"]
+TOOLBOX_NAME = "agent-tools"
+
+# Consumer endpoint — always serves the promoted default version
+url = f"{PROJECT_ENDPOINT}/toolboxes/{TOOLBOX_NAME}/mcp?api-version=v1"
+
+# Required header on every request (preview only)
+headers = {"Foundry-Features": "Toolboxes=V1Preview"}
+
+async with streamablehttp_client(url, headers=headers) as (read, write, _):
+    async with ClientSession(read, write) as session:
+        await session.initialize()
+        tools = await session.list_tools()
+        # Now pass tools into any agent framework (MAF, LangGraph, etc.)
+
+# Versioning: create/test a new Toolbox version, promote to default when ready —
+# agents pick up the new tool bundle without redeployment.`,
+      },
+      {
+        key: "foundryMemory",
+        label: "Foundry Memory + MAF (Apr 22 Preview)",
+        language: "python",
+        code: `# Foundry Memory — managed long-term memory (Public Preview Apr 22, 2026)
+# Native integration with Microsoft Agent Framework 1.0 (and LangGraph)
+# Pricing starts Jun 1, 2026: $0.25/1K events + $0.25/1K memories/mo + $0.50/1K retrievals
+
+from agent_framework import InMemoryHistoryProvider
+from agent_framework.azure import AzureOpenAIResponsesClient, FoundryMemoryProvider
+from azure.ai.projects import AIProjectClient
+from azure.identity import AzureCliCredential
+
+project_client = AIProjectClient(
+    endpoint=os.environ["AZURE_AI_PROJECT_ENDPOINT"],
+    credential=AzureCliCredential(),
+)
+
+agent = AzureOpenAIResponsesClient(
+    credential=AzureCliCredential(),
+).as_agent(
+    name="CustomerSuccessAgent",
+    instructions="You are a proactive customer success agent.",
+    context_providers=[
+        InMemoryHistoryProvider(),  # short-term (per-session)
+        FoundryMemoryProvider(       # long-term (cross-session, persistent)
+            project_client=project_client,
+            memory_store_name=memory_store.name,
+            scope="user_123",  # or "{{$userId}}" for auto-resolution
+        ),
+    ],
+)
+
+# Memory item CRUD API: inspect, edit, or delete specific facts the agent stored.
+# Custom scope via x-memory-user-id header — decouple from Entra identity.`,
+      },
+      {
+        key: "agentHarness",
+        label: "Agent Harness (Apr 22 Preview)",
+        language: "python",
+        code: `# Agent Harness in MAF 1.0 — 3 patterns for long-running autonomous agents (Apr 22 Preview)
+
+# ── Pattern 1: Local Shell Harness with Approval Flows ────────
+from agent_framework import Agent, tool
+
+@tool(approval_mode="always_require")
+def run_bash(command: str) -> str:
+    """Execute a shell command — requires human approval."""
+    import subprocess
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    return result.stdout
+
+local_shell_tool = client.get_shell_tool(func=run_bash)
+agent = Agent(client=client, instructions="...", tools=[local_shell_tool])
+
+# ── Pattern 2: Hosted Shell Harness (single-line change) ──────
+# Execution runs in the same provider-managed sandbox as Hosted Agents
+shell_tool = client.get_shell_tool()
+agent = Agent(client=client, instructions="...", tools=shell_tool)
+
+# ── Pattern 3: Context Compaction for long-running sessions ──
+from agent_framework import (
+    InMemoryHistoryProvider, CompactionProvider, SlidingWindowStrategy,
+)
+
+agent = Agent(
+    client=client,
+    instructions="You are a helpful assistant.",
+    tools=[get_weather],
+    context_providers=[
+        InMemoryHistoryProvider(),
+        CompactionProvider(
+            before_strategy=SlidingWindowStrategy(keep_last_groups=3)
+        ),
+    ],
+)`,
       },
       {
         key: "mcp",

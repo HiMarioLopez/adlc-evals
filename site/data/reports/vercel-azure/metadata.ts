@@ -34,14 +34,14 @@ export const metadata: ReportMetadata = {
   description:
     "Comprehensive comparison of Vercel + AI SDK versus Microsoft Foundry Agent Service + Microsoft Agent Framework 1.0 for building production-ready AI agents.",
   href: "/reports/vercel-azure",
-  date: "April 21, 2026",
-  dateIso: "2026-04-21",
-  version: "1.0.0",
+  date: "April 22, 2026",
+  dateIso: "2026-04-22",
+  version: "1.1.0",
   platforms,
   highlights: [
-    "Agent Framework 1.0 GA (Apr 3, 2026)",
-    "Foundry Agent Service: 24 regions",
-    "Supersedes Semantic Kernel + AutoGen",
+    "Hosted Agents refresh (Apr 22): $0.0994/vCPU-hr + $0.0118/GiB-hr",
+    "Foundry Toolbox + Memory (MAF + LangGraph native)",
+    "Agent Framework 1.0 GA · AI Red Teaming Agent GA",
   ],
   contributors,
 };

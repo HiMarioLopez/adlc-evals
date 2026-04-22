@@ -18,7 +18,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Americas",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -32,7 +32,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Americas",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: true,
@@ -46,7 +46,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Americas",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: false,
       fileSearch: true,
       computerUse: false,
@@ -60,7 +60,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Americas",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -74,7 +74,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Americas",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -116,7 +116,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Americas",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -130,7 +130,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Americas",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: false,
       computerUse: false,
@@ -160,7 +160,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -174,7 +174,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -188,7 +188,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -202,7 +202,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -216,7 +216,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -230,7 +230,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -244,7 +244,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: false,
       fileSearch: true,
       computerUse: false,
@@ -258,7 +258,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Europe",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: false,
       computerUse: false,
@@ -302,7 +302,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Asia Pacific",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: false,
       fileSearch: true,
       computerUse: false,
@@ -330,7 +330,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Asia Pacific",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -344,7 +344,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Asia Pacific",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: false,
       fileSearch: true,
       computerUse: false,
@@ -358,7 +358,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Asia Pacific",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: true,
@@ -388,7 +388,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Middle East",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -402,7 +402,7 @@ export const azureRegions: AzureRegionData[] = [
     geo: "Africa",
     foundry: {
       agentService: true,
-      hostedAgents: true,
+      hostedAgents: false,
       codeInterpreter: true,
       fileSearch: true,
       computerUse: false,
@@ -559,12 +559,12 @@ export const regionsData: AzureRegionalData = {
   sectionNumber: 5,
   title: "Regional Availability",
   description:
-    "Azure has 24 Foundry Agent Service regions but with fragmented sub-feature coverage. Six Azure regions have Foundry projects but NO Agent Service: North Europe, West Europe, Central India, East Asia, Qatar Central, West US 2. Computer Use is available in only 2 regions (East US 2, South India). GPT-5.4 Regional Standard is limited to 4 regions (East US 2, Sweden Central, South Central US, Poland Central).",
+    "Azure has 24 Foundry Agent Service regions but with fragmented sub-feature coverage. The Apr 22, 2026 Hosted Agents refresh ships on a new backend (not ACA-backed) and is limited to 4 preview regions: Australia East, Canada Central, North Central US, Sweden Central. Six Azure regions have Foundry projects but NO Agent Service: North Europe, West Europe, Central India, East Asia, Qatar Central, West US 2. Computer Use is available in 3 regions (East US 2, Sweden Central, South India). GPT-5.4 Regional Standard is limited to 4 regions (East US 2, Sweden Central, South Central US, Poland Central).",
   azureRegions,
   vercelRegions,
   foundryFeatures: [
     { key: "agentService", label: "Agent Service", required: true },
-    { key: "hostedAgents", label: "Hosted Agents", required: false },
+    { key: "hostedAgents", label: "Hosted Agents (Apr 22)", required: false },
     { key: "codeInterpreter", label: "Code Interp", required: false },
     { key: "fileSearch", label: "File Search", required: false },
     { key: "computerUse", label: "Computer Use", required: false },
