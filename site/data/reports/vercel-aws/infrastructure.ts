@@ -115,10 +115,10 @@ export const categoryGroups: CategoryGroup[] = [
           "Managed compute layer that handles scaling, deployments, and runtime lifecycle",
         iconName: "Server",
         vercel: {
-          text: "Vercel Platform",
+          text: "Fluid Compute",
           detail:
-            "Edge/Serverless/Fluid Compute, Active CPU billing (I/O free), 21 regions, 800s max",
-          link: "https://vercel.com/docs",
+            "Edge + Serverless hybrid across 20 regions; in-function concurrency; 800s max (Pro/Enterprise); Active CPU billing — I/O time is free",
+          link: "https://vercel.com/docs/fluid-compute",
         },
         aws: {
           text: "Bedrock AgentCore Runtime",
@@ -133,9 +133,9 @@ export const categoryGroups: CategoryGroup[] = [
           "Sandboxed environment for running untrusted or AI-generated code safely",
         iconName: "Code2",
         vercel: {
-          text: "Sandbox SDK (GA)",
+          text: "Vercel Sandbox",
           detail:
-            "Firecracker microVMs, 8 vCPU Pro / 32 vCPU Enterprise, persistent beta, iad1 only",
+            "Firecracker microVMs, node24/python3.13; up to 32 vCPU / 64 GB / 32 GB NVMe (Enterprise); 5-hr max; 2,000 concurrent; iad1 only; snapshots GA, persistent beta",
           link: "https://vercel.com/docs/vercel-sandbox",
         },
         aws: {
@@ -152,8 +152,8 @@ export const categoryGroups: CategoryGroup[] = [
         vercel: {
           text: "Workflow SDK (GA)",
           detail:
-            '"use workflow" directive, E2E encrypted, 2× faster, event-sourced, TS + Python beta',
-          link: "https://useworkflow.dev/",
+            '`"use workflow"` directive; event-sourced, unlimited run + sleep duration; 10K steps/run; 100K concurrent; DurableAgent for AI SDK; TS GA, Python beta',
+          link: "https://vercel.com/docs/workflows",
         },
         aws: {
           text: "Bedrock AgentCore Runtime Sessions",
@@ -163,14 +163,32 @@ export const categoryGroups: CategoryGroup[] = [
         },
       },
       {
+        capability: "Message Queue / Durable Execution",
+        description:
+          "Durable event streaming and task scheduling primitive underlying long-running agent workloads",
+        iconName: "Workflow",
+        vercel: {
+          text: "Vercel Queues (GA)",
+          detail:
+            "@vercel/queue: durable append-only topic log; fan-out consumer groups; automatic retries + deduplication; powers the Workflow SDK under the hood",
+          link: "https://vercel.com/docs/queues",
+        },
+        aws: {
+          text: "AWS Step Functions + AgentCore",
+          detail:
+            "Step Functions SDK integration with Bedrock AgentCore (GA Mar 26, 2026); durable state machines, built-in retries, parallel Map states, idempotent Lambda execution",
+          link: "https://aws.amazon.com/about-aws/whats-new/2026/03/aws-step-functions-sdk-integrations/",
+        },
+      },
+      {
         capability: "Browser Automation",
         description:
           "Programmatic browser control for web scraping, testing, and UI automation",
         iconName: "Globe",
         vercel: {
-          text: "Kernel (Marketplace) + Computer Use",
+          text: "Kernel (Marketplace) + Sandbox DIY",
           detail:
-            "Cloud browser via API/SDK; webSearch_20250305 native Anthropic tool added",
+            "Kernel (Vercel-native Marketplace, 500+ installs): CDP cloud browsers compatible with Playwright/Puppeteer/Stagehand/Computer Use · or install Chromium directly in @vercel/sandbox",
           link: "https://vercel.com/marketplace/kernel",
         },
         aws: {

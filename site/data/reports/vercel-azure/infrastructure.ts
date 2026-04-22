@@ -115,15 +115,15 @@ export const categoryGroups: CategoryGroup[] = [
           "Managed compute layer that handles scaling, deployments, and runtime lifecycle",
         iconName: "Server",
         vercel: {
-          text: "Vercel Platform",
+          text: "Fluid Compute",
           detail:
-            "Edge/Serverless/Fluid Compute, Active CPU billing (I/O free), 21 regions, 800s max",
-          link: "https://vercel.com/docs",
+            "Edge + Serverless hybrid across 20 regions; in-function concurrency; 800s max (Pro/Enterprise); Active CPU billing — I/O time is free",
+          link: "https://vercel.com/docs/fluid-compute",
         },
         aws: {
           text: "Foundry Agent Service",
           detail:
-            "Next-gen GA Mar 16, 2026 · Responses API runtime · 24 regions · Hosted Agents preview · from_agent_framework() + agent.yaml + Dockerfile",
+            "Next-gen GA Mar 16, 2026 · Responses API runtime (wire-compatible w/ OpenAI Agents SDK) · prompt agents GA · hosted agents preview (ACA-backed, 25 regions) · from_agent_framework() + agent.yaml + Dockerfile",
           link: "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
         },
       },
@@ -133,15 +133,15 @@ export const categoryGroups: CategoryGroup[] = [
           "Sandboxed environment for running untrusted or AI-generated code safely",
         iconName: "Code2",
         vercel: {
-          text: "Sandbox SDK (GA)",
+          text: "Vercel Sandbox",
           detail:
-            "Firecracker microVMs, 8 vCPU Pro / 32 vCPU Enterprise, persistent beta, iad1 only",
+            "Firecracker microVMs, node24/python3.13; up to 32 vCPU / 64 GB / 32 GB NVMe (Enterprise); 5-hr max; 2,000 concurrent; iad1 only; snapshots GA, persistent beta",
           link: "https://vercel.com/docs/vercel-sandbox",
         },
         aws: {
-          text: "Code Interpreter + ACA Dynamic Sessions",
+          text: "ACA Dynamic Sessions + Foundry Code Interpreter",
           detail:
-            "$0.03/session-hour (flat) · ACA: Hyper-V isolated, 220s max exec, ~37 regions · Code Interp: 20 of 24 Agent Service regions",
+            "Hyper-V isolated sessions across 38 regions; built-in Python/Node.js/Shell + custom container pools; 1-hr active / 30-min idle timeout; managed Code Interpreter tool wraps the same runtime",
           link: "https://learn.microsoft.com/en-us/azure/container-apps/sessions",
         },
       },
@@ -153,14 +153,32 @@ export const categoryGroups: CategoryGroup[] = [
         vercel: {
           text: "Workflow SDK (GA)",
           detail:
-            '"use workflow" directive, E2E encrypted, 2× faster, event-sourced, TS + Python beta',
-          link: "https://useworkflow.dev/",
+            '`"use workflow"` directive; event-sourced, unlimited run + sleep duration; 10K steps/run; 100K concurrent; DurableAgent for AI SDK; TS GA, Python beta',
+          link: "https://vercel.com/docs/workflows",
         },
         aws: {
           text: "Multi-agent Workflows (Preview)",
           detail:
-            "Visual + YAML orchestration on MAF (Nov 25, 2025) · Azure Durable Task Scheduler for Functions",
-          link: "https://devblogs.microsoft.com/foundry/introducing-multi-agent-workflows-in-foundry-agent-service",
+            "Preview since Nov 25, 2025 (Ignite) · still preview Apr 2026 · drag-drop visual designer + YAML in Foundry portal & VS Code · graph-based MAF orchestration deployed via hosted agents",
+          link: "https://devblogs.microsoft.com/foundry/introducing-multi-agent-workflows-in-foundry-agent-service/",
+        },
+      },
+      {
+        capability: "Message Queue / Durable Execution",
+        description:
+          "Durable event streaming and task scheduling primitive underlying long-running agent workloads",
+        iconName: "Workflow",
+        vercel: {
+          text: "Vercel Queues (GA)",
+          detail:
+            "@vercel/queue: durable append-only topic log; fan-out consumer groups; automatic retries + deduplication; powers the Workflow SDK under the hood",
+          link: "https://vercel.com/docs/queues",
+        },
+        aws: {
+          text: "Azure Durable Task Scheduler",
+          detail:
+            "Consumption SKU GA Mar 31, 2026 (pay-per-action, no upfront); Dedicated SKU GA Nov 2025 (1 CU = 2K actions/sec, 50 GB); managed backend for Durable Functions + Durable Task SDKs; 30-day history",
+          link: "https://learn.microsoft.com/en-us/azure/durable-task/scheduler/develop-with-durable-task-scheduler",
         },
       },
       {
@@ -169,16 +187,16 @@ export const categoryGroups: CategoryGroup[] = [
           "Programmatic browser control for web scraping, testing, and UI automation",
         iconName: "Globe",
         vercel: {
-          text: "Kernel (Marketplace) + Computer Use",
+          text: "Kernel (Marketplace) + Sandbox DIY",
           detail:
-            "Cloud browser via API/SDK; webSearch_20250305 native Anthropic tool added",
+            "Kernel (Vercel-native Marketplace, 500+ installs): CDP cloud browsers compatible with Playwright/Puppeteer/Stagehand/Computer Use · or install Chromium directly in @vercel/sandbox",
           link: "https://vercel.com/marketplace/kernel",
         },
         aws: {
           text: "Browser Automation + Computer Use (Preview)",
           detail:
-            "Azure-native browser automation · Computer Use preview ONLY in East US 2 and South India",
-          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-catalog",
+            "Two distinct tools: Browser Automation uses Microsoft Playwright Workspaces (BYO resource, any GPT model, DOM actions); Computer Use is screenshot-based on `computer-use-preview` (3 regions: East US 2, Sweden Central, South India)",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/browser-automation",
         },
       },
     ],
