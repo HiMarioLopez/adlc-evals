@@ -65,7 +65,10 @@ export function InfrastructureSection({
 }: InfrastructureSectionProps) {
   const theme = themeClasses(secondaryTheme);
   return (
-    <section className="bg-muted/30 px-6 py-24" id="infrastructure">
+    <section
+      className="report-section bg-muted/30 px-6 py-24"
+      id="infrastructure"
+    >
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="mb-16">

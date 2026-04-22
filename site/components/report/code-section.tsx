@@ -29,7 +29,7 @@ export function CodeSection({ data, secondaryTheme }: CodeSectionProps) {
   );
 
   return (
-    <section className="px-6 py-24" id="code">
+    <section className="report-section px-6 py-24" id="code">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">

@@ -1,6 +1,12 @@
 "use client";
 
-import { ExternalLink, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import {
+  ExternalLink,
+  PanelLeft,
+  PanelLeftClose,
+  PanelLeftOpen,
+  X,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ReportSection } from "@/data/report-schema.ts";
 import { cn } from "@/lib/utils.ts";
@@ -9,39 +15,66 @@ interface SidebarTocProps {
   sections: ReportSection[];
 }
 
-const STORAGE_KEY = "sidebar-toc-collapsed";
+type SidebarState = "expanded" | "collapsed" | "hidden";
+
+const STORAGE_KEY = "sidebar-toc-state";
+const LEGACY_STORAGE_KEY = "sidebar-toc-collapsed";
+
+function readStoredState(): SidebarState | null {
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (raw === "expanded" || raw === "collapsed" || raw === "hidden") {
+      return raw;
+    }
+    const legacy = window.localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (legacy === "1") {
+      return "collapsed";
+    }
+    if (legacy === "0") {
+      return "expanded";
+    }
+  } catch {
+    // Safari private mode and locked-down browsers throw on localStorage access
+  }
+  return null;
+}
+
+function widthFor(state: SidebarState): string {
+  if (state === "hidden") {
+    return "0rem";
+  }
+  if (state === "collapsed") {
+    return "3.5rem";
+  }
+  return "15rem";
+}
 
 export function SidebarToc({ sections }: SidebarTocProps) {
   const [activeSection, setActiveSection] = useState("");
-  const [collapsed, setCollapsed] = useState(false);
+  const [state, setState] = useState<SidebarState>("collapsed");
   const [hydrated, setHydrated] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored === "1") {
-        setCollapsed(true);
-      }
-    } catch {
-      // Safari private mode and locked-down browsers throw on localStorage access
+    const stored = readStoredState();
+    if (stored) {
+      setState(stored);
+    } else if (typeof window !== "undefined" && window.innerWidth >= 1024) {
+      setState("expanded");
     }
     setHydrated(true);
   }, []);
 
-  // Publish --sidebar-w on <html> so the main content wrapper can track
-  // the sidebar width via CSS var; avoids threading state through pages
   useEffect(() => {
     if (!hydrated) {
       return;
     }
-    const root = document.documentElement;
-    root.style.setProperty("--sidebar-w", collapsed ? "3.5rem" : "15rem");
+    document.documentElement.style.setProperty("--sidebar-w", widthFor(state));
     try {
-      window.localStorage.setItem(STORAGE_KEY, collapsed ? "1" : "0");
+      window.localStorage.setItem(STORAGE_KEY, state);
     } catch {
       // Safari private mode and locked-down browsers throw on localStorage access
     }
-  }, [collapsed, hydrated]);
+  }, [state, hydrated]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,11 +105,28 @@ export function SidebarToc({ sections }: SidebarTocProps) {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const collapsed = state === "collapsed";
+  const hidden = state === "hidden";
+
+  if (hidden) {
+    return (
+      <button
+        aria-label="Show sidebar"
+        className="fixed top-[calc(3.5rem+2.5rem+0.75rem)] left-2 z-30 hidden h-9 w-9 items-center justify-center rounded-md border border-border/60 bg-background/70 text-muted-foreground/80 shadow-sm backdrop-blur transition-colors hover:border-border hover:text-foreground md:flex"
+        onClick={() => setState("collapsed")}
+        title="Show sidebar"
+        type="button"
+      >
+        <PanelLeft className="h-4 w-4" />
+      </button>
+    );
+  }
+
   return (
     <aside
       aria-label="Report navigation"
       className={cn(
-        "pointer-events-none fixed top-[calc(3.5rem+2.5rem)] bottom-0 left-0 z-30 hidden py-10 transition-[width,padding] duration-300 ease-out lg:block",
+        "pointer-events-none fixed top-[calc(3.5rem+2.5rem)] bottom-0 left-0 z-30 hidden py-10 transition-[width,padding] duration-300 ease-out md:block",
         collapsed ? "w-14 px-2" : "w-60 px-6"
       )}
     >
@@ -84,7 +134,7 @@ export function SidebarToc({ sections }: SidebarTocProps) {
         <div
           className={cn(
             "mb-5 flex items-center",
-            collapsed ? "justify-center" : "justify-between"
+            collapsed ? "flex-col gap-1" : "justify-between"
           )}
         >
           {!collapsed && (
@@ -92,20 +142,36 @@ export function SidebarToc({ sections }: SidebarTocProps) {
               Contents
             </p>
           )}
-          <button
-            aria-expanded={!collapsed}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground/70 transition-colors hover:bg-muted/50 hover:text-foreground"
-            onClick={() => setCollapsed((v) => !v)}
-            title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            type="button"
-          >
-            {collapsed ? (
-              <PanelLeftOpen className="h-4 w-4" />
-            ) : (
-              <PanelLeftClose className="h-4 w-4" />
+          <div
+            className={cn(
+              "flex items-center",
+              collapsed ? "flex-col gap-1" : "gap-1"
             )}
-          </button>
+          >
+            <button
+              aria-expanded={!collapsed}
+              aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground/70 transition-colors hover:bg-muted/50 hover:text-foreground"
+              onClick={() => setState(collapsed ? "expanded" : "collapsed")}
+              title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+              type="button"
+            >
+              {collapsed ? (
+                <PanelLeftOpen className="h-4 w-4" />
+              ) : (
+                <PanelLeftClose className="h-4 w-4" />
+              )}
+            </button>
+            <button
+              aria-label="Hide sidebar"
+              className="flex h-7 w-7 items-center justify-center rounded-md text-muted-foreground/50 transition-colors hover:bg-muted/50 hover:text-foreground"
+              onClick={() => setState("hidden")}
+              title="Hide sidebar"
+              type="button"
+            >
+              <X className="h-3.5 w-3.5" />
+            </button>
+          </div>
         </div>
 
         <nav aria-label="Table of contents" className="flex-1 overflow-y-auto">
@@ -117,9 +183,6 @@ export function SidebarToc({ sections }: SidebarTocProps) {
           >
             {sections.map((section, idx) => {
               const isActive = activeSection === section.id;
-              // Section numbering is zero-indexed so the sidebar index aligns
-              // with the `sectionNumber` field rendered inside each section
-              // (Foreword = 00, Infrastructure = 01, Pricing = 02, …).
               const number = String(idx).padStart(2, "0");
 
               return (

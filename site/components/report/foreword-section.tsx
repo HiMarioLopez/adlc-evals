@@ -39,7 +39,7 @@ export function ForewordSection({ secondaryTheme }: ForewordSectionProps = {}) {
 
   return (
     <section
-      className="relative overflow-hidden py-24"
+      className="report-section relative overflow-hidden py-24"
       id="foreword"
       ref={sectionRef}
     >

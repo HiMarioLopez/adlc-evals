@@ -417,3 +417,10 @@ section {
     backdrop-filter: none !important;
   }
 }
+
+@media (min-width: 768px) {
+  .report-section > .mx-auto {
+    padding-left: var(--sidebar-w, 3.5rem);
+    transition: padding-left 300ms ease-out;
+  }
+}

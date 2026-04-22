@@ -15,7 +15,7 @@ interface PricingSectionProps {
 export function PricingSection({ data, secondaryTheme }: PricingSectionProps) {
   const theme = themeClasses(secondaryTheme);
   return (
-    <section className="px-6 py-24" id="pricing">
+    <section className="report-section px-6 py-24" id="pricing">
       {/* Tailwind safelist: bg-aws bg-aws/10 bg-aws/30 text-aws hover:border-aws/30 bg-azure bg-azure/10 bg-azure/30 text-azure hover:border-azure/30 bg-primary bg-primary/10 bg-primary/30 text-primary hover:border-primary/30 bg-chart-2 bg-chart-2/10 bg-chart-2/30 text-chart-2 hover:border-chart-2/30 bg-chart-3 bg-chart-3/10 bg-chart-3/30 text-chart-3 hover:border-chart-3/30 */}
       <div className="mx-auto max-w-6xl">
         {/* Header */}

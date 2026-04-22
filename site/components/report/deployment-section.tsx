@@ -40,7 +40,7 @@ export function DeploymentSection({
 }: DeploymentSectionProps) {
   const theme = themeClasses(secondaryTheme);
   return (
-    <section className="px-6 py-24" id="deployment">
+    <section className="report-section px-6 py-24" id="deployment">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">

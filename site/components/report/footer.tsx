@@ -18,7 +18,7 @@ export function Footer({ data, secondaryTheme }: FooterProps) {
   const theme = themeClasses(secondaryTheme);
   return (
     <footer
-      className="border-border border-t bg-card/50 px-6 py-24"
+      className="report-section border-border border-t bg-card/50 px-6 py-24"
       id="sources"
     >
       <div className="mx-auto max-w-6xl">

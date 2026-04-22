@@ -9,7 +9,7 @@ interface DeltaSectionProps {
 
 export function DeltaSection({ data }: DeltaSectionProps) {
   return (
-    <section className="px-6 py-24" id="delta">
+    <section className="report-section px-6 py-24" id="delta">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">

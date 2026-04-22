@@ -98,10 +98,7 @@ export default function VercelAzureReportPage() {
       {/* Spacer for fixed nav (h-14 = 56px) + banner (~40px) */}
       <div aria-hidden="true" className="h-[6rem]" />
 
-      {/* Left padding reserves space for the fixed sidebar on lg+ screens,
-          letting section backgrounds remain full-bleed. Width follows the
-          --sidebar-w CSS variable that SidebarToc toggles on <html>. */}
-      <div className="transition-[padding] duration-300 ease-out lg:[padding-left:var(--sidebar-w,15rem)]">
+      <div>
         <Hero
           data={report.hero}
           platforms={report.metadata.platforms}

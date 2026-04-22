@@ -372,7 +372,7 @@ export function AzureRegionalSection({ data }: AzureRegionalSectionProps) {
   );
 
   return (
-    <section className="bg-muted/30 px-6 py-24" id="regions">
+    <section className="report-section bg-muted/30 px-6 py-24" id="regions">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16">
           <span className="mb-4 inline-flex items-center gap-2 font-mono text-primary text-xs uppercase tracking-widest">
