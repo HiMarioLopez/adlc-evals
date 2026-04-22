@@ -2,21 +2,25 @@
 # Exit on any error
 set -e
 
-# Project directory where ultracite config lives
+# Project directory where ultracite config lives (site/)
 PROJECT_DIR="$(dirname "$0")/.."
 
-# Get staged files (only formattable extensions)
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.json' '*.css')
+# Get staged files (only formattable extensions) as paths relative to
+# PROJECT_DIR, which is the cwd ultracite will run in. Files outside
+# PROJECT_DIR are silently skipped by --relative so they never get
+# passed to ultracite with a broken path.
+STAGED_FILES=$(git -C "$PROJECT_DIR" diff --cached --name-only --diff-filter=ACMR --relative -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.json' '*.css')
 
 if [ -z "$STAGED_FILES" ]; then
   exit 0
 fi
 
-# Run formatter/linter only on staged files
+# Run formatter/linter only on staged files, from the project directory
 cd "$PROJECT_DIR"
 echo "$STAGED_FILES" | xargs bun x ultracite fix
 
-# Check if formatter modified any of the staged files
+# Check if ultracite modified any of the staged files (cwd is PROJECT_DIR,
+# so STAGED_FILES paths are resolved correctly against the repo).
 MODIFIED=$(echo "$STAGED_FILES" | xargs git diff --name-only --)
 if [ -n "$MODIFIED" ]; then
   echo ""
