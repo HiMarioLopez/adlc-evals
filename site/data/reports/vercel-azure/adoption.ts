@@ -95,9 +95,9 @@ export const adoptionData: AdoptionData = {
     {
       platform: "Azure OpenAI + Foundry Models",
       signals: [
-        "o3 + o4-mini GA (Apr 16) — reasoning + vision",
-        "GPT-4.1 series GA (Apr 14) — 1M context, 26% cheaper than GPT-4o",
-        "GPT-5.4-mini / nano released (Mar 17) — low-latency tier",
+        "GPT-5.4 GA (Mar 5) — $2.50/$15 per 1M, 1.05M context, native computer-use",
+        "GPT-5.4 mini + nano GA (Mar 17) — $0.75/$4.50 mini, $0.20/$1.25 nano, agent-workhorse tier",
+        "GPT-5.3-Codex GA (Feb 5) — $1.75/$14 per 1M, coding + reasoning unified",
         "MAI-Transcribe-1, MAI-Voice-1, MAI-Image-2 in Foundry (Apr 2)",
         "11,000+ models in Foundry Models catalog (up from ~1,900 mid-2025)",
       ],

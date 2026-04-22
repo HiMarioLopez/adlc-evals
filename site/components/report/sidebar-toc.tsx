@@ -117,7 +117,10 @@ export function SidebarToc({ sections }: SidebarTocProps) {
           >
             {sections.map((section, idx) => {
               const isActive = activeSection === section.id;
-              const number = String(idx + 1).padStart(2, "0");
+              // Section numbering is zero-indexed so the sidebar index aligns
+              // with the `sectionNumber` field rendered inside each section
+              // (Foreword = 00, Infrastructure = 01, Pricing = 02, …).
+              const number = String(idx).padStart(2, "0");
 
               return (
                 <button

@@ -4,39 +4,40 @@ export const pricingData: PricingData = {
   sectionNumber: 2,
   title: "2026 Unit Economics",
   description:
-    "Cost analysis for 1,000 agent turns with GPT-4.1 Global Standard ($2/$8 per 1M tokens, the recommended Azure default for production agents as of April 2026)",
+    "Cost analysis for 1,000 agent turns with GPT-5.4 mini Global Standard ($0.75/$4.50 per 1M tokens, the pragmatic Azure default for production agents as of April 2026 — the full-fat gpt-5.4 is registration-gated and 3.3× the price).",
   workloadAssumptions: {
     turns: 1000,
     inputTokensPerTurn: 2000,
     outputTokensPerTurn: 500,
     activeCpuPerTurn: "5s",
   },
+  modelPricingHeading: "GPT-5.4 Pricing (per 1M tokens)",
   modelPricing: [
     {
-      model: "GPT-5",
-      input: "$1.25",
-      output: "$10.00",
+      model: "GPT-5.4",
+      input: "$2.50",
+      output: "$15.00",
       tier: "flagship",
     },
     {
-      model: "GPT-4.1",
-      input: "$2.00",
-      output: "$8.00",
+      model: "GPT-5.4 mini",
+      input: "$0.75",
+      output: "$4.50",
       tier: "balanced",
     },
     {
-      model: "GPT-4.1-mini",
-      input: "$0.40",
-      output: "$1.60",
+      model: "GPT-5.4 nano",
+      input: "$0.20",
+      output: "$1.25",
       tier: "fast",
     },
   ],
   costBreakdown: {
     vercel: [
       {
-        component: "Model (GPT-4.1 via AI Gateway, 0% markup)",
-        calc: "2M input × $2 + 0.5M output × $8",
-        cost: "$8.00",
+        component: "Model (GPT-5.4 mini via AI Gateway, 0% markup)",
+        calc: "2M input × $0.75 + 0.5M output × $4.50",
+        cost: "$3.75",
       },
       {
         component: "Sandbox SDK (Active CPU, I/O free)",
@@ -61,9 +62,9 @@ export const pricingData: PricingData = {
     ],
     aws: [
       {
-        component: "Model (GPT-4.1 Global Standard)",
-        calc: "2M input × $2 + 0.5M output × $8",
-        cost: "$8.00",
+        component: "Model (GPT-5.4 mini Global Standard)",
+        calc: "2M input × $0.75 + 0.5M output × $4.50",
+        cost: "$3.75",
       },
       {
         component: "Foundry Agent Service orchestration",
@@ -86,17 +87,17 @@ export const pricingData: PricingData = {
         cost: "$0.002",
       },
     ],
-    vercelTotal: "$8.45",
-    awsTotal: "$8.50",
+    vercelTotal: "$4.20",
+    awsTotal: "$4.25",
     awsRegionalNote:
-      "Deployment tiers: Priority +75% ($15.00) · Batch −50% ($4.25) · Data Zone +10% ($8.80) · Regional +21% ($9.68)",
+      "Deployment tiers on GPT-5.4 mini model cost: Priority ≈ ×2 ($7.50) · Batch −50% ($1.88) · Data Zone +10% ($4.13) · PTU hourly reservation. Full-fat GPT-5.4 model baseline: $12.50/1K turns ($25 Priority · $6.25 Batch).",
   },
   keyInsight: {
     title: "Key Insight",
     description:
-      "Infrastructure costs remain a small fraction of total TCO (<5%). Azure OpenAI's deployment tiers (Priority +75% / Data Zone +10% / Regional +21% / Batch −50% / PTU) give a cost lever for latency-sensitive workloads (Priority) and batch/async jobs (Batch). PTU monthly reservations are ~64% off hourly PAYG at steady-state utilization. Vercel AI Gateway's 0% markup means no gateway fee is added on top of provider pricing. Foundry thread storage is $0 direct — customer pays Cosmos DB bills.",
-    modelPercent: 95,
-    infraPercent: 5,
+      "With GPT-5.4 mini, the cheap-but-capable agent-optimized tier, model cost drops to ~$3.75 per 1,000 turns — infrastructure is now ~10% of TCO, not the 3–5% you see with premium flagships. Azure OpenAI's deployment tiers (Priority ~2× · Data Zone +10% · Batch −50% · PTU reservations) give cost levers for latency-sensitive workloads (Priority) and async jobs (Batch, 24-hour SLA). PTU yearly reservations are ~70% off hourly PAYG at steady-state utilization. Vercel AI Gateway's 0% markup means no gateway fee is added on top of provider pricing. Foundry thread storage is $0 direct — the customer pays Cosmos DB bills.",
+    modelPercent: 89,
+    infraPercent: 11,
   },
   effortLevels: [
     {
@@ -108,12 +109,12 @@ export const pricingData: PricingData = {
     {
       level: "Data Zone",
       multiplier: "+10%",
-      impact: "Residency",
+      impact: "Residency (US/EU)",
       color: "chart-3",
     },
     {
       level: "Priority",
-      multiplier: "+75%",
+      multiplier: "≈ ×2",
       impact: "Latency SLA",
       color: "azure",
     },
@@ -130,37 +131,37 @@ export const pricingData: PricingData = {
       description: "Default, highest throughput",
       discount: "Baseline",
       tooltip:
-        "Default Azure OpenAI deployment. Traffic routes globally for best availability. No regional data residency guarantee.",
+        "Default Azure OpenAI deployment. Traffic routes globally for best availability. Matches OpenAI direct per-token pricing. No regional data residency guarantee.",
     },
     {
       tier: "Data Zone",
       description: "US or EU residency",
       discount: "+10%",
       tooltip:
-        "Traffic stays within a defined data zone (US or EU). Compliance insurance for GDPR, HIPAA-adjacent workloads.",
+        "Traffic stays within a defined data zone (US or EU). Compliance insurance for GDPR and HIPAA-adjacent workloads. GPT-5.4 nano and GPT-5.3-Codex both support Data Zone Standard on Azure.",
     },
     {
       tier: "Priority",
       description: "Latency-sensitive",
-      discount: "+75% premium",
+      discount: "≈ ×2 premium",
       tooltip:
-        "Highest priority inference for user-facing agents. Sub-2s p99 latency. Added for GPT-4.1 and GPT-5 in April 2026.",
+        "Highest-priority inference for user-facing agents (confirmed ~2× Global Standard, e.g. GPT-5 Global $1.25 → Priority $2.50). Sub-2s p99 latency. Available on GPT-5.4, GPT-5.2, GPT-5 (not mini/nano).",
     },
     {
       tier: "Batch API",
       description: "Async agent work",
       discount: "−50% discount",
       tooltip:
-        "Half-price tier for async workloads with 24-hour SLA. Ideal for overnight reports, eval runs, offline RAG indexing.",
+        "Half-price tier for async workloads with a 24-hour SLA. Ideal for overnight reports, eval runs, offline RAG indexing. Available on GPT-5.4, GPT-5, o3, o4-mini.",
     },
     {
       tier: "PTU Reservation",
       description: "Reserved capacity",
       discount: "Monthly −64% · Yearly −70%",
       tooltip:
-        "Provisioned Throughput Units billed hourly regardless of usage. Monthly reservations ≈ 64% off PAYG hourly; yearly ≈ 70% off. Min 15 PTU for Global, 50 PTU for Regional.",
+        "Provisioned Throughput Units billed hourly regardless of usage ($1/hr). Monthly reservations ≈ 64% off PAYG hourly; yearly ≈ 70% off ($2,652/yr per PTU). Min 15 PTU for Global deployments.",
     },
   ],
   bedrockPricingNote:
-    "Azure OpenAI pricing pages are JavaScript-rendered SPAs — GPT-5.1 and GPT-5.2 sub-series per-token rates currently render as $- in static HTML (DOCUMENTATION GAP — verify via Azure Pricing Calculator). Foundry Hosted Agents vCPU/GiB-hour rates similarly unavailable in static HTML. Thread/conversation storage is $0 direct from Microsoft but customer pays Cosmos DB bills (~$0.25/M RUs serverless). GPT-4.1 launched Apr 14, 2026 at 1M context window and is 26% cheaper than GPT-4o.",
+    "GPT-5.4 is the current OpenAI flagship (GA Mar 5, 2026) and is registration-gated on Azure — matches OpenAI direct pricing of $2.50/$15.00 at Global Standard, with a long-context tier of $5.00/$22.50 kicking in above 272K tokens (1.05M total context window). GPT-5.4 mini (Mar 17, 2026) is the agent-workhorse: 400K context, native computer-use, 2× faster than full GPT-5.4. GPT-5.4 nano is the cheapest in the family at $0.20/$1.25. Azure's pricing page still renders most values as $- in static HTML because it's JavaScript-rendered — numbers here are confirmed via OpenAI's direct pricing page and Microsoft Learn Q&A #5841927. Foundry Hosted Agents vCPU/GiB-hour rates remain unlisted in static HTML. Thread/conversation storage is $0 direct from Microsoft but customer pays Cosmos DB bills (~$0.25/M RUs serverless).",
 };

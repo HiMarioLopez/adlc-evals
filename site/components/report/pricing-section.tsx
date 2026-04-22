@@ -70,7 +70,7 @@ export function PricingSection({ data, secondaryTheme }: PricingSectionProps) {
         {/* Model Pricing */}
         <div className="mb-12">
           <h3 className="mb-6 font-semibold text-xl">
-            Claude 4.5 Pricing (per 1M tokens)
+            {data.modelPricingHeading}
           </h3>
           <div className="grid gap-4 sm:grid-cols-3">
             {data.modelPricing.map((model) => (

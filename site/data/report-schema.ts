@@ -178,6 +178,7 @@ export interface PricingData {
     infraPercent: number;
   };
   modelPricing: ModelPricing[];
+  modelPricingHeading: string;
   sectionNumber: number;
   title: string;
   workloadAssumptions: {

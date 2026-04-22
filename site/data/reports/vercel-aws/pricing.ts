@@ -11,6 +11,7 @@ export const pricingData: PricingData = {
     outputTokensPerTurn: 500,
     activeCpuPerTurn: "5s",
   },
+  modelPricingHeading: "Claude 4.x Pricing (per 1M tokens)",
   modelPricing: [
     {
       model: "Claude Opus 4.7",
