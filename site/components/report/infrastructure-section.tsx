@@ -22,10 +22,46 @@ import {
 } from "lucide-react";
 import type {
   InfrastructureData,
+  PlatformValue,
   SecondaryPlatformTheme,
 } from "@/data/report-schema.ts";
 import { cn } from "@/lib/utils.ts";
 import { themeClasses } from "./secondary-theme.ts";
+
+const PlatformLinks = ({ value }: { value: PlatformValue }) => {
+  if (value.links && value.links.length > 0) {
+    return (
+      <div className="flex flex-wrap gap-1.5">
+        {value.links.map((link) => (
+          <a
+            className="inline-flex items-center gap-1 rounded-md border border-border bg-background/50 px-2 py-0.5 text-primary text-xs transition-colors hover:border-primary/40 hover:bg-primary/5"
+            href={link.url}
+            key={link.url}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {link.label} <ExternalLink className="h-3 w-3" />
+          </a>
+        ))}
+      </div>
+    );
+  }
+
+  if (value.link) {
+    return (
+      <a
+        className="inline-flex items-center gap-1 text-primary text-xs hover:underline"
+        href={value.link}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Documentation <ExternalLink className="h-3 w-3" />
+      </a>
+    );
+  }
+
+  return null;
+};
 
 const getIcon = (name: string, size: "sm" | "md" = "md") => {
   const sizeClass = size === "sm" ? "h-4 w-4" : "h-5 w-5";
@@ -200,16 +236,7 @@ export function InfrastructureSection({
                               {row.vercel.detail}
                             </p>
                           )}
-                          {row.vercel.link && (
-                            <a
-                              className="inline-flex items-center gap-1 text-primary text-xs hover:underline"
-                              href={row.vercel.link}
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              Documentation <ExternalLink className="h-3 w-3" />
-                            </a>
-                          )}
+                          <PlatformLinks value={row.vercel} />
                         </div>
                       </div>
 
@@ -224,16 +251,7 @@ export function InfrastructureSection({
                               {row.aws.detail}
                             </p>
                           )}
-                          {row.aws.link && (
-                            <a
-                              className="inline-flex items-center gap-1 text-primary text-xs hover:underline"
-                              href={row.aws.link}
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              Documentation <ExternalLink className="h-3 w-3" />
-                            </a>
-                          )}
+                          <PlatformLinks value={row.aws} />
                         </div>
                       </div>
                     </div>

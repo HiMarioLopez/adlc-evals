@@ -94,7 +94,14 @@ export interface SecondaryPlatformTheme {
 
 export interface PlatformValue {
   detail?: string;
+  /** Single documentation link. Used when `links` is not provided. */
   link?: string;
+  /**
+   * Multiple labeled documentation links. Takes precedence over `link` when
+   * present. Use this when a capability references 2+ distinct products or
+   * concepts that each deserve their own citation.
+   */
+  links?: ExternalLink[];
   text: string;
 }
 
