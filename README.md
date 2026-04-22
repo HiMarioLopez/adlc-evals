@@ -34,17 +34,20 @@ flowchart LR
 ## Project Structure
 
 ```
-meta-research-prompts/     → Master prompts for report generation
-generated-reports/         → Raw markdown from AI models
+meta-research-prompts/     → Master prompts for report generation (sharded)
+generated-reports/         → Raw markdown from AI models (sharded for large reports)
 site/                      → Interactive Next.js report site
+scripts/                   → Sharding + reconstruction tooling
 ```
+
+Large reports and prompts are **sharded** into directories (one file per `##` section) to stay editable by agent tooling. Run `scripts/reconstruct-report.sh <dir>` to rebuild a flat `.md` from any sharded directory.
 
 ## Current Comparisons
 
 | Comparison | Status | Links |
 |------------|--------|-------|
-| Vercel vs AWS | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-aws) · [Markdown](generated-reports/vercel-aws/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md) |
-| Vercel vs Azure | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-azure) · [Markdown](generated-reports/vercel-azure/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md) |
+| Vercel vs AWS | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-aws) · [Markdown](generated-reports/vercel-aws/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7/index.md) |
+| Vercel vs Azure | ✅ Live | [Live Report](https://adlc-evals.vercel.app/reports/vercel-azure) · [Markdown](generated-reports/vercel-azure/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7/index.md) |
 | Vercel vs Cloudflare | 🔜 Planned | — |
 | Vercel vs GCP | 🔜 Planned | — |
 

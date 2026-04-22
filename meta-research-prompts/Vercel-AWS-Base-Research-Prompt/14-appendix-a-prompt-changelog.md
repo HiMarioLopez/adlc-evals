@@ -1,0 +1,20 @@
+## APPENDIX A: PROMPT CHANGELOG
+
+| Version | Date | Changes |
+|---------|------|---------|
+| 1.0.0 | 2026-01-08 | Initial prompt creation with Vercel AI SDK 6.x vs AWS Bedrock AgentCore comparison framework |
+| 1.1.0 | 2026-01-08 | Added validated citations from MCP servers (GitHub, AWS Docs, Context7) |
+| 1.2.0 | 2026-01-08 | Added SDK Language Support Matrix; documented Python/TypeScript asymmetry |
+| 1.3.0 | 2026-01-08 | Integrated Vercel Sandbox SDK & Workflow Development Kit (WDK) |
+| 1.4.0 | 2026-01-08 | Added Vercel AI Gateway & Amazon Bedrock platform comparison |
+| 1.5.0 | 2026-01-08 | Added bash-tool for filesystem context retrieval |
+| 1.6.0 | 2026-01-08 | Added self-update prompt and changelog appendix |
+| 1.7.0 | 2026-01-08 | **Major clarification:** Two-layer architecture (Agent Framework vs Infrastructure). Strands SDK = agent framework, AgentCore = infrastructure wrapper. Compare AI SDK ↔ Strands, not AI SDK ↔ AgentCore |
+| 1.8.0 | 2026-01-08 | Added "Blessed Path" methodology — focus on officially recommended, out-of-the-box developer experience; exclude DIY/custom solutions |
+| 1.9.0 | 2026-01-08 | Added Regional Availability Matrix — AgentCore Evaluations only in 4 regions (preview); documented feature-by-region availability |
+| 2.0.0 | 2026-01-08 | **Major enhancements:** Added Vercel Sandbox iad1 region; Secure Compute comparison with AWS VPC/NAT/PrivateLink pricing; Tool Execution Flow instructions; Ecosystem corrections (Vercel backends, Strands TS preview); Resolved 3 documentation gaps (Sandbox pricing, Edge limits, Haiku pricing) |
+| 2.1.0 | 2026-01-08 | Updated Vercel AI SDK version to `ai@6.0.23`; Verified AWS AgentCore pricing (no changes); Verified Bedrock pricing |
+| **3.0.0** | **2026-04-21** | **Major refresh: Jan → Apr 2026 delta.** (1) Status updates: Vercel Sandbox Beta→GA (Jan 30), Vercel Workflow Beta→GA (Apr 16), AgentCore Policy Preview→GA (Mar 3), AgentCore Evaluations Preview→GA (Mar 31), Strands TS preview→RC v1.0.0-rc.4. (2) SDK version bumps: `ai@6.0.23`→`6.0.168` (+ v7 beta `7.0.0-beta.111`), `bedrock-agentcore@v1.1.4`→`v1.6.3`, `strands-agents@v1.21.0`→`v1.36.0`. (3) New models: Claude Opus 4.6 (Feb 5), Sonnet 4.6 (Feb 17), Opus 4.7 (Apr 16 — new tokenizer + `xhigh` effort), GPT-5.4, Gemini 3.1, Kimi K2.6 and 20+ others on AI Gateway. (4) Regional expansion: AgentCore Runtime 11→14 regions, Evaluations 4→9 regions, Policy 11→13 regions. (5) New AgentCore services: AWS Agent Registry (preview, 5 regions), AG-UI protocol in Runtime, `InvokeAgentRuntimeCommand` API, Browser S3 profile billing (Apr 15). (6) New Vercel capabilities: Chat SDK (Feb 23), `WorkflowAgent` primitive, AI Gateway team-wide ZDR (Apr 8), Workflow E2E encryption (Mar 17), Persistent Sandboxes beta (Mar 26), Sandbox Enterprise 32 vCPU / 64 GB (Apr 8), Montréal `yul1` 21st region (Jan 20). (7) Bedrock service tiers (Priority/Standard/Flex) via Strands `BedrockModel(service_tier=...)` (v1.35.0). (8) Terminology correction: "AI Units v2026" does not exist as a public SKU — use Fast Data Transfer (FDT) + AI Gateway Credits (0% markup). (9) Updated canonical code examples to AI SDK 6.0.168+ (`inputSchema` not `parameters`; string model IDs; `prepareStep`) and Strands v1.36.0 (`BedrockModel(service_tier=...)`; callable hooks). (10) Updated all regional availability tables and pricing tables to April 2026 rates. |
+
+---
+
