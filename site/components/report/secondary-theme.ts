@@ -17,6 +17,8 @@ export const THEME_CLASSES = {
     glow: "glow-aws",
     dataActiveBg: "data-[state=active]:bg-aws",
     dataActiveBgSoft: "bg-aws/20",
+    bannerGradient:
+      "bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-amber-500/90 dark:from-amber-600/95 dark:via-orange-500/95 dark:to-amber-600/95",
   },
   azure: {
     bg: "bg-azure",
@@ -34,6 +36,8 @@ export const THEME_CLASSES = {
     glow: "glow-azure",
     dataActiveBg: "data-[state=active]:bg-azure",
     dataActiveBgSoft: "bg-azure/20",
+    bannerGradient:
+      "bg-gradient-to-r from-sky-500/90 via-azure/90 to-sky-500/90 dark:from-sky-600/95 dark:via-azure/95 dark:to-sky-600/95",
   },
 } as const;
 

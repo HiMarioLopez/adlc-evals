@@ -2,17 +2,22 @@
 
 import { AlertCircle, X } from "lucide-react";
 import { useState } from "react";
+import type { SecondaryPlatformTheme } from "@/data/report-schema.ts";
+import { themeClasses } from "./secondary-theme.ts";
 
 interface DataFreshnessBannerProps {
   capturedDate: string;
   capturedDateIso: string;
+  secondaryTheme: SecondaryPlatformTheme;
 }
 
 export function DataFreshnessBanner({
   capturedDate,
   capturedDateIso,
+  secondaryTheme,
 }: DataFreshnessBannerProps) {
   const [dismissed, setDismissed] = useState(false);
+  const theme = themeClasses(secondaryTheme);
 
   if (dismissed) {
     return null;
@@ -20,7 +25,9 @@ export function DataFreshnessBanner({
 
   return (
     <div className="fixed inset-x-0 top-14 z-40 w-full">
-      <div className="relative overflow-hidden bg-gradient-to-r from-amber-500/90 via-orange-500/90 to-amber-500/90 dark:from-amber-600/95 dark:via-orange-500/95 dark:to-amber-600/95">
+      <div
+        className={`relative overflow-hidden ${theme.bannerGradient}`}
+      >
         {/* Animated shimmer effect */}
         <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 

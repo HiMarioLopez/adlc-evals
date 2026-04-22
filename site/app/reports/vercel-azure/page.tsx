@@ -10,6 +10,7 @@ import { Hero } from "@/components/report/hero.tsx";
 import { InfrastructureSection } from "@/components/report/infrastructure-section.tsx";
 import { Navigation } from "@/components/report/navigation.tsx";
 import { PricingSection } from "@/components/report/pricing-section.tsx";
+import { SidebarToc } from "@/components/report/sidebar-toc.tsx";
 import type { SecondaryPlatformTheme } from "@/data/report-schema.ts";
 import { vercelAzureReport } from "@/data/reports/vercel-azure/index.ts";
 
@@ -87,38 +88,46 @@ export default function VercelAzureReportPage() {
       <DataFreshnessBanner
         capturedDate={report.metadata.date}
         capturedDateIso={report.metadata.dateIso}
+        secondaryTheme={azureSecondaryTheme}
       />
       <Navigation
         secondaryTheme={azureSecondaryTheme}
         sections={report.sections}
       />
-      <div aria-hidden="true" className="h-28" />
-      <Hero
-        data={report.hero}
-        platforms={report.metadata.platforms}
-        secondaryTheme={azureSecondaryTheme}
-      />
-      <ForewordSection secondaryTheme={azureSecondaryTheme} />
-      <InfrastructureSection
-        data={report.infrastructure}
-        secondaryTheme={azureSecondaryTheme}
-      />
-      <PricingSection
-        data={report.pricing}
-        secondaryTheme={azureSecondaryTheme}
-      />
-      <CodeSection data={report.code} secondaryTheme={azureSecondaryTheme} />
-      <DeploymentSection
-        data={report.deployment}
-        secondaryTheme={azureSecondaryTheme}
-      />
-      <AzureRegionalSection data={report.regions} />
-      <AdoptionSection
-        data={report.adoption}
-        secondaryTheme={azureSecondaryTheme}
-      />
-      <DeltaSection data={report.delta} />
-      <Footer data={report.footer} secondaryTheme={azureSecondaryTheme} />
+      <SidebarToc sections={report.sections} />
+      {/* Spacer for fixed nav (h-14 = 56px) + banner (~40px) */}
+      <div aria-hidden="true" className="h-[6rem]" />
+
+      {/* Left padding reserves space for the fixed sidebar on lg+ screens,
+          letting section backgrounds remain full-bleed */}
+      <div className="lg:pl-60 xl:pl-64">
+        <Hero
+          data={report.hero}
+          platforms={report.metadata.platforms}
+          secondaryTheme={azureSecondaryTheme}
+        />
+        <ForewordSection secondaryTheme={azureSecondaryTheme} />
+        <InfrastructureSection
+          data={report.infrastructure}
+          secondaryTheme={azureSecondaryTheme}
+        />
+        <PricingSection
+          data={report.pricing}
+          secondaryTheme={azureSecondaryTheme}
+        />
+        <CodeSection data={report.code} secondaryTheme={azureSecondaryTheme} />
+        <DeploymentSection
+          data={report.deployment}
+          secondaryTheme={azureSecondaryTheme}
+        />
+        <AzureRegionalSection data={report.regions} />
+        <AdoptionSection
+          data={report.adoption}
+          secondaryTheme={azureSecondaryTheme}
+        />
+        <DeltaSection data={report.delta} />
+        <Footer data={report.footer} secondaryTheme={azureSecondaryTheme} />
+      </div>
     </main>
   );
 }

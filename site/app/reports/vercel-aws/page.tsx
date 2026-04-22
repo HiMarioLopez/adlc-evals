@@ -91,6 +91,7 @@ export default function VercelAwsReportPage() {
       <DataFreshnessBanner
         capturedDate={report.metadata.date}
         capturedDateIso={report.metadata.dateIso}
+        secondaryTheme={awsSecondaryTheme}
       />
       <Navigation
         secondaryTheme={awsSecondaryTheme}
