@@ -25,4 +25,16 @@ export const heroData: HeroData = {
       },
     },
   ],
+  keyFindingsInline: {
+    label: "Key Findings",
+    items: [
+      { label: "Infra", primary: "≈5%", secondary: "of TCO" },
+      {
+        label: "Time-to-first-agent",
+        primary: "3 min",
+        secondary: "30-45 min",
+        highlightSecondary: true,
+      },
+    ],
+  },
 };

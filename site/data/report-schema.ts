@@ -50,15 +50,42 @@ export interface KeyFinding {
   };
 }
 
+export interface HeroKeyFindingsInline {
+  label: string;
+  items: Array<{
+    label: string;
+    primary: string;
+    secondary?: string;
+    highlightSecondary?: boolean;
+  }>;
+}
+
 export interface HeroData {
   description: string;
   keyFindings: KeyFinding[];
+  keyFindingsInline?: HeroKeyFindingsInline;
   lastUpdated: string;
   subtitle: string;
   title: {
     primary: string;
     secondary: string;
   };
+}
+
+// =============================================================================
+// Secondary Platform Theme (AWS / Azure / …)
+// =============================================================================
+
+export interface SecondaryPlatformTheme {
+  accent: "aws" | "azure";
+  label: string;
+  letter: string;
+  stackName: string;
+  stackLabel: string;
+  docsLabel: string;
+  pricingNoteLabel: string;
+  pricingTiersLabel: string;
+  regionalMatrixLabel: string;
 }
 
 // =============================================================================

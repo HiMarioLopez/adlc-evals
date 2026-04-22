@@ -10,7 +10,20 @@ import { Hero } from "@/components/report/hero.tsx";
 import { InfrastructureSection } from "@/components/report/infrastructure-section.tsx";
 import { Navigation } from "@/components/report/navigation.tsx";
 import { PricingSection } from "@/components/report/pricing-section.tsx";
+import type { SecondaryPlatformTheme } from "@/data/report-schema.ts";
 import { vercelAzureReport } from "@/data/reports/vercel-azure/index.ts";
+
+const azureSecondaryTheme: SecondaryPlatformTheme = {
+  accent: "azure",
+  label: "Azure",
+  letter: "A",
+  stackName: "Microsoft Foundry Agent Service + Agent Framework 1.0",
+  stackLabel: "Azure Stack",
+  docsLabel: "Azure Documentation",
+  pricingNoteLabel: "Azure OpenAI Pricing Note",
+  pricingTiersLabel: "Azure OpenAI Pricing Tiers",
+  regionalMatrixLabel: "Foundry Agent Service Regional Matrix",
+};
 
 export const metadata: Metadata = {
   title: "Vercel vs Azure Agent Stack Comparison | 2026 Report",
@@ -75,18 +88,37 @@ export default function VercelAzureReportPage() {
         capturedDate={report.metadata.date}
         capturedDateIso={report.metadata.dateIso}
       />
-      <Navigation sections={report.sections} />
+      <Navigation
+        secondaryTheme={azureSecondaryTheme}
+        sections={report.sections}
+      />
       <div aria-hidden="true" className="h-28" />
-      <Hero data={report.hero} platforms={report.metadata.platforms} />
-      <ForewordSection />
-      <InfrastructureSection data={report.infrastructure} />
-      <PricingSection data={report.pricing} />
-      <CodeSection data={report.code} />
-      <DeploymentSection data={report.deployment} />
+      <Hero
+        data={report.hero}
+        platforms={report.metadata.platforms}
+        secondaryTheme={azureSecondaryTheme}
+      />
+      <ForewordSection secondaryTheme={azureSecondaryTheme} />
+      <InfrastructureSection
+        data={report.infrastructure}
+        secondaryTheme={azureSecondaryTheme}
+      />
+      <PricingSection
+        data={report.pricing}
+        secondaryTheme={azureSecondaryTheme}
+      />
+      <CodeSection data={report.code} secondaryTheme={azureSecondaryTheme} />
+      <DeploymentSection
+        data={report.deployment}
+        secondaryTheme={azureSecondaryTheme}
+      />
       <AzureRegionalSection data={report.regions} />
-      <AdoptionSection data={report.adoption} />
+      <AdoptionSection
+        data={report.adoption}
+        secondaryTheme={azureSecondaryTheme}
+      />
       <DeltaSection data={report.delta} />
-      <Footer data={report.footer} />
+      <Footer data={report.footer} secondaryTheme={azureSecondaryTheme} />
     </main>
   );
 }

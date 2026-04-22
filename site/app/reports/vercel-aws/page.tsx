@@ -12,7 +12,20 @@ import { InfrastructureSection } from "@/components/report/infrastructure-sectio
 import { Navigation } from "@/components/report/navigation.tsx";
 import { PricingSection } from "@/components/report/pricing-section.tsx";
 import { SidebarToc } from "@/components/report/sidebar-toc.tsx";
+import type { SecondaryPlatformTheme } from "@/data/report-schema.ts";
 import { vercelAwsReport } from "@/data/reports/vercel-aws/index.ts";
+
+const awsSecondaryTheme: SecondaryPlatformTheme = {
+  accent: "aws",
+  label: "AWS",
+  letter: "A",
+  stackName: "AWS Bedrock AgentCore + Strands SDK",
+  stackLabel: "AWS Stack",
+  docsLabel: "AWS Documentation",
+  pricingNoteLabel: "AWS Bedrock Pricing Note",
+  pricingTiersLabel: "Amazon Bedrock Pricing Tiers",
+  regionalMatrixLabel: "AWS Bedrock AgentCore Regional Matrix",
+};
 
 export const metadata: Metadata = {
   title: "Vercel vs AWS Agent Stack Comparison | 2026 Report",
@@ -79,7 +92,10 @@ export default function VercelAwsReportPage() {
         capturedDate={report.metadata.date}
         capturedDateIso={report.metadata.dateIso}
       />
-      <Navigation sections={report.sections} />
+      <Navigation
+        secondaryTheme={awsSecondaryTheme}
+        sections={report.sections}
+      />
       <SidebarToc sections={report.sections} />
       {/* Spacer for fixed nav (h-14 = 56px) + banner (~40px) */}
       <div aria-hidden="true" className="h-[6rem]" />
@@ -87,17 +103,33 @@ export default function VercelAwsReportPage() {
       {/* Left padding reserves space for the fixed sidebar on lg+ screens,
           letting section backgrounds remain full-bleed */}
       <div className="lg:pl-60 xl:pl-64">
-        <Hero data={report.hero} platforms={report.metadata.platforms} />
-        <ForewordSection />
-        <InfrastructureSection data={report.infrastructure} />
-        <PricingSection data={report.pricing} />
+        <Hero
+          data={report.hero}
+          platforms={report.metadata.platforms}
+          secondaryTheme={awsSecondaryTheme}
+        />
+        <ForewordSection secondaryTheme={awsSecondaryTheme} />
+        <InfrastructureSection
+          data={report.infrastructure}
+          secondaryTheme={awsSecondaryTheme}
+        />
+        <PricingSection
+          data={report.pricing}
+          secondaryTheme={awsSecondaryTheme}
+        />
         <CostCalculator />
-        <CodeSection data={report.code} />
-        <DeploymentSection data={report.deployment} />
+        <CodeSection data={report.code} secondaryTheme={awsSecondaryTheme} />
+        <DeploymentSection
+          data={report.deployment}
+          secondaryTheme={awsSecondaryTheme}
+        />
         <RegionalSection data={report.regions} />
-        <AdoptionSection data={report.adoption} />
+        <AdoptionSection
+          data={report.adoption}
+          secondaryTheme={awsSecondaryTheme}
+        />
         <DeltaSection data={report.delta} />
-        <Footer data={report.footer} />
+        <Footer data={report.footer} secondaryTheme={awsSecondaryTheme} />
       </div>
     </main>
   );

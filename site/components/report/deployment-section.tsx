@@ -13,7 +13,11 @@ import {
   Shield,
   Terminal,
 } from "lucide-react";
-import type { DeploymentData } from "@/data/report-schema.ts";
+import type {
+  DeploymentData,
+  SecondaryPlatformTheme,
+} from "@/data/report-schema.ts";
+import { themeClasses } from "./secondary-theme.ts";
 
 const iconMap: Record<string, React.ReactNode> = {
   Terminal: <Terminal className="h-4 w-4" />,
@@ -27,9 +31,14 @@ const iconMap: Record<string, React.ReactNode> = {
 
 interface DeploymentSectionProps {
   data: DeploymentData;
+  secondaryTheme: SecondaryPlatformTheme;
 }
 
-export function DeploymentSection({ data }: DeploymentSectionProps) {
+export function DeploymentSection({
+  data,
+  secondaryTheme,
+}: DeploymentSectionProps) {
+  const theme = themeClasses(secondaryTheme);
   return (
     <section className="px-6 py-24" id="deployment">
       <div className="mx-auto max-w-6xl">
@@ -130,12 +139,20 @@ export function DeploymentSection({ data }: DeploymentSectionProps) {
 
           {/* AWS Infrastructure */}
           <div className="overflow-hidden rounded-2xl border border-border bg-card">
-            <div className="flex items-center gap-3 border-border border-b bg-aws/5 px-5 py-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-aws">
-                <span className="font-bold text-sm text-white">A</span>
+            <div
+              className={`flex items-center gap-3 border-border border-b ${theme.bgSoft} px-5 py-4`}
+            >
+              <div
+                className={`flex h-8 w-8 items-center justify-center rounded-lg ${theme.bg}`}
+              >
+                <span className="font-bold text-sm text-white">
+                  {secondaryTheme.letter}
+                </span>
               </div>
               <span className="font-semibold">{data.aws.title}</span>
-              <span className="ml-auto rounded-full bg-aws/10 px-2 py-1 font-mono text-aws text-xs">
+              <span
+                className={`ml-auto rounded-full ${theme.bgSoft10} px-2 py-1 font-mono ${theme.text} text-xs`}
+              >
                 {data.aws.duration}
               </span>
             </div>
@@ -143,7 +160,9 @@ export function DeploymentSection({ data }: DeploymentSectionProps) {
               {data.aws.steps.map((step, idx) => (
                 <div className="flex gap-4" key={step.stepNumber}>
                   <div className="flex flex-col items-center">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-aws bg-aws/10 font-bold text-aws text-sm">
+                    <div
+                      className={`flex h-8 w-8 items-center justify-center rounded-full border-2 ${theme.border} ${theme.bgSoft10} font-bold ${theme.text} text-sm`}
+                    >
                       {step.stepNumber}
                     </div>
                     {idx < data.aws.steps.length - 1 && (
@@ -152,7 +171,9 @@ export function DeploymentSection({ data }: DeploymentSectionProps) {
                   </div>
                   <div className="flex-1 pb-4">
                     <div className="mb-1 flex items-center gap-2">
-                      <span className="text-aws">{iconMap[step.iconName]}</span>
+                      <span className={theme.text}>
+                        {iconMap[step.iconName]}
+                      </span>
                       <h4 className="font-medium text-sm">{step.title}</h4>
                     </div>
                     {step.description && (
@@ -193,8 +214,12 @@ export function DeploymentSection({ data }: DeploymentSectionProps) {
               ))}
 
               {/* Summary */}
-              <div className="mt-4 rounded-xl border border-aws/20 bg-aws/5 p-4">
-                <div className="mb-2 flex items-center gap-2 font-medium text-aws text-sm">
+              <div
+                className={`mt-4 rounded-xl border ${theme.borderSoft} ${theme.bgSoft} p-4`}
+              >
+                <div
+                  className={`mb-2 flex items-center gap-2 font-medium ${theme.text} text-sm`}
+                >
                   <Clock className="h-4 w-4" />
                   {data.aws.summary.title}
                 </div>
@@ -227,7 +252,7 @@ export function DeploymentSection({ data }: DeploymentSectionProps) {
                 </div>
                 <span className="text-muted-foreground">vs</span>
                 <div>
-                  <span className="font-bold text-2xl text-aws">
+                  <span className={`font-bold text-2xl ${theme.text}`}>
                     {comparison.aws.value}
                   </span>
                   {comparison.aws.unit && (

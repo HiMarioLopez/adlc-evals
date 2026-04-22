@@ -3,14 +3,20 @@
 import { Code2 } from "lucide-react";
 import { useState } from "react";
 import { LightCodeBlock } from "@/components/ui/code-block.tsx";
-import type { CodeData } from "@/data/report-schema.ts";
+import type {
+  CodeData,
+  SecondaryPlatformTheme,
+} from "@/data/report-schema.ts";
 import { cn } from "@/lib/utils.ts";
+import { themeClasses } from "./secondary-theme.ts";
 
 interface CodeSectionProps {
   data: CodeData;
+  secondaryTheme: SecondaryPlatformTheme;
 }
 
-export function CodeSection({ data }: CodeSectionProps) {
+export function CodeSection({ data, secondaryTheme }: CodeSectionProps) {
+  const theme = themeClasses(secondaryTheme);
   const [activeVercelTab, setActiveVercelTab] = useState(
     data.vercel.examples[0]?.key || ""
   );
@@ -87,9 +93,15 @@ export function CodeSection({ data }: CodeSectionProps) {
 
           {/* AWS */}
           <div className="overflow-hidden rounded-2xl border border-border bg-card">
-            <div className="flex items-center gap-3 border-border border-b bg-aws/5 px-5 py-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-aws">
-                <span className="font-bold text-sm text-white">A</span>
+            <div
+              className={`flex items-center gap-3 border-border border-b ${theme.bgSoft} px-5 py-4`}
+            >
+              <div
+                className={`flex h-8 w-8 items-center justify-center rounded-lg ${theme.bg}`}
+              >
+                <span className="font-bold text-sm text-white">
+                  {secondaryTheme.letter}
+                </span>
               </div>
               <span className="font-semibold">{data.aws.label}</span>
               <span className="ml-auto font-mono text-muted-foreground text-xs">
@@ -102,7 +114,7 @@ export function CodeSection({ data }: CodeSectionProps) {
                   className={cn(
                     "whitespace-nowrap border-b-2 px-4 py-2.5 text-sm transition-all",
                     activeAwsTab === example.key
-                      ? "border-aws bg-aws/5 text-aws"
+                      ? `${theme.border} ${theme.bgSoft} ${theme.text}`
                       : "border-transparent text-muted-foreground hover:text-foreground"
                   )}
                   key={example.key}
@@ -152,7 +164,9 @@ export function CodeSection({ data }: CodeSectionProps) {
                     )}
                 </p>
                 <p>
-                  <span className="text-foreground">AWS:</span>{" "}
+                  <span className="text-foreground">
+                    {secondaryTheme.label}:
+                  </span>{" "}
                   {pattern.aws.code ? (
                     <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
                       {pattern.aws.code}

@@ -15,8 +15,12 @@ import {
   Wrench,
   Zap,
 } from "lucide-react";
-import type { InfrastructureData } from "@/data/report-schema.ts";
+import type {
+  InfrastructureData,
+  SecondaryPlatformTheme,
+} from "@/data/report-schema.ts";
 import { cn } from "@/lib/utils.ts";
+import { themeClasses } from "./secondary-theme.ts";
 
 const getIcon = (name: string, size: "sm" | "md" = "md") => {
   const sizeClass = size === "sm" ? "h-4 w-4" : "h-5 w-5";
@@ -52,9 +56,14 @@ const getIcon = (name: string, size: "sm" | "md" = "md") => {
 
 interface InfrastructureSectionProps {
   data: InfrastructureData;
+  secondaryTheme: SecondaryPlatformTheme;
 }
 
-export function InfrastructureSection({ data }: InfrastructureSectionProps) {
+export function InfrastructureSection({
+  data,
+  secondaryTheme,
+}: InfrastructureSectionProps) {
+  const theme = themeClasses(secondaryTheme);
   return (
     <section className="bg-muted/30 px-6 py-24" id="infrastructure">
       <div className="mx-auto max-w-7xl">
@@ -125,13 +134,15 @@ export function InfrastructureSection({ data }: InfrastructureSectionProps) {
                     </div>
                     <div className="border-border border-l p-4">
                       <div className="flex items-center gap-2">
-                        <div className="flex h-5 w-5 items-center justify-center rounded-md bg-aws">
+                        <div
+                          className={`flex h-5 w-5 items-center justify-center rounded-md ${theme.bg}`}
+                        >
                           <span className="font-bold text-[10px] text-white">
-                            A
+                            {secondaryTheme.letter}
                           </span>
                         </div>
                         <span className="font-mono text-muted-foreground text-xs uppercase tracking-widest">
-                          AWS
+                          {secondaryTheme.label}
                         </span>
                       </div>
                     </div>
@@ -231,28 +242,7 @@ export function InfrastructureSection({ data }: InfrastructureSectionProps) {
                     </code>{" "}
                   </>
                 )}
-                {data.keyInsight.description
-                  .split("Strands SDK")
-                  .map((part, i, arr) =>
-                    i < arr.length - 1 ? (
-                      <span key={i}>
-                        {part.includes("infrastructure wrapper") ? (
-                          <>
-                            is the{" "}
-                            <strong className="text-foreground">
-                              infrastructure wrapper
-                            </strong>
-                            , NOT the agent framework. Agent logic uses{" "}
-                          </>
-                        ) : (
-                          part
-                        )}
-                        <strong className="text-foreground">Strands SDK</strong>
-                      </span>
-                    ) : (
-                      <span key={i}>{part}</span>
-                    )
-                  )}
+                {data.keyInsight.description}
               </p>
             </div>
           </div>

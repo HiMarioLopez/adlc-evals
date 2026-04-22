@@ -3,13 +3,19 @@
 import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { GithubIcon } from "@/components/ui/github-icon.tsx";
-import type { FooterData } from "@/data/report-schema.ts";
+import type {
+  FooterData,
+  SecondaryPlatformTheme,
+} from "@/data/report-schema.ts";
+import { themeClasses } from "./secondary-theme.ts";
 
 interface FooterProps {
   data: FooterData;
+  secondaryTheme: SecondaryPlatformTheme;
 }
 
-export function Footer({ data }: FooterProps) {
+export function Footer({ data, secondaryTheme }: FooterProps) {
+  const theme = themeClasses(secondaryTheme);
   return (
     <footer
       className="border-border border-t bg-card/50 px-6 py-24"
@@ -52,16 +58,20 @@ export function Footer({ data }: FooterProps) {
           {/* AWS */}
           <div>
             <div className="mb-6 flex items-center gap-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-aws">
-                <span className="font-bold text-sm text-white">A</span>
+              <div
+                className={`flex h-8 w-8 items-center justify-center rounded-lg ${theme.bg}`}
+              >
+                <span className="font-bold text-sm text-white">
+                  {secondaryTheme.letter}
+                </span>
               </div>
-              <h3 className="font-semibold">AWS Documentation</h3>
+              <h3 className="font-semibold">{secondaryTheme.docsLabel}</h3>
             </div>
             <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3">
               {data.awsLinks.map((link) => (
                 <li key={link.label}>
                   <a
-                    className="inline-flex items-center gap-1.5 text-muted-foreground text-sm transition-colors hover:text-aws"
+                    className={`inline-flex items-center gap-1.5 text-muted-foreground text-sm transition-colors ${theme.hoverText}`}
                     href={link.url}
                     rel="noopener noreferrer"
                     target="_blank"
@@ -136,7 +146,7 @@ export function Footer({ data }: FooterProps) {
                 {data.analyzedVersions.strands}
               </span>
               <span className="hidden sm:inline">•</span>
-              <span className="font-mono text-aws">
+              <span className={`font-mono ${theme.text}`}>
                 {data.analyzedVersions.agentcore}
               </span>
             </div>

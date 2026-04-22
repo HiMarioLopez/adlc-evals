@@ -36,7 +36,7 @@ export const adoptionData: AdoptionData = {
       ratioLabel: "Early GA",
       latestCommit: "2026-04-20T00:00:00Z",
       link: "https://github.com/microsoft/agent-framework",
-      color: "aws",
+      color: "azure",
     },
     {
       name: "microsoft/semantic-kernel",

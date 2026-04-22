@@ -1,15 +1,22 @@
 "use client";
 
 import { AlertTriangle, DollarSign, Info, TrendingUp } from "lucide-react";
-import type { PricingData } from "@/data/report-schema.ts";
+import type {
+  PricingData,
+  SecondaryPlatformTheme,
+} from "@/data/report-schema.ts";
+import { themeClasses } from "./secondary-theme.ts";
 
 interface PricingSectionProps {
   data: PricingData;
+  secondaryTheme: SecondaryPlatformTheme;
 }
 
-export function PricingSection({ data }: PricingSectionProps) {
+export function PricingSection({ data, secondaryTheme }: PricingSectionProps) {
+  const theme = themeClasses(secondaryTheme);
   return (
     <section className="px-6 py-24" id="pricing">
+      {/* Tailwind safelist: bg-aws bg-aws/10 bg-aws/30 text-aws hover:border-aws/30 bg-azure bg-azure/10 bg-azure/30 text-azure hover:border-azure/30 bg-primary bg-primary/10 bg-primary/30 text-primary hover:border-primary/30 bg-chart-2 bg-chart-2/10 bg-chart-2/30 text-chart-2 hover:border-chart-2/30 bg-chart-3 bg-chart-3/10 bg-chart-3/30 text-chart-3 hover:border-chart-3/30 */}
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="mb-16">
@@ -75,7 +82,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                   <span
                     className={`rounded px-2 py-0.5 font-medium text-[10px] uppercase tracking-widest ${
                       model.tier === "flagship"
-                        ? "bg-aws/10 text-aws"
+                        ? `${theme.bgSoft10} ${theme.text}`
                         : model.tier === "balanced"
                           ? "bg-primary/10 text-primary"
                           : "bg-chart-2/10 text-chart-2"
@@ -108,12 +115,16 @@ export function PricingSection({ data }: PricingSectionProps) {
           </div>
 
           {/* Pricing Source Comparison */}
-          <div className="mt-6 rounded-xl border border-aws/20 bg-aws/5 p-4">
+          <div
+            className={`mt-6 rounded-xl border ${theme.borderSoft} ${theme.bgSoft} p-4`}
+          >
             <div className="flex items-start gap-3">
-              <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-aws" />
+              <AlertTriangle
+                className={`mt-0.5 h-4 w-4 shrink-0 ${theme.text}`}
+              />
               <div className="text-sm">
                 <p className="mb-1 font-medium text-foreground">
-                  AWS Bedrock Pricing Note
+                  {secondaryTheme.pricingNoteLabel}
                 </p>
                 <p className="text-muted-foreground text-xs">
                   {data.bedrockPricingNote}
@@ -172,12 +183,18 @@ export function PricingSection({ data }: PricingSectionProps) {
 
           {/* AWS */}
           <div className="overflow-hidden rounded-2xl border border-border bg-card">
-            <div className="flex items-center gap-3 border-border border-b bg-aws/5 px-6 py-4">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-aws">
-                <span className="font-bold text-white">A</span>
+            <div
+              className={`flex items-center gap-3 border-border border-b ${theme.bgSoft} px-6 py-4`}
+            >
+              <div
+                className={`flex h-8 w-8 items-center justify-center rounded-lg ${theme.bg}`}
+              >
+                <span className="font-bold text-white">
+                  {secondaryTheme.letter}
+                </span>
               </div>
               <div>
-                <h3 className="font-semibold">AWS Stack</h3>
+                <h3 className="font-semibold">{secondaryTheme.stackLabel}</h3>
                 <p className="text-[10px] text-muted-foreground">
                   Global endpoint pricing
                 </p>
@@ -209,7 +226,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                     </p>
                   )}
                 </div>
-                <span className="font-bold font-mono text-2xl text-aws">
+                <span className={`font-bold font-mono text-2xl ${theme.text}`}>
                   {data.costBreakdown.awsTotal}
                 </span>
               </div>
@@ -264,7 +281,7 @@ export function PricingSection({ data }: PricingSectionProps) {
         {/* Effort Tax */}
         <div className="mb-12">
           <div className="mb-6 flex items-center gap-3">
-            <AlertTriangle className="h-5 w-5 text-aws" />
+            <AlertTriangle className={`h-5 w-5 ${theme.text}`} />
             <h3 className="font-semibold text-xl">
               The "Effort" Tax: Extended Thinking
             </h3>
@@ -311,7 +328,7 @@ export function PricingSection({ data }: PricingSectionProps) {
         {/* Bedrock Tiers */}
         <div>
           <h3 className="mb-6 font-semibold text-xl">
-            Amazon Bedrock Pricing Tiers
+            {secondaryTheme.pricingTiersLabel}
           </h3>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             {data.bedrockTiers.map((tier) => (
@@ -320,10 +337,12 @@ export function PricingSection({ data }: PricingSectionProps) {
                 key={tier.tier}
               >
                 <div className="mb-2 flex items-center gap-1.5">
-                  <h4 className="font-medium text-aws">{tier.tier}</h4>
+                  <h4 className={`font-medium ${theme.text}`}>{tier.tier}</h4>
                   {tier.tooltip && (
                     <div className="relative">
-                      <Info className="h-3.5 w-3.5 cursor-help text-muted-foreground/50 transition-colors hover:text-aws" />
+                      <Info
+                        className={`h-3.5 w-3.5 cursor-help text-muted-foreground/50 transition-colors ${theme.hoverText}`}
+                      />
                       <div className="invisible fixed top-1/2 right-4 bottom-auto left-4 z-50 -translate-y-1/2 rounded-lg border border-border bg-popover px-3 py-2 text-popover-foreground text-xs opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100 sm:absolute sm:top-auto sm:right-auto sm:bottom-full sm:left-1/2 sm:mb-2 sm:w-56 sm:-translate-x-1/2 sm:translate-y-0">
                         {tier.tooltip}
                         <div className="absolute top-full left-1/2 -mt-px hidden -translate-x-1/2 border-4 border-transparent border-t-border sm:block" />
@@ -334,7 +353,9 @@ export function PricingSection({ data }: PricingSectionProps) {
                 <p className="mb-3 text-muted-foreground text-xs">
                   {tier.description}
                 </p>
-                <span className="inline-block rounded-lg bg-aws/10 px-2 py-1 font-mono text-aws text-xs">
+                <span
+                  className={`inline-block rounded-lg ${theme.bgSoft10} px-2 py-1 font-mono ${theme.text} text-xs`}
+                >
                   {tier.discount}
                 </span>
               </div>

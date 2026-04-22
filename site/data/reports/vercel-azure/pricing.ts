@@ -115,7 +115,7 @@ export const pricingData: PricingData = {
       level: "Priority",
       multiplier: "+75%",
       impact: "Latency SLA",
-      color: "aws",
+      color: "azure",
     },
     {
       level: "Batch",

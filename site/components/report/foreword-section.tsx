@@ -9,8 +9,14 @@ import {
   Puzzle,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import type { SecondaryPlatformTheme } from "@/data/report-schema.ts";
 
-export function ForewordSection() {
+interface ForewordSectionProps {
+  secondaryTheme?: SecondaryPlatformTheme;
+}
+
+export function ForewordSection({ secondaryTheme }: ForewordSectionProps = {}) {
+  const platformLabel = secondaryTheme?.label ?? "AWS";
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -69,7 +75,8 @@ export function ForewordSection() {
 
           <div className="prose prose-lg prose-invert max-w-none">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              As of April 2026, neither Vercel nor AWS offers a single, unified
+              As of April 2026, neither Vercel nor {platformLabel} offers a
+              single, unified
               "agent framework + infrastructure" package that just works out of
               the box. What we see instead—on both sides—is a{" "}
               <span className="font-medium text-foreground">

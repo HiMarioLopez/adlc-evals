@@ -559,7 +559,7 @@ export const regionsData: AzureRegionalData = {
   sectionNumber: 5,
   title: "Regional Availability",
   description:
-    "Azure has 24 Foundry Agent Service regions (vs AWS's 14) but with fragmented sub-feature coverage. Six Azure regions have Foundry projects but NO Agent Service: North Europe, West Europe, Central India, East Asia, Qatar Central, West US 2. Computer Use is available in only 2 regions (East US 2, South India). GPT-5.4 Regional Standard is limited to 4 regions (East US 2, Sweden Central, South Central US, Poland Central).",
+    "Azure has 24 Foundry Agent Service regions but with fragmented sub-feature coverage. Six Azure regions have Foundry projects but NO Agent Service: North Europe, West Europe, Central India, East Asia, Qatar Central, West US 2. Computer Use is available in only 2 regions (East US 2, South India). GPT-5.4 Regional Standard is limited to 4 regions (East US 2, Sweden Central, South Central US, Poland Central).",
   azureRegions,
   vercelRegions,
   foundryFeatures: [

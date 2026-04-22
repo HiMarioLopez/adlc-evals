@@ -18,7 +18,7 @@ export const deltaData: DeltaData = {
       ],
       version: "1.0.1 (Python) · 1.1.0 (.NET)",
       link: "https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/",
-      color: "aws",
+      color: "azure",
     },
     {
       platform: "Foundry Agent Service",
@@ -33,7 +33,7 @@ export const deltaData: DeltaData = {
       ],
       version: "GA",
       link: "https://devblogs.microsoft.com/foundry/foundry-agent-service-ga/",
-      color: "aws",
+      color: "azure",
     },
     {
       platform: "Foundry Control Plane",
@@ -48,7 +48,7 @@ export const deltaData: DeltaData = {
       ],
       version: "GA",
       link: "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760",
-      color: "aws",
+      color: "azure",
     },
     {
       platform: "Azure OpenAI Models",
@@ -64,7 +64,7 @@ export const deltaData: DeltaData = {
       ],
       version: "GPT-4.1 · GPT-5 · o3",
       link: "https://azure.microsoft.com/en-us/blog/announcing-the-gpt-4-1-model-series-for-azure-ai-foundry-and-github-developers/",
-      color: "aws",
+      color: "azure",
     },
     {
       platform: "Microsoft Entra Agent ID",
@@ -79,7 +79,7 @@ export const deltaData: DeltaData = {
       ],
       version: "Preview",
       link: "https://techcommunity.microsoft.com/blog/microsoft-entra-blog/announcing-microsoft-entra-agent-id-secure-and-manage-your-ai-agents/3827392",
-      color: "aws",
+      color: "azure",
     },
     {
       platform: "Foundry MCP Server",
@@ -93,7 +93,7 @@ export const deltaData: DeltaData = {
       ],
       version: "Preview",
       link: "https://learn.microsoft.com/en-us/azure/foundry/mcp/get-started",
-      color: "aws",
+      color: "azure",
     },
     {
       platform: "Vercel Sandbox",
@@ -169,7 +169,7 @@ export const deltaData: DeltaData = {
       ],
       version: "Platform rebrand",
       link: "https://azure.microsoft.com/en-us/blog/microsoft-foundry-scale-innovation-on-a-modular-interoperable-and-secure-agent-stack/",
-      color: "aws",
+      color: "azure",
     },
   ],
 };

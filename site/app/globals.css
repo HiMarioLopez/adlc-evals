@@ -34,6 +34,7 @@
 
   --color-vercel: hsl(var(--vercel));
   --color-aws: hsl(var(--aws));
+  --color-azure: hsl(var(--azure));
 
   --color-chart-1: hsl(var(--chart-1));
   --color-chart-2: hsl(var(--chart-2));
@@ -131,6 +132,7 @@
 
     --vercel: 0 0% 8%;
     --aws: 33 100% 50%;
+    --azure: 207 100% 42%;
 
     --chart-1: 158 64% 42%;
     --chart-2: 199 89% 48%;
@@ -162,6 +164,7 @@
 
     --vercel: 0 0% 100%;
     --aws: 33 100% 55%;
+    --azure: 207 100% 50%;
 
     --chart-1: 158 72% 48%;
     --chart-2: 199 89% 58%;
@@ -243,6 +246,10 @@
 
 .glow-aws {
   box-shadow: 0 0 80px 20px hsl(var(--aws) / 0.15);
+}
+
+.glow-azure {
+  box-shadow: 0 0 80px 20px hsl(var(--azure) / 0.15);
 }
 
 .delay-100 {

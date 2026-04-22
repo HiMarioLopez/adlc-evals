@@ -4,14 +4,20 @@ import { ChevronLeft, Menu, Moon, Sun, X } from "lucide-react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import type { ReportSection } from "@/data/report-schema.ts";
+import type {
+  ReportSection,
+  SecondaryPlatformTheme,
+} from "@/data/report-schema.ts";
 import { cn } from "@/lib/utils.ts";
+import { themeClasses } from "./secondary-theme.ts";
 
 interface NavigationProps {
   sections: ReportSection[];
+  secondaryTheme: SecondaryPlatformTheme;
 }
 
-export function Navigation({ sections }: NavigationProps) {
+export function Navigation({ sections, secondaryTheme }: NavigationProps) {
+  const theme = themeClasses(secondaryTheme);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -95,7 +101,9 @@ export function Navigation({ sections }: NavigationProps) {
                 <span className="font-medium text-muted-foreground text-sm">
                   vs
                 </span>
-                <span className="font-bold text-aws text-sm">A</span>
+                <span className={`font-bold ${theme.text} text-sm`}>
+                  {secondaryTheme.letter}
+                </span>
               </div>
             </div>
             <div className="hidden sm:block">
