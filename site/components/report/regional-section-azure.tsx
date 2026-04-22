@@ -197,9 +197,7 @@ function AzureRegionMarker({
           <div className="flex flex-wrap gap-1">
             {features.map((f) => (
               <FeaturePill
-                enabled={
-                  region.foundry[f.key as keyof typeof region.foundry]
-                }
+                enabled={region.foundry[f.key as keyof typeof region.foundry]}
                 feature={f}
                 key={f.key}
               />
@@ -479,7 +477,9 @@ export function AzureRegionalSection({ data }: AzureRegionalSectionProps) {
                   <AlertCircle className="h-2.5 w-2.5" />
                 </span>
                 <span>
-                  <strong className="text-destructive">No Agent Service:</strong>{" "}
+                  <strong className="text-destructive">
+                    No Agent Service:
+                  </strong>{" "}
                   <span className="text-muted-foreground">
                     {azureNone.length} regions (North Europe, West Europe,
                     Central India)
@@ -554,9 +554,7 @@ export function AzureRegionalSection({ data }: AzureRegionalSectionProps) {
                 </span>
                 <span>
                   <strong className="text-chart-3">Sandbox SDK:</strong>{" "}
-                  <span className="text-muted-foreground">
-                    iad1 only (GA)
-                  </span>
+                  <span className="text-muted-foreground">iad1 only (GA)</span>
                 </span>
               </p>
             </div>
