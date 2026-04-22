@@ -102,8 +102,9 @@ export default function VercelAwsReportPage() {
       <div aria-hidden="true" className="h-[6rem]" />
 
       {/* Left padding reserves space for the fixed sidebar on lg+ screens,
-          letting section backgrounds remain full-bleed */}
-      <div className="lg:pl-60 xl:pl-64">
+          letting section backgrounds remain full-bleed. Width follows the
+          --sidebar-w CSS variable that SidebarToc toggles on <html>. */}
+      <div className="transition-[padding] duration-300 ease-out lg:[padding-left:var(--sidebar-w,15rem)]">
         <Hero
           data={report.hero}
           platforms={report.metadata.platforms}
