@@ -4,6 +4,7 @@ import {
   Code2,
   Database,
   ExternalLink,
+  FileCheck,
   Fingerprint,
   Globe,
   Inbox,
@@ -12,6 +13,7 @@ import {
   Network,
   Server,
   Shield,
+  Users,
   Workflow,
   Wrench,
   Zap,
@@ -52,6 +54,10 @@ const getIcon = (name: string, size: "sm" | "md" = "md") => {
       return <Database className={sizeClass} />;
     case "Inbox":
       return <Inbox className={sizeClass} />;
+    case "Users":
+      return <Users className={sizeClass} />;
+    case "FileCheck":
+      return <FileCheck className={sizeClass} />;
     default:
       return <Bot className={sizeClass} />;
   }

@@ -212,10 +212,10 @@ export const categoryGroups: CategoryGroup[] = [
           "Policy-based access control determining what actions users and agents can perform",
         iconName: "KeyRound",
         vercel: {
-          text: "App-layer + AI Gateway ZDR",
+          text: "AI Gateway ZDR + Deployment Protection",
           detail:
-            "Middleware + env vars; AI Gateway team-wide ZDR enforcement (Apr 8, 2026)",
-          link: "https://vercel.com/blog/zdr-on-ai-gateway",
+            "AI Gateway ZDR (Pro/Enterprise): team-wide toggle ($0.10/1K req) or per-request flag; routes to 13 ZDR providers; BYOK exempt. Platform Deployment Protection: Vercel Auth, Password, Trusted IPs.",
+          link: "https://vercel.com/docs/ai-gateway/capabilities/zdr",
         },
         aws: {
           text: "Bedrock AgentCore Policy (GA)",
@@ -225,18 +225,74 @@ export const categoryGroups: CategoryGroup[] = [
         },
       },
       {
+        capability: "RBAC & Access Control",
+        description:
+          "Granular team, project, and resource-level permissions with directory sync",
+        iconName: "Users",
+        vercel: {
+          text: "Team Roles + Access Groups + SCIM",
+          detail:
+            "8 team roles (Owner → Contributor) + dedicated Security role for firewall/WAF; project-level Access Groups with permission groups; SCIM Directory Sync maps IdP groups to roles (Enterprise)",
+          link: "https://vercel.com/docs/rbac/access-groups",
+        },
+        aws: {
+          text: "IAM + AgentCore Managed Policies",
+          detail:
+            "IAM-based; AWS-managed BedrockAgentCoreFullAccess policy + resource-based policies on Runtime/Gateway/Memory; ABAC via tags; JWT-claim condition keys for agent invocations",
+          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/security-iam-awsmanpol.html",
+        },
+      },
+      {
         capability: "Identity / OAuth",
         description:
           "User authentication and identity management with social/enterprise providers",
         iconName: "Fingerprint",
         vercel: {
-          text: "NextAuth/Auth.js",
-          detail: "App-layer, custom implementation",
+          text: "Marketplace Auth + OIDC + SAML SSO",
+          detail:
+            "Marketplace-native: Clerk, Auth0, WorkOS, Stytch (auto-provisioned env vars, unified billing); Vercel OIDC IdP for keyless cloud + AI Gateway auth; SAML SSO (22+ IdPs) on Enterprise/Pro",
+          link: "https://vercel.com/docs/oidc",
         },
         aws: {
           text: "Bedrock AgentCore Identity",
           detail: "OAuth, API keys, M2M + USER_FEDERATION, $0.010/1K requests",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/identity.html",
+        },
+      },
+      {
+        capability: "Content Safety / Guardrails",
+        description:
+          "Platform-level content moderation and policy enforcement for agent I/O",
+        iconName: "Shield",
+        vercel: {
+          text: "Model-native + AI Gateway policies",
+          detail:
+            "No platform content filters or PII scrubbing; AI Gateway enforces ZDR + disallow-training; WAF rate-limits AI endpoints; Claude/OpenAI native safety + custom middleware required",
+          link: "https://vercel.com/docs/ai-gateway/capabilities/disallow-prompt-training",
+        },
+        aws: {
+          text: "Amazon Bedrock Guardrails (GA)",
+          detail:
+            "6 content filter categories (Hate/Insults/Sexual/Violence/Misconduct/Prompt Attack) + denied topics, PII redaction, grounding checks, Automated Reasoning; Classic & Standard tiers; applies to AgentCore via guardrail ID",
+          link: "https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html",
+        },
+      },
+      {
+        capability: "Compliance & Audit",
+        description:
+          "Enterprise compliance certifications, audit logging, and AI-specific security posture management",
+        iconName: "FileCheck",
+        vercel: {
+          text: "SOC 2 T2, ISO 27001, HIPAA BAA + Activity Log",
+          detail:
+            "SOC 2 Type 2, ISO 27001:2022, HIPAA BAA (Enterprise), PCI DSS v4.0, GDPR, EU-U.S. DPF, TISAX AL2; Activity Log (CLI accessible) + Log Drains for SIEM; reports at security.vercel.com",
+          link: "https://vercel.com/docs/security/compliance",
+        },
+        aws: {
+          text: "SOC 1/2/3, ISO, HIPAA + CloudTrail + Artifact",
+          detail:
+            "SOC 1/2/3, ISO 27001/27017/27018, PCI DSS, HIPAA eligible (BAA), FedRAMP in progress; CloudTrail logs AgentCore management + data events (InvokeGateway); audit reports via AWS Artifact",
+          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/compliance-validation.html",
         },
       },
     ],

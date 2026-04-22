@@ -213,16 +213,34 @@ export const categoryGroups: CategoryGroup[] = [
           "Policy-based access control determining what actions users and agents can perform",
         iconName: "KeyRound",
         vercel: {
-          text: "App-layer + AI Gateway ZDR",
+          text: "AI Gateway ZDR + Deployment Protection",
           detail:
-            "Middleware + env vars; AI Gateway team-wide ZDR enforcement (Apr 8, 2026)",
-          link: "https://vercel.com/blog/zdr-on-ai-gateway",
+            "AI Gateway ZDR (Pro/Enterprise): team-wide toggle ($0.10/1K req) or per-request flag; routes to 13 ZDR providers; BYOK exempt. Platform Deployment Protection: Vercel Auth, Password, Trusted IPs.",
+          link: "https://vercel.com/docs/ai-gateway/capabilities/zdr",
         },
         aws: {
           text: "Microsoft Entra Agent ID (Preview)",
           detail:
-            "Preview Apr 8, 2026 · Agent identity blueprints · OAuth 2.0 OBO · Managed Identity federation (TUAMI) · Entra directory integration",
-          link: "https://techcommunity.microsoft.com/blog/microsoft-entra-blog/announcing-microsoft-entra-agent-id-secure-and-manage-your-ai-agents/3827392",
+            "Preview since May 19, 2025 (Build 2025); still preview Apr 2026 · agent identity blueprints · OAuth 2.0 OBO + client_credentials · Managed Identity federation (FIC/TUAMI) · Conditional Access",
+          link: "https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/agent-blueprint",
+        },
+      },
+      {
+        capability: "RBAC & Access Control",
+        description:
+          "Granular team, project, and resource-level permissions with directory sync",
+        iconName: "Users",
+        vercel: {
+          text: "Team Roles + Access Groups + SCIM",
+          detail:
+            "8 team roles (Owner → Contributor) + dedicated Security role for firewall/WAF; project-level Access Groups with permission groups; SCIM Directory Sync maps IdP groups to roles (Enterprise)",
+          link: "https://vercel.com/docs/rbac/access-groups",
+        },
+        aws: {
+          text: "Azure RBAC + Foundry Roles",
+          detail:
+            "Built-in Foundry roles (GA): Azure AI Account Owner, Administrator, Developer, User + Cognitive Services OpenAI Contributor/User; RBAC assigned to agent identity for tool access",
+          link: "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/rbac-azure-ai-foundry",
         },
       },
       {
@@ -231,14 +249,16 @@ export const categoryGroups: CategoryGroup[] = [
           "User authentication and identity management with social/enterprise providers",
         iconName: "Fingerprint",
         vercel: {
-          text: "NextAuth/Auth.js",
-          detail: "App-layer, custom implementation",
+          text: "Marketplace Auth + OIDC + SAML SSO",
+          detail:
+            "Marketplace-native: Clerk, Auth0, WorkOS, Stytch (auto-provisioned env vars, unified billing); Vercel OIDC IdP for keyless cloud + AI Gateway auth; SAML SSO (22+ IdPs) on Enterprise/Pro",
+          link: "https://vercel.com/docs/oidc",
         },
         aws: {
           text: "Microsoft Entra ID",
           detail:
-            "Deepest enterprise identity story of any cloud · Azure RBAC · Managed Identity per agent · Foundry Agent Identity (GA)",
-          link: "https://learn.microsoft.com/en-us/entra/",
+            "900M+ MAU; Foundry auto-provisions distinct service principal per published agent; FIC-based managed identity federation; Azure RBAC + Conditional Access; Entra Agent ID framework still Preview",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity",
         },
       },
       {
@@ -247,15 +267,34 @@ export const categoryGroups: CategoryGroup[] = [
           "Platform-level content moderation and policy enforcement for agent I/O",
         iconName: "Shield",
         vercel: {
-          text: "Model-native + custom middleware",
+          text: "Model-native + AI Gateway policies",
           detail:
-            "No platform-level guardrails; rely on Claude/OpenAI native safety + custom middleware",
+            "No platform content filters or PII scrubbing; AI Gateway enforces ZDR + disallow-training; WAF rate-limits AI endpoints; Claude/OpenAI native safety + custom middleware required",
+          link: "https://vercel.com/docs/ai-gateway/capabilities/disallow-prompt-training",
         },
         aws: {
           text: "Foundry Guardrails for Agents (Preview)",
           detail:
-            "Preview Feb 13, 2026 · Hate/Sexual/Violence/Self-harm/Prompt Shield/Indirect Attack · 4 intervention points (system prompt, user turn, tool call, agent output)",
+            "Preview for agents (model layer GA) · 10 risk categories: Hate/Sexual/Violence/Self-harm/Prompt Shield/Indirect Attack/Protected Material (code+text)/PII/Task Adherence · 4 intervention points: user input, tool call, tool response, output",
           link: "https://learn.microsoft.com/en-us/azure/foundry/guardrails/guardrails-overview",
+        },
+      },
+      {
+        capability: "Compliance & Audit",
+        description:
+          "Enterprise compliance certifications, audit logging, and AI-specific security posture management",
+        iconName: "FileCheck",
+        vercel: {
+          text: "SOC 2 T2, ISO 27001, HIPAA BAA + Activity Log",
+          detail:
+            "SOC 2 Type 2, ISO 27001:2022, HIPAA BAA (Enterprise), PCI DSS v4.0, GDPR, EU-U.S. DPF, TISAX AL2; Activity Log (CLI accessible) + Log Drains for SIEM; reports at security.vercel.com",
+          link: "https://vercel.com/docs/security/compliance",
+        },
+        aws: {
+          text: "Defender AI-SPM + Purview + Azure Monitor",
+          detail:
+            "Defender for Cloud AI-SPM (GA): agentless AI discovery across Azure/AWS/GCP, attack-path analysis; Microsoft Purview for AI (GA DSPM + DLP middleware); Foundry OpenTelemetry tracing + Entra audit logs",
+          link: "https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-security-posture",
         },
       },
     ],
