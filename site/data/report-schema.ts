@@ -51,13 +51,13 @@ export interface KeyFinding {
 }
 
 export interface HeroKeyFindingsInline {
-  label: string;
   items: Array<{
     label: string;
     primary: string;
     secondary?: string;
     highlightSecondary?: boolean;
   }>;
+  label: string;
 }
 
 export interface HeroData {
@@ -78,14 +78,14 @@ export interface HeroData {
 
 export interface SecondaryPlatformTheme {
   accent: "aws" | "azure";
+  docsLabel: string;
   label: string;
   letter: string;
-  stackName: string;
-  stackLabel: string;
-  docsLabel: string;
   pricingNoteLabel: string;
   pricingTiersLabel: string;
   regionalMatrixLabel: string;
+  stackLabel: string;
+  stackName: string;
 }
 
 // =============================================================================

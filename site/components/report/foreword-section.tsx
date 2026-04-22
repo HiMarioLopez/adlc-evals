@@ -76,9 +76,8 @@ export function ForewordSection({ secondaryTheme }: ForewordSectionProps = {}) {
           <div className="prose prose-lg prose-invert max-w-none">
             <p className="text-lg text-muted-foreground leading-relaxed">
               As of April 2026, neither Vercel nor {platformLabel} offers a
-              single, unified
-              "agent framework + infrastructure" package that just works out of
-              the box. What we see instead—on both sides—is a{" "}
+              single, unified "agent framework + infrastructure" package that
+              just works out of the box. What we see instead—on both sides—is a{" "}
               <span className="font-medium text-foreground">
                 composition-based approach
               </span>

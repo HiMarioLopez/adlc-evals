@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils.ts";
 import { themeClasses } from "./secondary-theme.ts";
 
 interface NavigationProps {
-  sections: ReportSection[];
   secondaryTheme: SecondaryPlatformTheme;
+  sections: ReportSection[];
 }
 
 export function Navigation({ sections, secondaryTheme }: NavigationProps) {

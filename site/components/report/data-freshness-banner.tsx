@@ -25,9 +25,7 @@ export function DataFreshnessBanner({
 
   return (
     <div className="fixed inset-x-0 top-14 z-40 w-full">
-      <div
-        className={`relative overflow-hidden ${theme.bannerGradient}`}
-      >
+      <div className={`relative overflow-hidden ${theme.bannerGradient}`}>
         {/* Animated shimmer effect */}
         <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/20 to-transparent" />
 

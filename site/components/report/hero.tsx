@@ -124,9 +124,7 @@ export function Hero({
             <span className="text-center text-muted-foreground text-sm sm:text-left">
               {inline.items.map((item, idx) => (
                 <Fragment key={item.label}>
-                  {idx > 0 && (
-                    <span className="mx-2 text-primary/40">•</span>
-                  )}
+                  {idx > 0 && <span className="mx-2 text-primary/40">•</span>}
                   {item.label}:{" "}
                   <span className="font-bold font-mono text-primary">
                     {item.primary}
@@ -136,9 +134,7 @@ export function Hero({
                       <>
                         {" "}
                         vs{" "}
-                        <span
-                          className={`font-bold font-mono ${theme.text}`}
-                        >
+                        <span className={`font-bold font-mono ${theme.text}`}>
                           {item.secondary}
                         </span>
                       </>

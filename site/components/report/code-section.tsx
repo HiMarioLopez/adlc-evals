@@ -3,10 +3,7 @@
 import { Code2 } from "lucide-react";
 import { useState } from "react";
 import { LightCodeBlock } from "@/components/ui/code-block.tsx";
-import type {
-  CodeData,
-  SecondaryPlatformTheme,
-} from "@/data/report-schema.ts";
+import type { CodeData, SecondaryPlatformTheme } from "@/data/report-schema.ts";
 import { cn } from "@/lib/utils.ts";
 import { themeClasses } from "./secondary-theme.ts";
 
