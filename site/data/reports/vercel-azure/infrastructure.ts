@@ -21,12 +21,40 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "ToolLoopAgent, Agent interface, stopWhen, prepareStep, dynamicTool (stable Dec 2025); v7 beta ESM-only",
           link: "https://ai-sdk.dev/docs/agents/overview",
+          links: [
+            {
+              label: "Agents overview",
+              url: "https://ai-sdk.dev/docs/agents/overview",
+            },
+            {
+              label: "Agent reference",
+              url: "https://ai-sdk.dev/docs/reference/ai-sdk-core/agent",
+            },
+            {
+              label: "AI SDK 6 announcement",
+              url: "https://vercel.com/blog/ai-sdk-6",
+            },
+          ],
         },
         aws: {
           text: "Microsoft Agent Framework 1.0",
           detail:
             "GA Apr 3, 2026 · .NET + Python (TS in dev) · AIAgent, ChatClientAgent, SequentialBuilder, GraphFlow, Magentic-One · SK + AutoGen in maintenance",
           link: "https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/",
+          links: [
+            {
+              label: "MAF 1.0 release",
+              url: "https://devblogs.microsoft.com/agent-framework/microsoft-agent-framework-version-1-0/",
+            },
+            {
+              label: "MAF overview",
+              url: "https://learn.microsoft.com/en-us/agent-framework/overview/agent-framework-overview",
+            },
+            {
+              label: "Magentic pattern",
+              url: "https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/magentic",
+            },
+          ],
         },
       },
       {
@@ -39,12 +67,40 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "0% markup · BYOK across Anthropic/OpenAI/Azure/Vertex/Bedrock · 100+ models · built-in observability",
           link: "https://vercel.com/docs/ai-gateway",
+          links: [
+            {
+              label: "AI Gateway",
+              url: "https://vercel.com/docs/ai-gateway",
+            },
+            {
+              label: "BYOK",
+              url: "https://vercel.com/docs/ai-gateway/byok",
+            },
+            {
+              label: "Models & providers",
+              url: "https://vercel.com/docs/ai-gateway/models-and-providers",
+            },
+          ],
         },
         aws: {
           text: "Azure OpenAI + Foundry Models",
           detail:
             "1,900+ models · 9 deployment tiers (Global/Data Zone/Regional + PTU/Batch/Priority +75%) · GPT-5.4 GA Mar 2026",
           link: "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types",
+          links: [
+            {
+              label: "Azure OpenAI",
+              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/",
+            },
+            {
+              label: "Deployment tiers",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/deployment-types",
+            },
+            {
+              label: "Models catalog",
+              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+            },
+          ],
         },
       },
       {
@@ -109,6 +165,20 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "Responses API GA Mar 16, 2026 (wire-compatible with OpenAI Agents SDK) · MCP GA · A2A consumer preview · AG-UI adapter in MAF (preview)",
           link: "https://devblogs.microsoft.com/foundry/foundry-agent-service-ga/",
+          links: [
+            {
+              label: "Responses API",
+              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/responses",
+            },
+            {
+              label: "MCP tool",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/model-context-protocol",
+            },
+            {
+              label: "A2A tool",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/agent-to-agent",
+            },
+          ],
         },
       },
       {
@@ -121,12 +191,32 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "Marketplace: AI Agents & Services category + agent-optimized CLI (vercel integration discover/guide); mcp.vercel.com first-party MCP endpoint; no dedicated agent registry",
           link: "https://vercel.com/marketplace/category/agents",
+          links: [
+            {
+              label: "Agents Marketplace",
+              url: "https://vercel.com/marketplace/category/agents",
+            },
+            {
+              label: "Vercel MCP",
+              url: "https://vercel.com/docs/mcp",
+            },
+          ],
         },
         aws: {
           text: "Foundry Tool Catalog + Projects REST",
           detail:
             "Tool Catalog GA (portal + SDK, public + private) · agent CRUD via Projects REST v1 · no standalone cross-project agent registry",
           link: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-catalog",
+          links: [
+            {
+              label: "Tool Catalog",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/tool-catalog",
+            },
+            {
+              label: "Foundry Agent Service",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+            },
+          ],
         },
       },
     ],
@@ -179,12 +269,32 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "Firecracker microVMs, node24/python3.13; up to 32 vCPU / 64 GB / 32 GB NVMe (Enterprise); 5-hr max; 2,000 concurrent; iad1 only; snapshots GA, persistent beta",
           link: "https://vercel.com/docs/vercel-sandbox",
+          links: [
+            {
+              label: "Vercel Sandbox",
+              url: "https://vercel.com/docs/vercel-sandbox",
+            },
+            {
+              label: "Pricing & limits",
+              url: "https://vercel.com/docs/vercel-sandbox/pricing",
+            },
+          ],
         },
         aws: {
           text: "ACA Dynamic Sessions + Foundry Code Interpreter",
           detail:
             "Hyper-V isolated sessions across 38 regions; built-in Python/Node.js/Shell + custom container pools; 1-hr active / 30-min idle timeout; managed Code Interpreter tool wraps the same runtime",
           link: "https://learn.microsoft.com/en-us/azure/container-apps/sessions",
+          links: [
+            {
+              label: "ACA Dynamic Sessions",
+              url: "https://learn.microsoft.com/en-us/azure/container-apps/sessions",
+            },
+            {
+              label: "Code Interpreter",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/code-interpreter",
+            },
+          ],
         },
       },
       {
@@ -197,12 +307,36 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             '`"use workflow"` directive; event-sourced, unlimited run + sleep duration; 10K steps/run; 100K concurrent; DurableAgent for AI SDK; TS GA, Python beta',
           link: "https://vercel.com/docs/workflows",
+          links: [
+            {
+              label: "Vercel Workflows",
+              url: "https://vercel.com/docs/workflows",
+            },
+            {
+              label: "Getting started",
+              url: "https://workflow-sdk.dev/docs/getting-started",
+            },
+            {
+              label: "DurableAgent",
+              url: "https://workflow-sdk.dev/docs/api-reference/workflow-ai/durable-agent",
+            },
+          ],
         },
         aws: {
           text: "Multi-agent Workflows (Preview)",
           detail:
             "Preview since Nov 25, 2025 (Ignite) · still preview Apr 2026 · drag-drop visual designer + YAML in Foundry portal & VS Code · graph-based MAF orchestration deployed via hosted agents",
           link: "https://devblogs.microsoft.com/foundry/introducing-multi-agent-workflows-in-foundry-agent-service/",
+          links: [
+            {
+              label: "Multi-agent Workflows",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/workflow",
+            },
+            {
+              label: "Announcement",
+              url: "https://devblogs.microsoft.com/foundry/introducing-multi-agent-workflows-in-foundry-agent-service/",
+            },
+          ],
         },
       },
       {
@@ -215,12 +349,36 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "@vercel/queue: durable append-only topic log; fan-out consumer groups; automatic retries + deduplication; powers the Workflow SDK under the hood",
           link: "https://vercel.com/docs/queues",
+          links: [
+            {
+              label: "Vercel Queues",
+              url: "https://vercel.com/docs/queues",
+            },
+            {
+              label: "Queue concepts",
+              url: "https://vercel.com/docs/queues/concepts",
+            },
+          ],
         },
         aws: {
           text: "Azure Durable Task Scheduler",
           detail:
             "Consumption SKU GA Mar 31, 2026 (pay-per-action, no upfront); Dedicated SKU GA Nov 2025 (1 CU = 2K actions/sec, 50 GB); managed backend for Durable Functions + Durable Task SDKs; 30-day history",
           link: "https://learn.microsoft.com/en-us/azure/durable-task/scheduler/develop-with-durable-task-scheduler",
+          links: [
+            {
+              label: "Durable Task Scheduler",
+              url: "https://learn.microsoft.com/en-us/azure/durable-task/scheduler/durable-task-scheduler",
+            },
+            {
+              label: "Developer guide",
+              url: "https://learn.microsoft.com/en-us/azure/durable-task/scheduler/develop-with-durable-task-scheduler",
+            },
+            {
+              label: "Durable Functions",
+              url: "https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview",
+            },
+          ],
         },
       },
       {
@@ -283,12 +441,36 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "Kernel (Vercel-native Marketplace, 500+ installs): CDP cloud browsers compatible with Playwright/Puppeteer/Stagehand/Computer Use · or install Chromium directly in @vercel/sandbox",
           link: "https://vercel.com/marketplace/kernel",
+          links: [
+            {
+              label: "Kernel",
+              url: "https://vercel.com/marketplace/kernel",
+            },
+            {
+              label: "Vercel Sandbox",
+              url: "https://vercel.com/docs/vercel-sandbox",
+            },
+          ],
         },
         aws: {
           text: "Browser Automation + Computer Use (Preview)",
           detail:
             "Two distinct tools: Browser Automation uses Microsoft Playwright Workspaces (BYO resource, any GPT model, DOM actions); Computer Use is screenshot-based on `computer-use-preview` (3 regions: East US 2, Sweden Central, South India)",
           link: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/browser-automation",
+          links: [
+            {
+              label: "Browser Automation",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/browser-automation",
+            },
+            {
+              label: "Computer Use",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/tools/computer-use",
+            },
+            {
+              label: "Playwright Workspaces",
+              url: "https://learn.microsoft.com/en-us/azure/app-testing/playwright-workspaces/overview-what-is-microsoft-playwright-workspaces",
+            },
+          ],
         },
       },
     ],
@@ -309,12 +491,32 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "AI Gateway ZDR (Pro/Enterprise): team-wide toggle ($0.10/1K req) or per-request flag; routes to 13 ZDR providers; BYOK exempt. Platform Deployment Protection: Vercel Auth, Password, Trusted IPs.",
           link: "https://vercel.com/docs/ai-gateway/capabilities/zdr",
+          links: [
+            {
+              label: "AI Gateway ZDR",
+              url: "https://vercel.com/docs/ai-gateway/capabilities/zdr",
+            },
+            {
+              label: "Deployment Protection",
+              url: "https://vercel.com/docs/deployment-protection",
+            },
+          ],
         },
         aws: {
           text: "Microsoft Entra Agent ID (Preview)",
           detail:
             "Preview since May 19, 2025 (Build 2025); still preview Apr 2026 · agent identity blueprints · OAuth 2.0 OBO + client_credentials · Managed Identity federation (FIC/TUAMI) · Conditional Access",
           link: "https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/agent-blueprint",
+          links: [
+            {
+              label: "Entra Agent ID",
+              url: "https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/agent-blueprint",
+            },
+            {
+              label: "OAuth OBO flow",
+              url: "https://learn.microsoft.com/en-us/entra/identity-platform/v2-oauth2-on-behalf-of-flow",
+            },
+          ],
         },
       },
       {
@@ -327,12 +529,36 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "8 team roles (Owner → Contributor) + dedicated Security role for firewall/WAF; project-level Access Groups with permission groups; SCIM Directory Sync maps IdP groups to roles (Enterprise)",
           link: "https://vercel.com/docs/rbac/access-groups",
+          links: [
+            {
+              label: "Access Roles",
+              url: "https://vercel.com/docs/rbac/access-roles",
+            },
+            {
+              label: "Access Groups",
+              url: "https://vercel.com/docs/rbac/access-groups",
+            },
+            {
+              label: "Directory Sync",
+              url: "https://vercel.com/docs/directory-sync",
+            },
+          ],
         },
         aws: {
           text: "Azure RBAC + Foundry Roles",
           detail:
             "Built-in Foundry roles (GA): Azure AI Account Owner, Administrator, Developer, User + Cognitive Services OpenAI Contributor/User; RBAC assigned to agent identity for tool access",
           link: "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/rbac-azure-ai-foundry",
+          links: [
+            {
+              label: "Foundry RBAC",
+              url: "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/rbac-azure-ai-foundry",
+            },
+            {
+              label: "AI built-in roles",
+              url: "https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles/ai-machine-learning",
+            },
+          ],
         },
       },
       {
@@ -365,6 +591,20 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "900M+ MAU; Foundry auto-provisions distinct service principal per published agent; FIC-based managed identity federation; Azure RBAC + Conditional Access; Entra Agent ID framework still Preview",
           link: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity",
+          links: [
+            {
+              label: "Agent identity",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/agents/concepts/agent-identity",
+            },
+            {
+              label: "Workload ID federation",
+              url: "https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation",
+            },
+            {
+              label: "Conditional Access",
+              url: "https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview",
+            },
+          ],
         },
       },
       {
@@ -377,6 +617,20 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "No platform content filters or PII scrubbing; AI Gateway enforces ZDR + disallow-training; WAF rate-limits AI endpoints; Claude/OpenAI native safety + custom middleware required",
           link: "https://vercel.com/docs/ai-gateway/capabilities/disallow-prompt-training",
+          links: [
+            {
+              label: "Disallow training",
+              url: "https://vercel.com/docs/ai-gateway/capabilities/disallow-prompt-training",
+            },
+            {
+              label: "AI Gateway ZDR",
+              url: "https://vercel.com/docs/ai-gateway/capabilities/zdr",
+            },
+            {
+              label: "Vercel Firewall",
+              url: "https://vercel.com/docs/vercel-firewall",
+            },
+          ],
         },
         aws: {
           text: "Foundry Guardrails for Agents (Preview)",
@@ -409,6 +663,20 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "SOC 2 Type 2, ISO 27001:2022, HIPAA BAA (Enterprise), PCI DSS v4.0, GDPR, EU-U.S. DPF, TISAX AL2; Activity Log (CLI accessible) + Log Drains for SIEM; reports at security.vercel.com",
           link: "https://vercel.com/docs/security/compliance",
+          links: [
+            {
+              label: "Compliance",
+              url: "https://vercel.com/docs/security/compliance",
+            },
+            {
+              label: "Activity Log",
+              url: "https://vercel.com/docs/observability/activity-log",
+            },
+            {
+              label: "Log Drains",
+              url: "https://vercel.com/docs/log-drains",
+            },
+          ],
         },
         aws: {
           text: "Defender AI-SPM + Purview + Azure Monitor",
@@ -449,6 +717,20 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "DurableAgent (@workflow/ai/agent) auto-persists messages/tool calls across steps; useChat onFinish for chat history; Neon/Upstash/Supabase via Marketplace; no first-party agent memory product",
           link: "https://workflow-sdk.dev/docs/api-reference/workflow-ai/durable-agent",
+          links: [
+            {
+              label: "DurableAgent",
+              url: "https://workflow-sdk.dev/docs/api-reference/workflow-ai/durable-agent",
+            },
+            {
+              label: "useChat",
+              url: "https://ai-sdk.dev/docs/reference/ai-sdk-ui/use-chat",
+            },
+            {
+              label: "Marketplace storage",
+              url: "https://vercel.com/marketplace?category=storage",
+            },
+          ],
         },
         aws: {
           text: "Responses API Conversations + Foundry Memory (refreshed)",
@@ -481,6 +763,16 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "Supabase pgvector, Upstash Vector, MongoDB Atlas, Pinecone via Marketplace (first-party billing, auto-provisioned env vars); AI SDK native embeddings + reranking",
           link: "https://vercel.com/marketplace?category=storage",
+          links: [
+            {
+              label: "Marketplace storage",
+              url: "https://vercel.com/marketplace?category=storage",
+            },
+            {
+              label: "AI SDK embeddings",
+              url: "https://ai-sdk.dev/docs/ai-sdk-core/embeddings",
+            },
+          ],
         },
         aws: {
           text: "Foundry IQ (Preview)",
@@ -545,6 +837,20 @@ export const categoryGroups: CategoryGroup[] = [
           detail:
             "No first-party eval product; Braintrust on Marketplace (GA Oct 2025) for evals + trace streaming with unified billing; Langfuse via AI Gateway integration (Feb 2026)",
           link: "https://vercel.com/changelog/braintrust-joins-the-vercel-marketplace",
+          links: [
+            {
+              label: "Braintrust",
+              url: "https://vercel.com/marketplace/braintrust",
+            },
+            {
+              label: "Langfuse",
+              url: "https://vercel.com/marketplace/langfuse",
+            },
+            {
+              label: "Announcement",
+              url: "https://vercel.com/changelog/braintrust-joins-the-vercel-marketplace",
+            },
+          ],
         },
         aws: {
           text: "Foundry Evaluations + AI Red Teaming Agent (GA)",
