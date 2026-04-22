@@ -311,15 +311,34 @@ export const categoryGroups: CategoryGroup[] = [
           "Store conversation history and agent state across sessions for continuity",
         iconName: "Database",
         vercel: {
-          text: "BYO (Redis/DB) + WorkflowAgent",
+          text: "DurableAgent + Marketplace Storage",
           detail:
-            "External databases, vector stores; v7 WorkflowAgent for durable in-agent state",
+            "DurableAgent (@workflow/ai/agent) auto-persists messages/tool calls across steps; useChat onFinish for chat history; Neon/Upstash/Supabase via Marketplace; no first-party agent memory product",
+          link: "https://workflow-sdk.dev/docs/api-reference/workflow-ai/durable-agent",
         },
         aws: {
-          text: "Conversations API + Foundry Memory (Preview)",
+          text: "Responses API Conversations + Foundry Memory",
           detail:
-            "AzureAIAgentThread — server-side persistent threads (GA) · Foundry Memory preview · Azure AI Search + Cosmos DB (customer-owned)",
-          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/overview",
+            "Responses API Conversations (GA Mar 16, 2026) — indefinite retention, 100K items/convo; Foundry Memory (Preview, Jan 2026): user-profile + chat-summary types, 10K/scope; Assistants API sunsets Aug 26, 2026",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/memory-usage",
+        },
+      },
+      {
+        capability: "Knowledge Base / Grounding",
+        description:
+          "Managed retrieval layer for grounding agents on curated documents and vector data",
+        iconName: "BookOpen",
+        vercel: {
+          text: "Marketplace Vector Stores",
+          detail:
+            "Supabase pgvector, Upstash Vector, MongoDB Atlas, Pinecone via Marketplace (first-party billing, auto-provisioned env vars); AI SDK native embeddings + reranking",
+          link: "https://vercel.com/marketplace?category=storage",
+        },
+        aws: {
+          text: "Foundry IQ (Preview)",
+          detail:
+            "Managed Azure AI Search knowledge base for agents; MCP tool (knowledge_base_retrieve); semantic reranking + permission-aware retrieval; distinct from Memory (org content vs user context)",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/agents/how-to/foundry-iq-connect",
         },
       },
       {
@@ -328,14 +347,15 @@ export const categoryGroups: CategoryGroup[] = [
           "Tracing, logging, and metrics to debug and monitor agent behavior",
         iconName: "Activity",
         vercel: {
-          text: "AI SDK telemetry + Workflow in Observability",
+          text: "AI SDK telemetry + Vercel Observability + AI Gateway",
           detail:
-            "OTEL via @ai-sdk/otel (v7 stable); Workflow queryable in Vercel Observability (Apr 7)",
+            "experimental_telemetry on generateText/streamText (OTEL GenAI semconv); Vercel Observability Plus: 30-day retention, workflow run/step queries (Apr 7), anomaly alerts GA (Apr 13, 2026); AI Gateway Custom Reporting API (beta) for cost by tag/user/model",
+          link: "https://vercel.com/docs/observability/observability-plus",
         },
         aws: {
           text: "Foundry Monitoring & Tracing (GA)",
           detail:
-            "GA Mar 16, 2026 · OpenTelemetry-native · configure_azure_monitor() one-call setup · Azure Monitor/App Insights: $2.30/GB Analytics, $0.50/GB Basic, $0.05/GB Auxiliary",
+            "GA Mar 16, 2026 · OpenTelemetry-native · configure_azure_monitor() (Python + .NET + Node + Java) · eval results linked to traces · Azure Monitor: $2.30/GB Analytics, $0.50/GB Basic, $0.05/GB Auxiliary (East US PAYG, 5 GB/mo free)",
           link: "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760",
         },
       },
@@ -345,14 +365,16 @@ export const categoryGroups: CategoryGroup[] = [
           "Built-in quality measurement for agent responses, safety, task completion, and tool usage",
         iconName: "CheckCircle2",
         vercel: {
-          text: "External (BYO)",
-          detail: "Bring your own evaluation framework / LLM judges",
+          text: "BYO + Braintrust on Marketplace",
+          detail:
+            "No first-party eval product; Braintrust on Marketplace (GA Oct 2025) for evals + trace streaming with unified billing; Langfuse via AI Gateway integration (Feb 2026)",
+          link: "https://vercel.com/changelog/braintrust-joins-the-vercel-marketplace",
         },
         aws: {
           text: "Foundry Evaluations (GA)",
           detail:
-            "GA Mar 16, 2026 · Built-in evaluators (coherence, relevance, groundedness) · Custom evaluators · Continuous production monitoring · Prompt Optimizer preview",
-          link: "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760",
+            "GA Mar 16, 2026 · 30+ built-in evaluators + 9 agent-specific (Tool Call Accuracy, Task Adherence, Intent Resolution) · custom evaluators: LLM-as-judge + code-based (Preview) · continuous monitoring → Azure Monitor alerts · Prompt Optimizer Preview",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/concepts/built-in-evaluators",
         },
       },
     ],
@@ -368,7 +390,7 @@ export const infrastructureData: InfrastructureData = {
   keyInsight: {
     title: "Key Architecture Insight",
     description:
-      "unifies Semantic Kernel + AutoGen into a single SDK as of April 3, 2026. Both predecessors remain maintained but are explicitly superseded. This mirrors how Vercel's AI SDK handles agent logic while Foundry Agent Service provides infrastructure.",
+      " (open-source, MIT, Apr 3, 2026) owns orchestration logic and is framework-portable; Foundry Agent Service (GA Mar 16, 2026) owns the managed runtime — private networking, Entra RBAC, continuous evaluation, guardrails. The Responses API binds both layers, keeping agents portable between Foundry and OpenAI. Vercel's AI SDK sits at the MAF layer; Foundry's managed runtime has no direct Vercel equivalent — you compose it from Marketplace integrations.",
     codeHighlight: "Microsoft Agent Framework 1.0",
   },
 };

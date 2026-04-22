@@ -309,9 +309,10 @@ export const categoryGroups: CategoryGroup[] = [
           "Store conversation history and agent state across sessions for continuity",
         iconName: "Database",
         vercel: {
-          text: "BYO (Redis/DB) + WorkflowAgent",
+          text: "DurableAgent + Marketplace Storage",
           detail:
-            "External databases, vector stores; v7 WorkflowAgent for durable in-agent state",
+            "DurableAgent (@workflow/ai/agent) auto-persists messages/tool calls across steps; useChat onFinish for chat history; Neon/Upstash/Supabase via Marketplace; no first-party agent memory product",
+          link: "https://workflow-sdk.dev/docs/api-reference/workflow-ai/durable-agent",
         },
         aws: {
           text: "Bedrock AgentCore Memory",
@@ -321,14 +322,33 @@ export const categoryGroups: CategoryGroup[] = [
         },
       },
       {
+        capability: "Knowledge Base / Grounding",
+        description:
+          "Managed retrieval layer for grounding agents on curated documents and vector data",
+        iconName: "BookOpen",
+        vercel: {
+          text: "Marketplace Vector Stores",
+          detail:
+            "Supabase pgvector, Upstash Vector, MongoDB Atlas, Pinecone via Marketplace (first-party billing, auto-provisioned env vars); AI SDK native embeddings + reranking",
+          link: "https://vercel.com/marketplace?category=storage",
+        },
+        aws: {
+          text: "Amazon Bedrock Knowledge Bases (GA)",
+          detail:
+            "GA managed RAG for Bedrock agents; S3/SharePoint/Confluence ingestion; GraphRAG, multimodal parsing via Bedrock Data Automation, NL→SQL for structured stores; native AgentCore integration",
+          link: "https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html",
+        },
+      },
+      {
         capability: "Observability",
         description:
           "Tracing, logging, and metrics to debug and monitor agent behavior",
         iconName: "Activity",
         vercel: {
-          text: "AI SDK telemetry + Workflow in Observability",
+          text: "AI SDK telemetry + Vercel Observability + AI Gateway",
           detail:
-            "OTEL via @ai-sdk/otel (v7 stable); Workflow queryable in Vercel Observability (Apr 7)",
+            "experimental_telemetry on generateText/streamText (OTEL GenAI semconv); Vercel Observability Plus: 30-day retention, workflow run/step queries (Apr 7), anomaly alerts GA (Apr 13, 2026); AI Gateway Custom Reporting API (beta) for cost by tag/user/model",
+          link: "https://vercel.com/docs/observability/observability-plus",
         },
         aws: {
           text: "Bedrock AgentCore Observability",
@@ -342,8 +362,10 @@ export const categoryGroups: CategoryGroup[] = [
           "Built-in quality measurement for agent responses, safety, task completion, and tool usage",
         iconName: "CheckCircle2",
         vercel: {
-          text: "External (BYO)",
-          detail: "Bring your own evaluation framework / LLM judges",
+          text: "BYO + Braintrust on Marketplace",
+          detail:
+            "No first-party eval product; Braintrust on Marketplace (GA Oct 2025) for evals + trace streaming with unified billing; Langfuse via AI Gateway integration (Feb 2026)",
+          link: "https://vercel.com/changelog/braintrust-joins-the-vercel-marketplace",
         },
         aws: {
           text: "Bedrock AgentCore Evaluations (GA)",
@@ -365,7 +387,7 @@ export const infrastructureData: InfrastructureData = {
   keyInsight: {
     title: "Key Architecture Insight",
     description:
-      "is the infrastructure wrapper, NOT the agent framework. Agent logic uses Strands SDK. This mirrors how Vercel's AI SDK handles agent logic while the Vercel platform provides infrastructure.",
-    codeHighlight: "bedrock-agentcore-sdk-python",
+      " separates orchestration from hosting: Strands Agents SDK (open-source) owns agent logic; AgentCore provides the managed runtime — microVM-per-session compute, Cedar-based policy, Memory, Identity, Observability, and Evaluations as eight first-class services. Vercel's AI SDK sits at the Strands layer; AgentCore's hosted-agent story has no direct Vercel equivalent — you compose it from Marketplace integrations.",
+    codeHighlight: "Bedrock AgentCore",
   },
 };

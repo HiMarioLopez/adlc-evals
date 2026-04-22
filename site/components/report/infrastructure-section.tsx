@@ -1,6 +1,8 @@
 import {
   Activity,
+  BookOpen,
   Bot,
+  CheckCircle2,
   Code2,
   Database,
   ExternalLink,
@@ -58,6 +60,10 @@ const getIcon = (name: string, size: "sm" | "md" = "md") => {
       return <Users className={sizeClass} />;
     case "FileCheck":
       return <FileCheck className={sizeClass} />;
+    case "BookOpen":
+      return <BookOpen className={sizeClass} />;
+    case "CheckCircle2":
+      return <CheckCircle2 className={sizeClass} />;
     default:
       return <Bot className={sizeClass} />;
   }
