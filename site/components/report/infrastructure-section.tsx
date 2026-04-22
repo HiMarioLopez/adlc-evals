@@ -6,6 +6,7 @@ import {
   ExternalLink,
   Fingerprint,
   Globe,
+  Inbox,
   KeyRound,
   Layers,
   Network,
@@ -49,6 +50,8 @@ const getIcon = (name: string, size: "sm" | "md" = "md") => {
       return <Fingerprint className={sizeClass} />;
     case "Database":
       return <Database className={sizeClass} />;
+    case "Inbox":
+      return <Inbox className={sizeClass} />;
     default:
       return <Bot className={sizeClass} />;
   }

@@ -163,10 +163,10 @@ export const categoryGroups: CategoryGroup[] = [
         },
       },
       {
-        capability: "Message Queue / Durable Execution",
+        capability: "Message Queue",
         description:
           "Durable event streaming and task scheduling primitive underlying long-running agent workloads",
-        iconName: "Workflow",
+        iconName: "Inbox",
         vercel: {
           text: "Vercel Queues (GA)",
           detail:
