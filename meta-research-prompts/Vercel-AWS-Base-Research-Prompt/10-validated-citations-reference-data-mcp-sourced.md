@@ -10,7 +10,8 @@
 | Vercel AI SDK (v7 beta) | [vercel/ai](https://github.com/vercel/ai) | TypeScript | `ai@7.0.0-beta.111` |
 | Vercel Workflow | [`@ai-sdk/workflow`](https://github.com/vercel/ai) | TypeScript | Part of AI SDK v7 beta |
 | AWS AgentCore SDK | [aws/bedrock-agentcore-sdk-python](https://github.com/aws/bedrock-agentcore-sdk-python) | Python | `v1.6.3` |
-| Strands Agents (Python) | [strands-agents/sdk-python](https://github.com/strands-agents/sdk-python) | Python | `v1.36.0` |
+| Strands Agents (Python) | [strands-agents/sdk-python](https://github.com/strands-agents/sdk-python) | Python | `v1.37.0` (Apr 22, 2026 — now powers AgentCore managed harness) |
+| AgentCore CLI | [aws/agentcore-cli](https://github.com/aws/agentcore-cli) | TypeScript (npm `@aws/agentcore`) | `v0.9.1` stable / `v1.0.0-preview.1` preview (Apr 22, 2026) |
 | Strands Agents (TypeScript) | [strands-agents/sdk-typescript](https://github.com/strands-agents/sdk-typescript) | TypeScript | `v1.0.0-rc.4` (RC, not GA) |
 | Spring AI AgentCore SDK | (AWS) | Java | GA Apr 14, 2026 |
 
@@ -350,7 +351,7 @@ const textEditorTool = anthropic.tools.textEditor_20250124({ ... });
 
 ### Strands Agents SDK — AWS Agent Framework (April 2026)
 
-**Source:** [Strands Agents Python SDK](https://github.com/strands-agents/sdk-python) (current: `v1.36.0`)
+**Source:** [Strands Agents Python SDK](https://github.com/strands-agents/sdk-python) (current: `v1.37.0`, Apr 22, 2026)
 
 ```python
 from strands import Agent, tool
@@ -389,13 +390,13 @@ async for event in agent.stream_async("Tell me about Paris weather"):
 
 **Key Features (April 2026):**
 
-- **`Agent` class:** Core abstraction; accepts plain callables in `hooks=[...]` (v1.36.0)
+- **`Agent` class:** Core abstraction; accepts plain callables in `hooks=[...]` (v1.36.0); v1.37.0 (Apr 22, 2026) adds fallback trim, experimental checkpoint, `context_window_limit`; now powers AgentCore managed harness
 - **Tool registration:** `@tool` decorator (sync, async, streaming via yield)
 - **Model routing:** Bedrock (with service tiers), Anthropic, OpenAI/Responses, Gemini (new), SageMaker AI (new), LiteLLM, Mistral, Ollama, Writer, Llama API, LlamaCpp
 - **Multi-agent:** `Swarm` (autonomous handoffs) + `Graph` (deterministic DAG w/ conditional edges) — both GA
 - **`AgentAsTool` (v1.34.0):** Pass `Agent` instances directly in `tools=[...]` — auto-wrapped
 - **Plugin system (v1.28.0):** `Plugin` ABC; Agent Skills is now a plugin (v1.30.0)
-- **Languages:** Python (primary, `v1.36.0`), TypeScript (RC — `v1.0.0-rc.4`, **not GA** as of April 2026; includes Swarm, Graph, MCP, A2A, and `VercelModel` adapter), Java (Spring AI AgentCore SDK, GA Apr 14, 2026)
+- **Languages:** Python (primary, `v1.37.0` — Apr 22, 2026), TypeScript (RC — `v1.0.0-rc.4`, **not GA** as of April 2026; includes Swarm, Graph, MCP, A2A, and `VercelModel` adapter), Java (Spring AI AgentCore SDK, GA Apr 14, 2026)
 
 **Relationship to AgentCore (April 2026 canonical pattern):**
 
@@ -439,6 +440,14 @@ if __name__ == "__main__":
 ```
 
 > **Pattern:** Strands SDK handles the agent logic (tools, orchestration, streaming). `BedrockAgentCoreApp` wraps it for deployment to AgentCore infrastructure (Runtime, Memory, Gateway).
+>
+> **Alternative pattern (Apr 22, 2026):** The new **AgentCore Managed Harness** (preview, 4 regions) replaces `BedrockAgentCoreApp` + `@app.entrypoint` with a declarative 3-call API (`CreateHarness` → `GetHarness` → `InvokeHarness`). No Python code required; Strands `v1.37.0` powers the orchestration under the hood. See [harness docs](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html), [announcement](https://aws.amazon.com/blogs/machine-learning/get-to-your-first-working-agent-in-minutes-announcing-new-features-in-amazon-bedrock-agentcore/), and [What's New](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/). Operators who need custom orchestration can export the harness to Strands code. The `BedrockAgentCoreApp` + CDK path remains the GA option for the 10 non-preview AgentCore regions.
+>
+> **Related: AgentCore CLI (Preview Apr 22, 2026).** `@aws/agentcore` npm package provides `agentcore create/dev/deploy/invoke` — a unified terminal experience that compiles to CDK under the hood. Terraform IaC "coming soon". Repo: [aws/agentcore-cli](https://github.com/aws/agentcore-cli). Docs: [get-started-cli](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-get-started-cli.html).
+>
+> **Related: Persistent agent filesystem (Preview Mar 25, 2026).** AgentCore Runtime sessions can now configure `filesystemConfigurations` for managed S3-backed session storage — 1 GB per session, 14-day idle retention, standard POSIX ops (no hard links, device files, FIFOs, or xattr). Docs: [runtime-persistent-filesystems](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-persistent-filesystems.html). Pricing TBD before GA.
+>
+> **Related: AgentCore Coding Agent Skills (Apr 22, 2026).** Pre-built AgentCore best-practice skills for coding assistants. Kiro Power GA today ([kirodotdev/powers/aws-agentcore](https://github.com/kirodotdev/powers/tree/main/aws-agentcore)); Claude Code / Codex / Cursor plugins "coming next week" (~Apr 29, 2026) per [What's New](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/).
 
 ---
 

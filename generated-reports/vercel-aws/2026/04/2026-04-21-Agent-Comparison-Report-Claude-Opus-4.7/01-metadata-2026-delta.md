@@ -2,13 +2,13 @@
 
 | Field | Value |
 |-------|-------|
-| **Last Updated** | 2026-04-21T00:00:00Z |
+| **Last Updated** | 2026-04-22T00:00:00Z |
 | **Model** | Claude Opus 4.7 |
 | **Report Path** | `generated-reports/vercel-aws/2026/04/2026-04-21-Agent-Comparison-Report-Claude-Opus-4.7.md` |
-| **Report Version** | 2.0.0 |
+| **Report Version** | 2.1.0 |
 | **Methodology** | "Blessed Path" — Officially recommended, out-of-the-box developer experience |
 | **Previous Version** | [2026-01-08 (Claude Opus 4.5)](../../2026/01/2026-01-08-Agent-Comparison-Report-Claude-Opus-4.5.md) |
-| **Coverage Window** | 2026-01-08 → 2026-04-21 (≈3.5 months) |
+| **Coverage Window** | 2026-01-08 → 2026-04-22 (≈3.5 months) |
 | **Live Site** | [adlc-evals.vercel.app/reports/vercel-aws](https://adlc-evals.vercel.app/reports/vercel-aws) |
 
 > 📝 **Source of Truth:** This markdown mirrors the curated, human-validated content published at the live site above. Where the two drift, **the site wins** — this file is regenerated from site data during each refresh.
@@ -16,6 +16,8 @@
 ### Executive Delta: January → April 2026
 
 Both platforms advanced substantially in the first 3.5 months of 2026. This is not a cosmetic refresh — multiple previously-preview components graduated to GA, SDK versions advanced by dozens of releases, a new frontier Anthropic model (Claude Opus 4.7) launched five days before this report was generated, and both vendors materially expanded the "blessed path" surface area with new rows for RBAC, content safety, compliance, and managed knowledge bases.
+
+**Highlights (v2.1.0 — Apr 22, 2026):** **AgentCore Managed Harness + CLI** (preview, Apr 22) — 9th AgentCore service, declarative agent config replaces orchestration code; **AgentCore Runtime: 14 regions · 9 services** (with persistent filesystem preview); **Strands v1.37 · Sandbox + Workflow GA**; **Claude Opus 4.7 · Sonnet 4.6**.
 
 | Platform | Previous (Jan 8) | Current (Apr 21) | Nature of Change |
 |----------|-----------------|------------------|------------------|
@@ -28,12 +30,15 @@ Both platforms advanced substantially in the first 3.5 months of 2026. This is n
 | **Vercel Plugin for Coding Agents** | Did not exist | GA (Mar 17, 2026) | New — Claude Code / Cursor / Codex native integration |
 | **AgentCore Policy** | Preview | **GA** (Mar 3, 2026) | Status — included in Runtime/Gateway pricing at GA |
 | **AgentCore Evaluations** | Preview (4 regions) | **GA** (Mar 31, 2026, 9 regions) | Status + regional — 13 built-in evaluators, Ground Truth, custom Lambda evaluators |
-| **AgentCore Runtime** | 11 regions | **14 regions** | Regional — +eu-west-2, eu-west-3, eu-north-1 (Jan 26, 2026 expansion wave); +AG-UI protocol (Mar 13); +`InvokeAgentRuntimeCommand` API (Mar 17) |
+| **AgentCore Runtime** | 11 regions | **14 regions** | Regional — +eu-west-2, eu-west-3, eu-north-1 (Jan 26, 2026 expansion wave); +AG-UI protocol (Mar 13); +`InvokeAgentRuntimeCommand` API (Mar 17); + **persistent filesystem preview** (Mar 25, 2026) — 1 GB/session, 14-day idle retention |
 | **AWS Agent Registry** | Did not exist | **Preview** (Apr 9, 2026, 5 regions) | New service — 8th AgentCore service; semantic + keyword search, approval workflows, MCP endpoint |
+| **AgentCore Managed Harness** | Did not exist | **Preview** (Apr 22, 2026, 4 regions) | **New 9th AgentCore service** — declarative agent config replaces orchestration code. 3-call API surface (`CreateHarness` + `GetHarness` + `InvokeHarness`). Powered by Strands Agents v1.37. Swap models mid-session (Bedrock/OpenAI/Gemini). 4 preview regions: us-east-1, us-west-2, ap-southeast-2, eu-central-1. No additional charge. [[announcement](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/)] |
+| **AgentCore CLI** | Did not exist | **Preview** (Apr 22, 2026, 14 regions) | New — `@aws/agentcore` npm package (`v0.9.1` stable, `v1.0.0-preview.1` released same day as announcement). Unified prototype → deploy → operate workflow: `agentcore create` / `dev` / `deploy` / `invoke`. Uses CDK under the hood; Terraform coming. Repo: [aws/agentcore-cli](https://github.com/aws/agentcore-cli). No additional charge. |
+| **AgentCore Coding Agent Skills** | Did not exist | **Kiro Power GA** (Apr 22, 2026); Claude Code/Codex/Cursor ~Apr 29 | New — pre-built AgentCore best-practice skills for coding assistants. Kiro Power bundles `POWER.md` steering + MCP server + hooks ([kirodotdev/powers/aws-agentcore](https://github.com/kirodotdev/powers/tree/main/aws-agentcore)). Plugins for Claude Code, Codex, and Cursor "coming next week" per What's New. No additional charge. |
 | **AWS Step Functions + AgentCore** | Did not exist | **GA** (Mar 26, 2026) | New — SDK service integration; invoke runtimes with built-in retries, run agents in parallel via Map states, automate agent provisioning as workflow steps |
 | **Amazon Bedrock Guardrails** | Existed (models only) | **Applies to AgentCore** (via guardrail ID) | Capability — 6 content filter categories + denied topics, PII redaction, grounding checks, Automated Reasoning; Classic & Standard tiers |
 | **Amazon Bedrock Knowledge Bases** | GA for RAG | + GraphRAG, multimodal parsing (BDA), NL→SQL | Capability — native AgentCore integration for managed grounding |
-| **Strands SDK (Python)** | `v1.21.0` | `v1.36.0` | Version — 15 releases; `AgentAsTool`, Plugin system, `BedrockModel(service_tier=...)`, Gemini + SageMaker providers |
+| **Strands SDK (Python)** | `v1.21.0` | `v1.37.0` | Version — 16 releases; `v1.37.0` (Apr 22) adds fallback trim, experimental checkpoint, `context_window_limit`. Now powers the AgentCore managed harness. `AgentAsTool` (`v1.34.0`), Plugin system, `BedrockModel(service_tier=...)`, Gemini + SageMaker providers |
 | **Strands SDK (TypeScript)** | Preview | `v1.0.0-rc.4` (**still RC**) | Status — feature-complete with Python but not yet GA; includes Swarm, Graph, A2A, and `VercelModel` adapter |
 | **bedrock-agentcore** | `v1.1.4` | `v1.6.3` | Version — 22 releases; `EvaluationClient`, `ResourcePolicyClient`, `serve_a2a()`, `serve_ag_ui()` |
 | **Spring AI AgentCore SDK** | Did not exist | **Java GA** (Apr 14, 2026) | New — third first-class language for AgentCore |

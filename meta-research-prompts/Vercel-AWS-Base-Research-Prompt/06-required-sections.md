@@ -10,8 +10,12 @@
   - **AgentCore Policy** Preview → GA (Mar 3, 2026)
   - **AgentCore Evaluations** Preview → GA (Mar 31, 2026, 4 → 9 regions)
   - **AWS Agent Registry** launched in preview (Apr 9, 2026) — 8th AgentCore service
+  - **AgentCore Managed Harness (Preview Apr 22, 2026)** — **9th AgentCore service**; declarative agent config replaces orchestration code; 3-call API (`CreateHarness` → `GetHarness` → `InvokeHarness`); 4 preview regions (us-east-1, us-west-2, ap-southeast-2, eu-central-1); powered by Strands `v1.37.0`; no additional charge
+  - **AgentCore CLI (Preview Apr 22, 2026)** — `@aws/agentcore` npm (`v0.9.1` stable / `v1.0.0-preview.1`); unified `agentcore create/dev/deploy/invoke`; CDK IaC under the hood, Terraform "coming soon"; available in all 14 AgentCore regions
+  - **AgentCore Coding Agent Skills (Apr 22, 2026)** — pre-built best-practice skills; Kiro Power GA today; Claude Code / Codex / Cursor plugins "coming next week" (~Apr 29, 2026)
+  - **AgentCore persistent agent filesystem (Preview Mar 25, 2026)** — managed session storage; 1 GB/session; 14-day idle retention; 14 regions; pricing TBD before GA
   - **AG-UI protocol** added to AgentCore Runtime (alongside MCP and A2A)
-  - **Strands Python SDK** v1.21.0 → v1.36.0 (15 releases; `AgentAsTool`, Plugin system, `BedrockModel(service_tier=...)`)
+  - **Strands Python SDK** v1.21.0 → **v1.37.0** (16 releases; now powers AgentCore managed harness; `AgentAsTool`, Plugin system, `BedrockModel(service_tier=...)`, fallback trim, experimental checkpoint)
   - **bedrock-agentcore-sdk-python** v1.1.4 → v1.6.3 (22 releases)
   - **Strands TypeScript SDK** preview → `v1.0.0-rc.4` (still RC, not GA)
   - **Claude model lineup** expansion: Opus 4.6 (Feb 5), Sonnet 4.6 (Feb 17), **Opus 4.7 (Apr 16)** with new tokenizer (1.0–1.35× inflation) and `xhigh` effort level
@@ -36,6 +40,9 @@ Populate a side-by-side comparison table covering the **full agent development l
 | **Identity/OAuth** | NextAuth/Auth.js, custom | AgentCore Identity (OAuth, API keys, M2M + USER_FEDERATION flows, custom_parameters) |
 | **Evaluations** | External (bring your own) | AgentCore Evaluations **GA** (13 built-in evaluators, on-demand + online modes, Ground Truth, custom Lambda evaluators, 9 regions) |
 | **Agent Discovery** | N/A | AWS Agent Registry (preview, 5 regions) — 8th AgentCore service |
+| **Managed Agent Harness** 🆕 | AI SDK `ToolLoopAgent` (code-first TypeScript class) | AgentCore Managed Harness (preview Apr 22, 2026) — **9th AgentCore service**; declarative config; 3-call API (`CreateHarness` → `GetHarness` → `InvokeHarness`); 4 regions; powered by Strands `v1.37.0`; swap providers mid-session |
+| **Agent CLI** 🆕 | `vercel` CLI v52 (git-push-to-deploy; no CDK/Terraform) | AgentCore CLI `@aws/agentcore` (preview Apr 22, 2026) — unified `agentcore create/dev/deploy/invoke`; CDK IaC under the hood, Terraform coming soon; 14 regions |
+| **Coding Agent Integration** 🆕 | AI Gateway coding agent integrations (9 agents) + Vercel MCP (12+ clients) + `ai-sdk.dev/llms.txt` | AgentCore Coding Agent Skills — Kiro Power GA (Apr 22, 2026); Claude Code / Codex / Cursor plugins ~Apr 29, 2026 |
 | **Observability** | AI SDK telemetry (OTEL-compatible, `@ai-sdk/otel` package in v7, stable API), Workflow data in Vercel Observability | AgentCore Observability + CloudWatch (span ingestion, step visualization, metadata tagging) |
 | **Multi-Agent** | Compose `ToolLoopAgent` + subagents via `toModelOutput` | Strands `Swarm` (autonomous handoffs), `Graph` (deterministic DAG), `AgentAsTool` (nested composition) |
 | **Chat Integration** | Chat SDK (unified library for Slack, Discord, Teams, WhatsApp, Telegram) | Slack reference architecture (Strands + Gateway + Memory) |
@@ -117,6 +124,10 @@ Populate a side-by-side comparison table covering the **full agent development l
 - **AI SDK v7 beta:** Call out the new `WorkflowAgent` primitive in `@ai-sdk/workflow` for durable/resumable agents, the stable `@ai-sdk/otel` telemetry package, `toolNeedsApproval` for human-in-the-loop, and `uploadFile`/`uploadSkill` provider abstractions.
 - **AI Gateway integration:** Document the string shorthand `model: 'anthropic/claude-sonnet-4.6'` (no explicit provider import needed) vs. `gateway('provider/model')` explicit import. Confirm **0% markup** on all providers.
 - **Sandbox SDK (GA):** Compare microVM isolation to AgentCore Code Interpreter. Cover Enterprise 32 vCPU / 64 GB, Persistent Sandboxes beta, filesystem snapshots, CLI integration via `vercel sandbox`.
+- **AgentCore Managed Harness (Preview Apr 22, 2026):** Analyze declarative config vs. `BedrockAgentCoreApp` + CDK stack. Cover the 3-call API (`CreateHarness` / `GetHarness` / `InvokeHarness`), 4 preview regions, Strands `v1.37.0` as underlying framework, mid-session provider swapping, export-to-Strands-code escape hatch. Cite [harness docs](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html), [harness get-started](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-get-started.html), [Apr 22 announcement](https://aws.amazon.com/blogs/machine-learning/get-to-your-first-working-agent-in-minutes-announcing-new-features-in-amazon-bedrock-agentcore/), and [What's New](https://aws.amazon.com/about-aws/whats-new/2026/04/agentcore-new-features-to-build-agents-faster/).
+- **AgentCore CLI (Preview Apr 22, 2026):** Compare `@aws/agentcore` (`v0.9.1` stable, `v1.0.0-preview.1`) to `vercel` CLI. Cover CDK IaC (auto-managed `agentcore/cdk/`), Terraform "coming soon" caveat, framework support (Strands, LangChain/LangGraph, Google ADK, OpenAI Agents SDK), 14-region availability. Cite [aws/agentcore-cli](https://github.com/aws/agentcore-cli) and [CLI docs](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-get-started-cli.html).
+- **AgentCore Coding Agent Skills (Apr 22, 2026):** Contrast with Vercel's AI Gateway coding agent integrations + `mcp.vercel.com` + `ai-sdk.dev/llms.txt`. Cover Kiro Power GA today, Claude Code / Codex / Cursor plugins "coming next week" (~Apr 29, 2026), and the "IDE-embedded skill pack" paradigm vs. Vercel's "gateway + MCP" paradigm. Cite [kiro.dev/powers](https://kiro.dev/powers/) and [kirodotdev/powers/aws-agentcore](https://github.com/kirodotdev/powers/tree/main/aws-agentcore).
+- **AgentCore persistent agent filesystem (Preview Mar 25, 2026):** Compare to Vercel Sandbox Persistent Sandboxes (beta, iad1-only) and Vercel Workflow durable execution. Cover 1 GB/session, 14-day idle retention, S3-backed, 14 regions, POSIX limitations (no hard links / device files / FIFOs / xattr), pricing TBD before GA. Cite [persistent filesystems docs](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-persistent-filesystems.html) and [Mar 25 What's New](https://aws.amazon.com/about-aws/whats-new/2026/03/bedrock-agentcore-runtime-session-storage/).
 - **bash-tool:** Open-sourced Jan 7, 2026. Analyze filesystem context retrieval; the `just-bash` TS interpreter engine; `experimental_createSkillTool` for Skills support (Jan 21).
 - **Workflow SDK (GA):** Compare `"use workflow"` durability to AgentCore 8-hour runtime. Cover: E2E encryption by default (AES-256-GCM, per-run HKDF-SHA256 keys), event-sourced architecture, custom class serialization, `WorkflowAgent` primitive, Python beta, Vercel Queues as underlying durable queue layer.
 - **Chat SDK:** New Feb 23, 2026 — unified TS library for Slack, Discord, Teams, WhatsApp, Telegram, and more.
@@ -138,7 +149,7 @@ Populate a side-by-side comparison table covering the **full agent development l
 - Cover **Strands TypeScript SDK** status — `v1.0.0-rc.4`, still RC; includes Swarm, Graph, MCP, streaming, hooks, A2A, and a `VercelModel` adapter for Vercel AI SDK v3 Language Model Spec.
 - Cover **Spring AI AgentCore SDK** (Java GA, Apr 14, 2026) — AgentCore now has GA-quality SDKs for Python, TypeScript (RC), and Java.
 
-- List specific Git tags analyzed for both platforms (current: `ai@6.0.168`, `strands-agents@v1.36.0`, `bedrock-agentcore@v1.6.3`, `strands-agents-ts@v1.0.0-rc.4`).
+- List specific Git tags analyzed for both platforms (current: `ai@6.0.168`, `strands-agents@v1.37.0`, `bedrock-agentcore@v1.6.3`, `strands-agents-ts@v1.0.0-rc.4`, `@aws/agentcore@1.0.0-preview.1` / `v0.9.1` stable).
 
 ### 5. Observability & Day 2 (Evidence-Based)
 

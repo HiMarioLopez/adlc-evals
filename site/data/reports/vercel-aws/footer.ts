@@ -29,6 +29,18 @@ export const footerData: FooterData = {
       url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html",
     },
     {
+      label: "AgentCore Managed Harness",
+      url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html",
+    },
+    {
+      label: "AgentCore CLI",
+      url: "https://github.com/aws/agentcore-cli",
+    },
+    {
+      label: "Persistent Filesystem",
+      url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-persistent-filesystems.html",
+    },
+    {
       label: "Strands SDK",
       url: "https://github.com/strands-agents/sdk-python",
     },
@@ -37,8 +49,8 @@ export const footerData: FooterData = {
       url: "https://aws.amazon.com/bedrock/pricing/",
     },
     {
-      label: "Bedrock AgentCore Policy",
-      url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
+      label: "Kiro AgentCore Power",
+      url: "https://kiro.dev/powers/",
     },
   ],
   complianceNote: {
@@ -49,11 +61,11 @@ export const footerData: FooterData = {
     ],
   },
   contributors: [{ name: "Mario Lopez Martinez", github: "HiMarioLopez" }],
-  reportVersion: "2.0.0",
-  generatedDate: "2026-04-21",
+  reportVersion: "2.1.0",
+  generatedDate: "2026-04-22",
   analyzedVersions: {
     aiSdk: "ai@6.0.168",
-    strands: "strands@1.36.0",
-    agentcore: "agentcore@1.6.3",
+    strands: "strands@1.37.0",
+    agentcore: "agentcore@1.6.3 · CLI @aws/agentcore@1.0.0-preview.1",
   },
 };

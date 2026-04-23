@@ -4,8 +4,9 @@
 **SDK Versions:**
 - Vercel AI SDK: `ai@X.X.X` (was: `ai@6.0.168` stable / `7.0.0-beta.111` beta)
 - AgentCore SDK: `vX.X.X` (was: `v1.6.3`)
-- Strands Agents (Python): `vX.X.X` (was: `v1.36.0`)
+- Strands Agents (Python): `vX.X.X` (was: `v1.37.0` — powers AgentCore managed harness)
 - Strands Agents (TypeScript): `vX.X.X` (was: `v1.0.0-rc.4`)
+- AgentCore CLI: `@aws/agentcore@X.X.X` (was: `v0.9.1` stable / `v1.0.0-preview.1` preview)
 
 **Pricing Changes:**
 - [List any pricing changes or "No changes detected"]
@@ -33,8 +34,9 @@ Copy-paste this condensed version for rapid updates:
 1. Use GitHub MCP to check latest versions of:
    - vercel/ai (baseline: ai@6.0.168 stable / 7.0.0-beta.111 beta)
    - aws/bedrock-agentcore-sdk-python (baseline: v1.6.3)
-   - strands-agents/sdk-python (baseline: v1.36.0)
+   - strands-agents/sdk-python (baseline: v1.37.0)
    - strands-agents/sdk-typescript (baseline: v1.0.0-rc.4)
+   - aws/agentcore-cli (baseline: v0.9.1 stable / v1.0.0-preview.1 preview)
 
 2. Use AWS Documentation MCP to validate AgentCore & Bedrock pricing
    (especially service tiers and any new Claude model releases)

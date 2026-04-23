@@ -9,7 +9,9 @@
 | Browser automation | Anthropic `computer_20250124` + Kernel (Marketplace) | AgentCore Browser Tool |
 | File operations | `textEditor_20250124` + Sandbox filesystem | Code Interpreter file ops |
 | Web search | `webSearch_20250305` (Anthropic-native) | Third-party tools |
-| Skills | `experimental_createSkillTool` | Strands `AgentAsTool` + Skills plugin (v1.30.0) |
+| Skills (agent-level) | `experimental_createSkillTool` | Strands `AgentAsTool` + Skills plugin (v1.30.0) |
+| **Coding agent skills** 🆕 | AI Gateway coding agent integrations (9 agents) + `mcp.vercel.com` (12+ clients) + `ai-sdk.dev/llms.txt` | **AgentCore Coding Agent Skills** — Kiro Power GA (Apr 22); Claude Code / Codex / Cursor plugins ~Apr 29 |
+| **Persistent filesystem** 🆕 | Sandbox Persistent Sandboxes (beta Mar 26, iad1-only) + Workflow durable execution | AgentCore Runtime persistent filesystem (preview Mar 25, 1 GB/session, 14-day retention, 14 regions) |
 | Knowledge base / RAG | Marketplace Vector Stores (Supabase pgvector, Upstash, Pinecone, MongoDB Atlas) | **Amazon Bedrock Knowledge Bases (GA)** — native AgentCore integration |
 
 ### 10.2 Runtime & Language Support
@@ -52,7 +54,7 @@
 | Overhead | Near-zero (in-memory) | Container cold start |
 | Security | No arbitrary code execution | Sandboxed but full capabilities |
 | Best for | `find`, `grep`, `jq` over preloaded files | Complex computations, visualizations |
-| Skills support | **Yes, via `experimental_createSkillTool`** (Jan 21, 2026) | Via Strands Skills plugin (v1.30.0) |
+| Skills support | **Yes, via `experimental_createSkillTool`** (Jan 21, 2026) | Via Strands Skills plugin (v1.30.0) — distinct from the new AgentCore coding agent skills (Kiro Power GA Apr 22, 2026) |
 
 ---
 

@@ -671,7 +671,7 @@ export const regionsData: RegionalData = {
   sectionNumber: 5,
   title: "Regional Availability",
   description:
-    "Both platforms have global infrastructure. April 2026 update: AgentCore Runtime expanded to 14 regions; Evaluations GA in 9 regions; Policy GA in 13 regions. Vercel Sandbox remains iad1-only.",
+    "Both platforms have global infrastructure. April 2026 update: AgentCore Runtime in 14 regions (persistent filesystem preview matches Runtime footprint); Evaluations GA in 9 regions; Policy GA in 13 regions; new Managed Harness preview (Apr 22) in 4 regions (us-east-1, us-west-2, ap-southeast-2, eu-central-1); AgentCore CLI available in all 14 Runtime regions. Vercel Sandbox remains iad1-only.",
   awsRegions,
   vercelRegions,
   agentcoreFeatures: [

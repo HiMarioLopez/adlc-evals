@@ -1,7 +1,7 @@
 import type { HeroData } from "@/data/report-schema.ts";
 
 export const heroData: HeroData = {
-  lastUpdated: "April 21, 2026",
+  lastUpdated: "April 22, 2026",
   title: {
     primary: "Vercel",
     secondary: "AWS",

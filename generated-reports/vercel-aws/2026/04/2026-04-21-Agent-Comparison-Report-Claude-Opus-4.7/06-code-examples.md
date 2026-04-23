@@ -191,6 +191,7 @@ print(result.message)
 | v1.34.0 | 2026-03-31 | **`AgentAsTool`** — pass `Agent` instances directly in `tools=[]` |
 | v1.35.0 | 2026-04-08 | **Bedrock service tier support** (`service_tier` on `BedrockModel`) |
 | v1.36.0 | 2026-04-17 | Agent snapshot API (`take_snapshot()` / `load_snapshot()`); callable hooks |
+| **v1.37.0** | **2026-04-22** | **Powers new AgentCore Managed Harness** (released same day as announcement); fallback trim for tool-heavy conversations, experimental checkpoint, `context_window_limit` in model configs, MCP client cleanup fix |
 
 #### Bedrock AgentCoreApp
 
@@ -222,6 +223,52 @@ if __name__ == "__main__":
 | `@app.ping` | Custom health check (`GET /ping`) |
 | `@app.websocket` | WebSocket handler |
 | `@app.async_task` | Mark async tasks for busy-status tracking |
+
+#### AgentCore Managed Harness (Preview Apr 22, 2026)
+
+The harness is an alternative to `BedrockAgentCoreApp` + `@app.entrypoint` boilerplate — **declarative, no orchestration code**, 3 API calls. Powered by Strands Agents `v1.37.0`. Available in 4 preview regions: `us-east-1`, `us-west-2`, `ap-southeast-2`, `eu-central-1`.
+
+```bash
+# 1. Create harness (declare model + tools + instructions + optional filesystem)
+aws bedrock-agentcore-control create-harness \
+  --harness-name "MyHarness" \
+  --execution-role-arn "arn:aws:iam::123456789012:role/MyHarnessRole" \
+  --default-model-id "anthropic.claude-sonnet-4-6-20250101-v1:0" \
+  --system-prompt "You are a helpful assistant." \
+  --tools file://tools.json
+
+# 2. Poll until READY
+aws bedrock-agentcore-control get-harness --harness-arn "$ARN"
+
+# 3. Invoke (override model / tools / prompt per call; swap providers mid-session)
+aws bedrock-agentcore invoke-harness \
+  --harness-arn "$ARN" \
+  --runtime-session-id "sess-42" \
+  --messages '[{"role":"user","content":"..."}]' \
+  --model-id "openai.gpt-5.4"    # provider swap within same session
+```
+
+Or via the AgentCore CLI (preview, `@aws/agentcore@1.0.0-preview.1`):
+
+```bash
+npm install -g @aws/agentcore@preview
+agentcore create --framework strands
+agentcore deploy
+agentcore invoke --prompt "What's the weather in Seattle?"
+```
+
+**Harness vs. `BedrockAgentCoreApp`:**
+
+| Aspect | `BedrockAgentCoreApp` | Managed Harness |
+|---|---|---|
+| Paradigm | Code (Python) | Declarative config |
+| Orchestration | Handwritten | Strands-powered, no code |
+| Multi-provider | Redeploy to switch | Swap mid-session via `runtimeSessionId` |
+| Export escape hatch | N/A (already code) | Export to Strands code anytime |
+| Availability | 14 regions | 4 preview regions |
+| Production-ready | GA | **Preview** |
+
+Sources: [Harness overview](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html) · [Get started](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-get-started.html) · [Config & models](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness-config-and-models.html) · [aws/agentcore-cli](https://github.com/aws/agentcore-cli) · [Strands v1.37.0 release](https://github.com/strands-agents/sdk-python/releases/tag/v1.37.0)
 
 #### Cedar Policy (GA Mar 3, 2026)
 

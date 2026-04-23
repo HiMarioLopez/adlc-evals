@@ -97,8 +97,62 @@ export const categoryGroups: CategoryGroup[] = [
         aws: {
           text: "AWS Agent Registry (Preview)",
           detail:
-            "New 8th AgentCore service; semantic + keyword search; MCP endpoint; 5 regions",
+            "8th AgentCore service; semantic + keyword search; MCP endpoint; 5 regions",
           link: "https://aws.amazon.com/blogs/machine-learning/the-future-of-managing-agents-at-scale-aws-agent-registry-now-in-preview/",
+        },
+      },
+      {
+        capability: "Managed Agent Harness",
+        description:
+          "Declarative agent runtime that replaces orchestration code with config (model, tools, instructions)",
+        iconName: "Boxes",
+        vercel: {
+          text: "AI SDK ToolLoopAgent (code-first)",
+          detail:
+            "Code-first TypeScript class: new ToolLoopAgent({ model, tools, stopWhen, prepareStep }). No declarative/config-only mode; no Python equivalent in AI SDK",
+          link: "https://ai-sdk.dev/docs/agents/overview",
+        },
+        aws: {
+          text: "AgentCore Managed Harness (Preview)",
+          detail:
+            "9th AgentCore service (Apr 22, 2026); 3-call surface (Create/Get/Invoke); declarative config; Strands-powered; swap models mid-session; 4 preview regions",
+          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/harness.html",
+        },
+      },
+      {
+        capability: "Agent CLI",
+        description:
+          "First-party CLI covering the prototype → deploy → operate lifecycle for agents",
+        iconName: "Terminal",
+        vercel: {
+          text: "vercel CLI v52",
+          detail:
+            "General-purpose deploy CLI: vercel / vercel --prod / vercel dev / vercel logs / vercel env pull; no CDK/Terraform IaC path; git-push-to-deploy model",
+          link: "https://vercel.com/docs/cli",
+        },
+        aws: {
+          text: "AgentCore CLI (Preview)",
+          detail:
+            "@aws/agentcore npm package (v0.9.1 stable, v1.0.0-preview.1 Apr 22); agentcore create/dev/deploy/invoke; CDK IaC under the hood, Terraform coming; 14 regions",
+          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-get-started-cli.html",
+        },
+      },
+      {
+        capability: "Coding Agent Integration",
+        description:
+          "Pre-built skills, plugins, or docs that help coding assistants (Claude Code, Cursor, etc.) use the platform correctly",
+        iconName: "Code",
+        vercel: {
+          text: "AI Gateway coding agent integrations + Vercel MCP + llms.txt",
+          detail:
+            "AI Gateway routing for 9 coding agents (Claude Code, Codex, Cursor, Cline, Roo, etc.); mcp.vercel.com remote MCP supports 12+ clients; ai-sdk.dev/llms.txt for agent ingestion; no IDE-embedded skill packs",
+          link: "https://vercel.com/docs/agent-resources/coding-agents",
+        },
+        aws: {
+          text: "AgentCore Coding Agent Skills",
+          detail:
+            "Pre-built AgentCore best-practice skills; Kiro Power GA (Apr 22); Claude Code / Codex / Cursor plugins announced 'coming next week' (~Apr 29, 2026)",
+          link: "https://kiro.dev/powers/",
         },
       },
     ],
@@ -123,7 +177,7 @@ export const categoryGroups: CategoryGroup[] = [
         aws: {
           text: "Bedrock AgentCore Runtime",
           detail:
-            "microVM-per-session, 14 regions, 8h maxLifetime, InvokeAgentRuntimeCommand API",
+            "microVM-per-session, 14 regions, 8h maxLifetime, InvokeAgentRuntimeCommand API, managed session filesystem preview (1 GB/session, 14-day idle retention)",
           link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-lifecycle-settings.html",
         },
       },
@@ -158,8 +212,8 @@ export const categoryGroups: CategoryGroup[] = [
         aws: {
           text: "Bedrock AgentCore Runtime Sessions",
           detail:
-            "Up to 8 hours, configurable idle timeout, Step Functions integration",
-          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-lifecycle-settings.html",
+            "Up to 8 hours, configurable idle timeout, Step Functions integration, persistent filesystem preview (Mar 25) for stop/resume",
+          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-persistent-filesystems.html",
         },
       },
       {
@@ -387,7 +441,7 @@ export const infrastructureData: InfrastructureData = {
   keyInsight: {
     title: "Key Architecture Insight",
     description:
-      " separates orchestration from hosting: Strands Agents SDK (open-source) owns agent logic; AgentCore provides the managed runtime — microVM-per-session compute, Cedar-based policy, Memory, Identity, Observability, and Evaluations as eight first-class services. Vercel's AI SDK sits at the Strands layer; AgentCore's hosted-agent story has no direct Vercel equivalent — you compose it from Marketplace integrations.",
+      " separates orchestration from hosting: Strands Agents SDK (open-source) owns agent logic; AgentCore provides the managed runtime — microVM-per-session compute, Cedar-based policy, Memory, Identity, Observability, Evaluations, Agent Registry, and the new Managed Harness as nine first-class services (as of Apr 22, 2026). The harness + AgentCore CLI add a declarative, code-free path that compresses prototype → deploy, while still compiling to Strands + CDK under the hood. Vercel's AI SDK sits at the Strands layer; Vercel has no config-only harness equivalent — its ToolLoopAgent is code-first and the CLI is git-push-to-deploy rather than IaC.",
     codeHighlight: "Bedrock AgentCore",
   },
 };

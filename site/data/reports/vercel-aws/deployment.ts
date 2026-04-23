@@ -39,12 +39,13 @@ export const deploymentData: DeploymentData = {
   },
   aws: {
     title: "AWS Setup",
-    duration: "60+ min",
+    duration: "60+ min (CDK path) · preview harness path under way",
     steps: [
       {
         stepNumber: 1,
-        title: "Install AWS CLI & CDK",
-        description: "",
+        title: "Install AWS CLI & CDK (or AgentCore CLI)",
+        description:
+          "CDK path remains the GA option; new AgentCore CLI (@aws/agentcore, v1.0.0-preview.1, Apr 22, 2026) offers a preview alternative that still uses CDK under the hood",
         iconName: "Terminal",
         command: "brew install awscli && npm i -g aws-cdk",
       },
@@ -131,7 +132,7 @@ export class AgentStack extends cdk.Stack {
     summary: {
       title: "Enterprise-grade Control",
       description:
-        "Full control over VPCs, IAM, encryption, and networking. Required for regulated industries and complex integrations.",
+        "Full control over VPCs, IAM, encryption, and networking. Required for regulated industries and complex integrations. The new AgentCore Managed Harness + CLI (both preview, Apr 22, 2026) offer a faster declarative path for the four preview regions (us-east-1, us-west-2, ap-southeast-2, eu-central-1) — but still compile to CDK + IAM under the hood, so GA production deploys remain the traditional CDK path today.",
     },
   },
   comparisons: [

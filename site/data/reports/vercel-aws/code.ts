@@ -152,6 +152,36 @@ if __name__ == "__main__":
     app.run()`,
       },
       {
+        key: "harness",
+        label: "Managed Harness (Preview)",
+        language: "bash",
+        code: `# AgentCore Managed Harness — preview, Apr 22, 2026
+# 4 regions: us-east-1, us-west-2, ap-southeast-2, eu-central-1
+# 3-call surface replaces @app.entrypoint boilerplate — declarative, no orchestration code.
+
+# 1. Create harness (declare model + tools + instructions)
+aws bedrock-agentcore-control create-harness \\
+  --harness-name "MyHarness" \\
+  --execution-role-arn "arn:aws:iam::123456789012:role/MyHarnessRole" \\
+  --default-model-id "anthropic.claude-sonnet-4-6-20250101-v1:0" \\
+  --system-prompt "You are a helpful assistant." \\
+  --tools file://tools.json
+
+# 2. Poll until READY
+aws bedrock-agentcore-control get-harness --harness-arn "$ARN"
+
+# 3. Invoke (override model/tools/prompt at invocation time)
+aws bedrock-agentcore invoke-harness \\
+  --harness-arn "$ARN" \\
+  --runtime-session-id "sess-42" \\
+  --messages '[{"role":"user","content":"..."}]' \\
+  --model-id "openai.gpt-5.4"    # swap providers mid-session
+
+# Or via AgentCore CLI (preview):
+# npm i -g @aws/agentcore@preview
+# agentcore create --framework strands && agentcore deploy && agentcore invoke`,
+      },
+      {
         key: "policy",
         label: "Cedar Policy (GA)",
         language: "hcl",

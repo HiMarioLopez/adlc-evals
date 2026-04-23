@@ -18,8 +18,10 @@ Run these GitHub MCP queries to get current versions:
 
 - [ ] `vercel/ai` — Check latest release tag (current: `ai@6.0.168` stable / `7.0.0-beta.111` beta)
 - [ ] `aws/bedrock-agentcore-sdk-python` — Check latest tag (current: `v1.6.3`)
-- [ ] `strands-agents/sdk-python` — Check latest release (current: `v1.36.0`)
+- [ ] `strands-agents/sdk-python` — Check latest release (current: `v1.37.0`, powers AgentCore managed harness)
 - [ ] `strands-agents/sdk-typescript` — Check latest release (current: `v1.0.0-rc.4`, still RC)
+- [ ] `aws/agentcore-cli` — Check latest release (current: stable `v0.9.1`, preview `v1.0.0-preview.1`); verify if v1.0.0 has GA'd
+- [ ] npm `@aws/agentcore` — Confirm package is still preview or has graduated
 
 #### 2. Pricing Validation
 Query AWS Documentation MCP for current rates:
@@ -47,6 +49,9 @@ Search for new announcements:
 - [ ] Vercel Changelog: Any new agent-related features since last update?
 - [ ] AWS What's New: Any AgentCore updates since last update?
 - [ ] New MCP server support on either platform?
+- [ ] AgentCore managed harness feature additions (preview → GA milestones, new API methods, new model providers)
+- [ ] AgentCore CLI feature additions (Terraform IaC shipping, new `agentcore` subcommands, new framework support)
+- [ ] AgentCore coding agent skills ecosystem expansion (new IDEs beyond Kiro/Claude Code/Codex/Cursor)
 
 #### 3b. Blessed Path Validation
 Confirm the recommended approach hasn't changed:
@@ -60,10 +65,14 @@ Confirm the recommended approach hasn't changed:
 Use AWS Documentation MCP to verify regional availability:
 
 - [ ] Check [AgentCore Supported Regions](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/agentcore-regions.html) for updates
-- [ ] Has AgentCore Runtime expanded past 14 regions (baseline as of Apr 21, 2026)?
-- [ ] Has AgentCore Evaluations expanded past 9 regions (baseline as of Apr 21, 2026)?
-- [ ] Has AgentCore Policy expanded past 13 regions (baseline as of Apr 21, 2026)?
+- [ ] Has AgentCore Runtime expanded past 14 regions (baseline as of Apr 22, 2026)?
+- [ ] Has AgentCore Evaluations expanded past 9 regions (baseline as of Apr 22, 2026)?
+- [ ] Has AgentCore Policy expanded past 13 regions (baseline as of Apr 22, 2026)?
 - [ ] Has AWS Agent Registry expanded past 5 preview regions?
+- [ ] **Has AgentCore Managed Harness expanded past 4 preview regions** (us-east-1, us-west-2, ap-southeast-2, eu-central-1)? Has it graduated to GA?
+- [ ] **Has AgentCore persistent filesystem graduated to GA?** (Preview as of Mar 25, 2026; pricing TBD per pricing page)
+- [ ] **Has the AgentCore CLI graduated past `v1.0.0-preview.1`?** Has Terraform IaC shipped (announced as "coming soon" Apr 22, 2026)?
+- [ ] **Have Claude Code / Codex / Cursor coding agent skills plugins shipped?** (Announced "coming next week" from Apr 22, 2026 — ~Apr 29)
 - [ ] Any new AgentCore features with limited regional availability?
 - [ ] Update the Regional Availability Matrix in section 2b if changed
 - [ ] Has Vercel Sandbox expanded past `iad1`?

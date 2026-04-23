@@ -24,8 +24,8 @@ export const adoptionData: AdoptionData = {
     },
     {
       name: "strands-agents/sdk-python",
-      description: "Strands Agents SDK (Python)",
-      latestTag: "v1.36.0",
+      description: "Strands Agents SDK (Python) — now powers AgentCore harness",
+      latestTag: "v1.37.0",
       language: "Python",
       forks: "~780",
       openIssues: "~155",
@@ -34,7 +34,7 @@ export const adoptionData: AdoptionData = {
       recentClosed: 140,
       ratio: "1.29",
       ratioLabel: "Active",
-      latestCommit: "2026-04-17T20:09:27Z",
+      latestCommit: "2026-04-22T19:13:00Z",
       link: "https://github.com/strands-agents/sdk-python",
       color: "chart-2",
     },
@@ -70,6 +70,23 @@ export const adoptionData: AdoptionData = {
       link: "https://github.com/aws/bedrock-agentcore-sdk-python",
       color: "aws",
     },
+    {
+      name: "aws/agentcore-cli",
+      description:
+        "AgentCore CLI — unified prototype/deploy/operate terminal experience (npm @aws/agentcore)",
+      latestTag: "v1.0.0-preview.1 (stable: v0.9.1)",
+      language: "TypeScript",
+      forks: "~8",
+      openIssues: "~12",
+      ecosystem: "Infrastructure (Node.js, CDK)",
+      recentOpen: 35,
+      recentClosed: 14,
+      ratio: "2.50",
+      ratioLabel: "New (Jan 2026)",
+      latestCommit: "2026-04-22T18:56:00Z",
+      link: "https://github.com/aws/agentcore-cli",
+      color: "aws",
+    },
   ],
   activitySignals: [
     {
@@ -85,23 +102,26 @@ export const adoptionData: AdoptionData = {
     {
       platform: "AWS Bedrock AgentCore",
       signals: [
-        "Policy GA (Mar 3, 2026) — 13 regions",
+        "Managed Harness + CLI preview (Apr 22) — 9th service, declarative config",
+        "Persistent filesystem preview (Mar 25) — 1 GB/session, 14-day retention",
+        "Policy GA (Mar 3) — 13 regions",
         "Evaluations GA (Mar 31) — 9 regions, 13 evaluators",
         "AWS Agent Registry preview (Apr 9) — 8th service",
         "AG-UI protocol in Runtime (Mar 13)",
-        "Spring AI Java SDK GA (Apr 14)",
+        "Kiro Power for AgentCore (Apr 22); Claude Code/Codex/Cursor ~Apr 29",
       ],
     },
     {
       platform: "Strands Agents",
       signals: [
-        "Python v1.36 — AgentAsTool, Plugins, service tiers",
-        "TypeScript still RC (v1.0.0-rc.4) as of Apr 21",
+        "Python v1.37 (Apr 22) — now powers AgentCore managed harness",
+        "v1.36: AgentAsTool, Plugins, service tiers",
+        "TypeScript still RC (v1.0.0-rc.4) as of Apr 22",
         "VercelModel adapter in TS — Language Model Spec v3",
         "Security: litellm supply-chain pin in v1.33.0",
       ],
     },
   ],
   dataNote:
-    "Repository metrics approximated as of April 21, 2026. Ratio = Open/Closed issues created in trailing 60-day period.",
+    "Repository metrics approximated as of April 22, 2026. Ratio = Open/Closed issues created in trailing 60-day period.",
 };
