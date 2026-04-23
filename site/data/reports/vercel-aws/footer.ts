@@ -41,6 +41,13 @@ export const footerData: FooterData = {
       url: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/policy.html",
     },
   ],
+  complianceNote: {
+    text: "Both platforms hold baseline enterprise certifications — SOC 2 Type 2, ISO 27001, HIPAA BAA, and GDPR. AWS additionally holds FedRAMP High, DoD IL5, HITRUST, and 140+ regional/vertical certs for regulated industries. Full inventories:",
+    links: [
+      { label: "security.vercel.com", url: "https://security.vercel.com" },
+      { label: "AWS compliance", url: "https://aws.amazon.com/compliance/" },
+    ],
+  },
   contributors: [{ name: "Mario Lopez Martinez", github: "HiMarioLopez" }],
   reportVersion: "2.0.0",
   generatedDate: "2026-04-21",

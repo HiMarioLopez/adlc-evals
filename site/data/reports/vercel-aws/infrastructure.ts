@@ -278,21 +278,21 @@ export const categoryGroups: CategoryGroup[] = [
         },
       },
       {
-        capability: "Compliance & Audit",
+        capability: "Agent Auditability & Observability",
         description:
-          "Enterprise compliance certifications, audit logging, and AI-specific security posture management",
+          "What you can trace, log, and audit about agent execution — tool calls, prompts, outputs, token usage, and policy decisions",
         iconName: "FileCheck",
         vercel: {
-          text: "SOC 2 T2, ISO 27001, HIPAA BAA + Activity Log",
+          text: "OTel spans + AI Gateway logs + Log Drains",
           detail:
-            "SOC 2 Type 2, ISO 27001:2022, HIPAA BAA (Enterprise), PCI DSS v4.0, GDPR, EU-U.S. DPF, TISAX AL2; Activity Log (CLI accessible) + Log Drains for SIEM; reports at security.vercel.com",
-          link: "https://vercel.com/docs/security/compliance",
+            "AI SDK emits OpenTelemetry spans per generation (model, prompt, tool calls, tokens, latency); AI Gateway logs every request with ZDR + disallow-training enforcement; Activity Log captures team/project changes; Log Drains stream to any SIEM (Datadog, Splunk, Axiom). BYO-DSPM model — plug into existing security tooling rather than a first-party posture product.",
+          link: "https://vercel.com/docs/ai-gateway/observability",
         },
         aws: {
-          text: "SOC 1/2/3, ISO, HIPAA + CloudTrail + Artifact",
+          text: "AgentCore Observability + CloudTrail + GuardDuty",
           detail:
-            "SOC 1/2/3, ISO 27001/27017/27018, PCI DSS, HIPAA eligible (BAA), FedRAMP in progress; CloudTrail logs AgentCore management + data events (InvokeGateway); audit reports via AWS Artifact",
-          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/compliance-validation.html",
+            "AgentCore Observability emits OTel-compatible traces/spans/metrics (session count, latency, token usage, error rates) into CloudWatch with a built-in agent dashboard; CloudTrail logs AgentCore management + data events (InvokeGateway, tool calls); GuardDuty adds anomaly detection. AWS-native stack — tightly integrated with the AWS security and observability ecosystem.",
+          link: "https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/observability.html",
         },
       },
     ],

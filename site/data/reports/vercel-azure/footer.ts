@@ -41,6 +41,16 @@ export const footerData: FooterData = {
       url: "https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/generally-available-evaluations-monitoring-and-tracing-in-microsoft-foundry/4502760",
     },
   ],
+  complianceNote: {
+    text: "Both platforms hold baseline enterprise certifications — SOC 2 Type 2, ISO 27001, HIPAA BAA, and GDPR. Azure additionally holds FedRAMP High, DoD IL5, HITRUST, and 100+ regional/vertical certs for regulated industries. Full inventories:",
+    links: [
+      { label: "security.vercel.com", url: "https://security.vercel.com" },
+      {
+        label: "Microsoft compliance",
+        url: "https://learn.microsoft.com/en-us/compliance/",
+      },
+    ],
+  },
   contributors: [{ name: "Mario Lopez Martinez", github: "HiMarioLopez" }],
   reportVersion: "1.1.0",
   generatedDate: "2026-04-21",

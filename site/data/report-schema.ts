@@ -429,6 +429,16 @@ export interface FooterData {
     agentcore: string;
   };
   awsLinks: ExternalLink[];
+  /**
+   * Optional compliance footnote rendered above the copyright line.
+   * Used to disclose baseline certifications (SOC 2, ISO 27001, etc.) that
+   * are table-stakes for both platforms and therefore not differentiating
+   * enough to belong in the capability matrix.
+   */
+  complianceNote?: {
+    text: string;
+    links?: ExternalLink[];
+  };
   contributors: Contributor[];
   generatedDate: string;
   reportVersion: string;

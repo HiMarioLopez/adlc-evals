@@ -153,8 +153,36 @@ export function Footer({ data, secondaryTheme }: FooterProps) {
           </div>
         </div>
 
+        {/* Compliance footnote */}
+        {data.complianceNote && (
+          <div className="mt-6 px-4 text-center sm:mt-8 sm:px-0">
+            <p className="text-muted-foreground text-xs leading-relaxed">
+              {data.complianceNote.text}
+              {data.complianceNote.links &&
+                data.complianceNote.links.length > 0 && (
+                  <>
+                    {" "}
+                    {data.complianceNote.links.map((link, index) => (
+                      <span key={link.url}>
+                        {index > 0 && " · "}
+                        <a
+                          className="underline transition-colors hover:text-foreground"
+                          href={link.url}
+                          rel="noopener noreferrer"
+                          target="_blank"
+                        >
+                          {link.label}
+                        </a>
+                      </span>
+                    ))}
+                  </>
+                )}
+            </p>
+          </div>
+        )}
+
         {/* Copyright */}
-        <div className="mt-6 px-4 text-center sm:mt-8 sm:px-0">
+        <div className="mt-4 px-4 text-center sm:px-0">
           <p className="text-muted-foreground text-xs leading-relaxed">
             Data sourced from official documentation and public GitHub
             repositories.

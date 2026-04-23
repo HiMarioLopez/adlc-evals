@@ -654,34 +654,38 @@ export const categoryGroups: CategoryGroup[] = [
         },
       },
       {
-        capability: "Compliance & Audit",
+        capability: "Agent Auditability & Observability",
         description:
-          "Enterprise compliance certifications, audit logging, and AI-specific security posture management",
+          "What you can trace, log, and audit about agent execution — tool calls, prompts, outputs, token usage, and policy decisions",
         iconName: "FileCheck",
         vercel: {
-          text: "SOC 2 T2, ISO 27001, HIPAA BAA + Activity Log",
+          text: "OTel spans + AI Gateway logs + Log Drains",
           detail:
-            "SOC 2 Type 2, ISO 27001:2022, HIPAA BAA (Enterprise), PCI DSS v4.0, GDPR, EU-U.S. DPF, TISAX AL2; Activity Log (CLI accessible) + Log Drains for SIEM; reports at security.vercel.com",
-          link: "https://vercel.com/docs/security/compliance",
+            "AI SDK emits OpenTelemetry spans per generation (model, prompt, tool calls, tokens, latency); AI Gateway logs every request with ZDR + disallow-training enforcement; Activity Log captures team/project changes; Log Drains stream to any SIEM (Datadog, Splunk, Axiom). BYO-DSPM model — plug into existing security tooling rather than a first-party posture product.",
+          link: "https://vercel.com/docs/ai-gateway/observability",
           links: [
             {
-              label: "Compliance",
-              url: "https://vercel.com/docs/security/compliance",
+              label: "AI Gateway observability",
+              url: "https://vercel.com/docs/ai-gateway/observability",
             },
             {
-              label: "Activity Log",
-              url: "https://vercel.com/docs/observability/activity-log",
+              label: "AI SDK telemetry",
+              url: "https://ai-sdk.dev/docs/ai-sdk-core/telemetry",
             },
             {
               label: "Log Drains",
               url: "https://vercel.com/docs/log-drains",
             },
+            {
+              label: "Activity Log",
+              url: "https://vercel.com/docs/observability/activity-log",
+            },
           ],
         },
         aws: {
-          text: "Defender AI-SPM + Purview + Azure Monitor",
+          text: "Defender AI-SPM + Purview for AI + Foundry tracing",
           detail:
-            "Defender for Cloud AI-SPM (GA): agentless AI discovery across Azure/AWS/GCP, attack-path analysis; Microsoft Purview for AI (GA DSPM + DLP middleware); Foundry OpenTelemetry tracing + Entra audit logs",
+            "First-party bundle: Defender for Cloud AI-SPM (GA) does agentless AI discovery + attack-path analysis across Azure/AWS/GCP; Microsoft Purview for AI (GA) captures prompts/responses with DSPM + DLP middleware; Foundry OpenTelemetry tracing + Entra audit logs. Out-of-box posture, tightly coupled to the Microsoft Security stack.",
           link: "https://learn.microsoft.com/en-us/azure/defender-for-cloud/ai-security-posture",
           links: [
             {
