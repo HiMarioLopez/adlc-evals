@@ -1,0 +1,153 @@
+name: Check External Links
+
+on:
+  # Nightly sweep catches platform URL rot that happens without any code
+  # change (vendor rebranding a doc path, removing an integration, etc.).
+  schedule:
+    - cron: "0 7 * * *" # 07:00 UTC = midnight PT
+
+  # Block merges that add broken URLs to report data.
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/data/reports/**"
+      - "site/data/report-schema.ts"
+      - "site/scripts/check-links.ts"
+      - "site/package.json"
+      - ".github/workflows/check-links.yml"
+
+  # Catch regressions from direct-to-main pushes.
+  push:
+    branches: [main]
+    paths:
+      - "site/data/reports/**"
+      - "site/data/report-schema.ts"
+      - "site/scripts/check-links.ts"
+      - "site/package.json"
+      - ".github/workflows/check-links.yml"
+
+  # Manual trigger for debugging. --strict promotes redirect/network warnings
+  # to errors so you can audit the full health of the link corpus.
+  workflow_dispatch:
+    inputs:
+      scope:
+        description: "Report scope"
+        required: true
+        default: "all"
+        type: choice
+        options:
+          - all
+          - vercel-aws
+          - vercel-azure
+      strict:
+        description: "Treat redirects and network errors as errors"
+        required: false
+        default: false
+        type: boolean
+      timeout:
+        description: "Per-URL timeout in ms"
+        required: false
+        default: "20000"
+        type: string
+
+jobs:
+  check:
+    name: Check links (${{ github.event.inputs.scope || 'all' }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+        working-directory: site
+
+      - name: Run link checker
+        id: check
+        env:
+          SCOPE: ${{ github.event.inputs.scope || 'all' }}
+          STRICT: ${{ github.event.inputs.strict || 'false' }}
+          TIMEOUT_MS: ${{ github.event.inputs.timeout || '20000' }}
+        run: |
+          # Validate env vars to prevent command injection from workflow_dispatch inputs.
+          case "$SCOPE" in all|vercel-aws|vercel-azure) ;; *) echo "Invalid scope: $SCOPE" >&2; exit 2 ;; esac
+          case "$STRICT" in true|false) ;; *) echo "Invalid strict: $STRICT" >&2; exit 2 ;; esac
+          case "$TIMEOUT_MS" in ''|*[!0-9]*) echo "Invalid timeout: $TIMEOUT_MS" >&2; exit 2 ;; esac
+
+          ARGS="$SCOPE --timeout=$TIMEOUT_MS"
+          if [ "$STRICT" = "true" ]; then
+            ARGS="$ARGS --strict"
+          fi
+
+          bun run scripts/check-links.ts $ARGS | tee link-report.txt
+          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+          exit "${PIPESTATUS[0]}"
+        working-directory: site
+
+      - name: Upload link report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-report-${{ github.run_id }}
+          path: site/link-report.txt
+          retention-days: 30
+
+      # Auto-open an issue on nightly failures so broken platform links don't
+      # sit undetected. Only runs on schedule — PR/push failures already show
+      # up in the Checks UI where they block the merge.
+      - name: Open issue on nightly failure
+        if: failure() && github.event_name == 'schedule'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const report = fs.readFileSync('site/link-report.txt', 'utf8');
+            const title = `Nightly link check failed (${new Date().toISOString().split('T')[0]})`;
+            const body = [
+              `The nightly external link audit found broken URLs in the report data.`,
+              ``,
+              `**Run:** ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+              ``,
+              `## Report`,
+              '```',
+              report.slice(0, 60000),
+              '```',
+              ``,
+              `Fix by updating the offending URLs in \`site/data/reports/**\`, then re-run \`bun run check:links\` locally to confirm.`,
+            ].join('\n');
+
+            // Dedupe: if an open issue already exists with this prefix, comment on it
+            // instead of opening a new one.
+            const { data: existing } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'link-check',
+            });
+            const match = existing.find((i) => i.title.startsWith('Nightly link check failed'));
+            if (match) {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: match.number,
+                body,
+              });
+            } else {
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title,
+                body,
+                labels: ['link-check', 'bug'],
+              });
+            }
