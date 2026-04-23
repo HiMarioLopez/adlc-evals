@@ -9,6 +9,7 @@
     "check": "ultracite check",
     "fix": "ultracite fix",
     "check:sync": "bun run scripts/check-sync.ts",
+    "check:links": "bun run scripts/check-links.ts",
     "prepare": "cd .. && husky site/.husky"
   },
   "dependencies": {
