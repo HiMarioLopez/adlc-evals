@@ -286,7 +286,7 @@ export const categoryGroups: CategoryGroup[] = [
           text: "OTel spans + AI Gateway logs + Log Drains",
           detail:
             "AI SDK emits OpenTelemetry spans per generation (model, prompt, tool calls, tokens, latency); AI Gateway logs every request with ZDR + disallow-training enforcement; Activity Log captures team/project changes; Log Drains stream to any SIEM (Datadog, Splunk, Axiom). BYO-DSPM model — plug into existing security tooling rather than a first-party posture product.",
-          link: "https://vercel.com/docs/ai-gateway/observability",
+          link: "https://vercel.com/docs/ai-gateway/capabilities/observability",
         },
         aws: {
           text: "AgentCore Observability + CloudTrail + GuardDuty",
@@ -330,7 +330,7 @@ export const categoryGroups: CategoryGroup[] = [
           text: "Marketplace Vector Stores",
           detail:
             "Supabase pgvector, Upstash Vector, MongoDB Atlas, Pinecone via Marketplace (first-party billing, auto-provisioned env vars); AI SDK native embeddings + reranking",
-          link: "https://vercel.com/marketplace?category=storage",
+          link: "https://vercel.com/marketplace/category/storage",
         },
         aws: {
           text: "Amazon Bedrock Knowledge Bases (GA)",

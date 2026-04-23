@@ -48,7 +48,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "MAF overview",
-              url: "https://learn.microsoft.com/en-us/agent-framework/overview/agent-framework-overview",
+              url: "https://learn.microsoft.com/en-us/agent-framework/overview/",
             },
             {
               label: "Magentic pattern",
@@ -74,7 +74,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "BYOK",
-              url: "https://vercel.com/docs/ai-gateway/byok",
+              url: "https://vercel.com/docs/ai-gateway/authentication-and-byok/byok",
             },
             {
               label: "Models & providers",
@@ -90,7 +90,7 @@ export const categoryGroups: CategoryGroup[] = [
           links: [
             {
               label: "Azure OpenAI",
-              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/",
             },
             {
               label: "Deployment tiers",
@@ -98,7 +98,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "Models catalog",
-              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/concepts/models",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure",
             },
           ],
         },
@@ -168,7 +168,7 @@ export const categoryGroups: CategoryGroup[] = [
           links: [
             {
               label: "Responses API",
-              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/responses",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/responses",
             },
             {
               label: "MCP tool",
@@ -250,7 +250,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "Responses API",
-              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/responses",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/responses",
             },
             {
               label: "azd ai agent",
@@ -376,7 +376,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "Durable Functions",
-              url: "https://learn.microsoft.com/en-us/azure/azure-functions/durable/durable-functions-overview",
+              url: "https://learn.microsoft.com/en-us/azure/azure-functions/durable-functions/durable-functions-overview",
             },
           ],
         },
@@ -506,11 +506,11 @@ export const categoryGroups: CategoryGroup[] = [
           text: "Microsoft Entra Agent ID (Preview)",
           detail:
             "Preview since May 19, 2025 (Build 2025); still preview Apr 2026 · agent identity blueprints · OAuth 2.0 OBO + client_credentials · Managed Identity federation (FIC/TUAMI) · Conditional Access",
-          link: "https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/agent-blueprint",
+          link: "https://learn.microsoft.com/en-us/entra/agent-id/agent-blueprint",
           links: [
             {
               label: "Entra Agent ID",
-              url: "https://learn.microsoft.com/en-us/entra/agent-id/identity-platform/agent-blueprint",
+              url: "https://learn.microsoft.com/en-us/entra/agent-id/agent-blueprint",
             },
             {
               label: "OAuth OBO flow",
@@ -548,11 +548,11 @@ export const categoryGroups: CategoryGroup[] = [
           text: "Azure RBAC + Foundry Roles",
           detail:
             "Built-in Foundry roles (GA): Azure AI Account Owner, Administrator, Developer, User + Cognitive Services OpenAI Contributor/User; RBAC assigned to agent identity for tool access",
-          link: "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/rbac-azure-ai-foundry",
+          link: "https://learn.microsoft.com/en-us/azure/foundry/concepts/rbac-foundry",
           links: [
             {
               label: "Foundry RBAC",
-              url: "https://learn.microsoft.com/en-us/azure/ai-foundry/concepts/rbac-azure-ai-foundry",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/concepts/rbac-foundry",
             },
             {
               label: "AI built-in roles",
@@ -662,11 +662,11 @@ export const categoryGroups: CategoryGroup[] = [
           text: "OTel spans + AI Gateway logs + Log Drains",
           detail:
             "AI SDK emits OpenTelemetry spans per generation (model, prompt, tool calls, tokens, latency); AI Gateway logs every request with ZDR + disallow-training enforcement; Activity Log captures team/project changes; Log Drains stream to any SIEM (Datadog, Splunk, Axiom). BYO-DSPM model — plug into existing security tooling rather than a first-party posture product.",
-          link: "https://vercel.com/docs/ai-gateway/observability",
+          link: "https://vercel.com/docs/ai-gateway/capabilities/observability",
           links: [
             {
               label: "AI Gateway observability",
-              url: "https://vercel.com/docs/ai-gateway/observability",
+              url: "https://vercel.com/docs/ai-gateway/capabilities/observability",
             },
             {
               label: "AI SDK telemetry",
@@ -674,11 +674,11 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "Log Drains",
-              url: "https://vercel.com/docs/log-drains",
+              url: "https://vercel.com/docs/drains",
             },
             {
               label: "Activity Log",
-              url: "https://vercel.com/docs/observability/activity-log",
+              url: "https://vercel.com/docs/activity-log",
             },
           ],
         },
@@ -732,7 +732,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "Marketplace storage",
-              url: "https://vercel.com/marketplace?category=storage",
+              url: "https://vercel.com/marketplace/category/storage",
             },
           ],
         },
@@ -748,7 +748,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "Responses API",
-              url: "https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/responses",
+              url: "https://learn.microsoft.com/en-us/azure/foundry/openai/how-to/responses",
             },
             {
               label: "Assistants migration",
@@ -766,11 +766,11 @@ export const categoryGroups: CategoryGroup[] = [
           text: "Marketplace Vector Stores",
           detail:
             "Supabase pgvector, Upstash Vector, MongoDB Atlas, Pinecone via Marketplace (first-party billing, auto-provisioned env vars); AI SDK native embeddings + reranking",
-          link: "https://vercel.com/marketplace?category=storage",
+          link: "https://vercel.com/marketplace/category/storage",
           links: [
             {
               label: "Marketplace storage",
-              url: "https://vercel.com/marketplace?category=storage",
+              url: "https://vercel.com/marketplace/category/storage",
             },
             {
               label: "AI SDK embeddings",
@@ -806,7 +806,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "AI Gateway observability",
-              url: "https://vercel.com/docs/ai-gateway/observability",
+              url: "https://vercel.com/docs/ai-gateway/capabilities/observability",
             },
           ],
         },

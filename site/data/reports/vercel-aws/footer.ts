@@ -44,7 +44,7 @@ export const footerData: FooterData = {
   complianceNote: {
     text: "Both platforms hold baseline enterprise certifications — SOC 2 Type 2, ISO 27001, HIPAA BAA, and GDPR. AWS additionally holds FedRAMP High, DoD IL5, HITRUST, and 140+ regional/vertical certs for regulated industries. Full inventories:",
     links: [
-      { label: "security.vercel.com", url: "https://security.vercel.com" },
+      { label: "security.vercel.com", url: "https://security.vercel.com/" },
       { label: "AWS compliance", url: "https://aws.amazon.com/compliance/" },
     ],
   },
