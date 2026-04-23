@@ -848,7 +848,7 @@ export const categoryGroups: CategoryGroup[] = [
             },
             {
               label: "Langfuse",
-              url: "https://vercel.com/marketplace/langfuse",
+              url: "https://vercel.com/docs/ai-gateway/ecosystem/framework-integrations/langfuse",
             },
             {
               label: "Announcement",

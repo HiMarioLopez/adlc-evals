@@ -26,7 +26,7 @@ export const categoryGroups: CategoryGroup[] = [
           text: "Strands Agents SDK",
           detail:
             "Agent, Swarm, Graph, AgentAsTool, Plugins; Python v1.36, TS RC v1.0.0-rc.4",
-          link: "https://strandsagents.com/latest/",
+          link: "https://strandsagents.com/",
         },
       },
       {
