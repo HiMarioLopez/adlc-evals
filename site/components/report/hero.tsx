@@ -77,7 +77,7 @@ export function Hero({
           <div className="flex items-center gap-4 rounded-2xl border border-border bg-card/80 px-6 py-4 backdrop-blur-sm transition-colors hover:border-foreground/20">
             <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-foreground">
               <svg
-                className="h-7 w-7 text-background"
+                className="h-9 w-9 text-background"
                 fill="currentColor"
                 viewBox="0 0 76 65"
               >
